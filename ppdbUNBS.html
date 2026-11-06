@@ -1,0 +1,3317 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SPMB ULUN NUHA BOARDING SCHOOL</title>
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- QRCode.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<!-- html2canvas untuk export PNG -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<!-- jsPDF untuk export PDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+
+
+
+
+</head>
+
+<body class="bg-gradient-to-br from-green-50 to-green-100 min-h-screen flex flex-col">
+
+  
+
+
+
+<!-- Header -->
+<header class="bg-green-600 text-white p-4 flex justify-between items-center shadow-md">
+  <!-- Kiri: Logo + Informasi Siswa -->
+  <div class="flex items-center gap-3 min-w-0">
+    <img src="user.png" alt="user"
+      class="w-10 h-10 rounded-full shadow-md object-cover shrink-0">
+
+    <div class="min-w-0">
+      <div id="userInfo" class="text-sm opacity-90">
+        (Nama Siswa - NIK)
+      </div>
+
+      <!-- Jalur Pendaftaran -->
+      <div class="text-xs mt-1">
+        Jalur:
+        <span id="jalurPendaftaran"
+          class="font-semibold bg-white/20 px-2 py-0.5 rounded-full">
+          Memuat...
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tombol Logout -->
+  <button id="logoutBtn"
+    class="flex items-center justify-center bg-red-500 hover:bg-red-600
+    transition-all p-2 rounded-lg text-sm font-medium shadow-sm
+    active:scale-95 shrink-0"
+    title="Keluar">
+
+    <svg xmlns="http://www.w3.org/2000/svg"
+      class="h-5 w-5 rotate-180"
+      fill="none" viewBox="0 0 24 24"
+      stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M17 16l4-4m0 0l-4-4m4 4H9m4 4v1a2 2 0 01-2 2H8a2 2 0 01-2-2v-1m0-4V9m0 0V5a2 2 0 012-2h3a2 2 0 012 2v4" />
+    </svg>
+  </button>
+</header>
+
+
+<!-- Navigasi Atas-->
+<div class="sticky top-0 z-10 bg-white shadow-sm border-b mb-4">
+  <div id="infoLengkap"></div> 
+  <div class="flex flex-wrap justify-around text-center text-sm font-semibold overflow-x-auto">
+    <button id="tab-beranda"
+      class="tab-btn flex-1 min-w-[100px] py-3 text-green-700 border-b-2 border-green-600 bg-green-50 transition">
+      Beranda
+    </button>
+    <button id="tab-casisba"
+      class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
+      Calon Siswa
+    </button>
+    <button id="tab-saudara"
+      class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
+      Data Orang Tua
+    </button>
+    <button id="tab-pernyataan"
+      class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
+      Berkas & Pernyataan
+    </button>
+    <button id="tab-pengumuman"
+      class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
+      Pengumuman
+    </button>
+  </div>
+</div>
+  
+
+
+
+
+
+<!-- Konten Utama -->
+<main class="flex-grow flex justify-center items-start mt-6 px-4 pb-8">
+  <div class="bg-white w-full max-w-2xl p-6 rounded-2xl shadow-xl border border-gray-200 animate-fadeIn">
+    
+
+    <form id="dataForm" class="space-y-6">
+      <input type="hidden" id="tanggalDaftar" name="tanggalDaftar" required>
+      <input type="hidden" id="noPendaftaran" name="noPendaftaran" required>
+
+            <!-- Beranda -->
+    <div id="tab-content-beranda" class="p-4 sm:p-6">
+      
+      <!-- Header Sekolah -->
+      <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-md mb-6 text-center flex flex-col items-center">
+      
+        <img src="logo.png" alt="Logo ULUN NUHA BOARDING SCHOOL" class="w-16 sm:w-32 ">
+             
+        <h1 class="text-base sm:text-lg md:text-2xl font-bold mb-1 text-center">SPMB ULUN NUHA BOARDING SCHOOL</h1>
+        <p class="text-gray-700 text-sm sm:text-base">Ahlan Wa sahlan, <span id="userNama">Siswa</span>
+      </div>
+
+      <!-- SYARAT PENGISIAN FORM -->
+<div id="syaratPengisian"
+  class="bg-white p-5 sm:p-6 rounded-2xl shadow-md border border-gray-100 space-y-5 hidden">
+
+  <!-- HEADER -->
+  <div class="flex items-center gap-3 border-b border-gray-100 pb-4">
+    <div class="w-11 h-11 shrink-0 rounded-xl bg-green-100 text-green-700 flex items-center justify-center">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 12h6m-6 4h6"/>
+      </svg>
+    </div>
+
+    <div>
+      <h2 class="text-base sm:text-lg font-bold text-gray-800">
+        Syarat Pengisian Form SPMB
+      </h2>
+      <p class="text-xs text-gray-500 mt-1">
+        Perhatikan beberapa hal berikut sebelum mengisi formulir.
+      </p>
+    </div>
+  </div>
+
+  <!-- DAFTAR SYARAT -->
+  <div class="space-y-4">
+
+    <!-- SYARAT 1 -->
+    <div class="flex items-start gap-3">
+      <div class="w-7 h-7 shrink-0 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+        1
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-800">
+          Lengkapi Semua Data Wajib
+        </p>
+        <p class="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
+          Isi seluruh kolom yang wajib diisi dan ditandai dengan tanda bintang (*).
+        </p>
+      </div>
+    </div>
+
+    <!-- SYARAT 2 -->
+    <div class="flex items-start gap-3">
+      <div class="w-7 h-7 shrink-0 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+        2
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-800">
+          Siapkan Dokumen Pendukung
+        </p>
+        <p class="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
+          Siapkan dokumen berikut sebelum melakukan pengisian:
+        </p>
+
+        <div class="mt-2 bg-gray-50 rounded-xl p-3 space-y-2">
+          <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+            <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 13l4 4L19 7"/>
+            </svg>
+            Kartu Keluarga (KK)
+          </div>
+
+          <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+            <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 13l4 4L19 7"/>
+            </svg>
+            Akta Kelahiran
+          </div>
+
+          <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+            <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 13l4 4L19 7"/>
+            </svg>
+            Surat Keterangan Siswa dari Sekolah Asal
+          </div>
+
+          <div class="flex items-center gap-2 text-xs sm:text-sm text-gray-600">
+            <svg class="w-4 h-4 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M5 13l4 4L19 7"/>
+            </svg>
+            File pasfoto formal
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SYARAT 3 -->
+    <div class="flex items-start gap-3">
+      <div class="w-7 h-7 shrink-0 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+        3
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-800">
+          Pastikan Data Sesuai Dokumen
+        </p>
+        <p class="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
+          Pastikan seluruh data yang diisi sesuai dengan Kartu Keluarga dan Akta Kelahiran.
+        </p>
+      </div>
+    </div>
+
+    <!-- SYARAT 4 -->
+    <div class="flex items-start gap-3">
+      <div class="w-7 h-7 shrink-0 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-xs font-bold">
+        4
+      </div>
+      <div>
+        <p class="text-sm font-semibold text-gray-800">
+          Periksa Kembali Data
+        </p>
+        <p class="text-xs sm:text-sm text-gray-500 mt-1 leading-relaxed">
+          Periksa kembali seluruh data dan dokumen sebelum menekan tombol
+          <strong class="text-green-700">"Mengakhiri Pendaftaran"</strong>.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CATATAN -->
+  <div class="flex items-start gap-2 bg-amber-50 border border-amber-100 rounded-xl p-3">
+    <svg class="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+        d="M12 9v4m0 4h.01M10.3 3.9L2.6 17.2A2 2 0 004.3 20h15.4a2 2 0 001.7-2.8L13.7 3.9a2 2 0 00-3.4 0z"/>
+    </svg>
+    <p class="text-xs text-amber-800 leading-relaxed">
+      <strong>Perhatian:</strong> Pastikan dokumen yang diunggah dapat dibaca dengan jelas agar proses pemeriksaan data berjalan lancar.
+    </p>
+  </div>
+
+</div> <br>
+
+
+      
+
+        <button type="button"  id="startForm" hidden
+          class="w-full sm:w-auto px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+          Mulai Isi Form
+        </button>
+
+        <div class="flex justify-center mt-1">
+        <button 
+          type="button" 
+          id="previewBuktiBtn"
+          class="hidden bg-green-50 border border-green-300 text-green-700 font-semibold px-6 py-3 rounded-xl shadow hover:bg-green-100 transition-all duration-200 text-center w-full sm:w-auto">
+          Lihat Bukti Daftar
+        </button>
+      </div>
+
+      </div>
+
+  
+
+
+      <!-- STEP 1: Data Calon Siswa -->
+      <div id="step1" class="step space-y-4">
+        <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Administrasi Siswa</h3>
+        <div>
+          <label for="namaSiswa" class="block text-gray-700 font-medium mb-1">Nama Siswa</label>
+          <input type="text" id="namaSiswa" name="namaSiswa" placeholder="Masukkan nama lengkap" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label for="tempat" class="block text-gray-700 font-medium mb-1">Tempat Lahir</label>
+            <input type="text" id="tempat" name="tempat" placeholder="Tempat lahir" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+          </div>
+          <div>
+            <label for="tanggal" class="block text-gray-700 font-medium mb-1">Tanggal Lahir</label>
+            <input type="date" id="tanggal" name="tanggal" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+          </div>
+        </div>
+
+        <div>
+          <label for="jk" class="block text-gray-700 font-medium mb-1">Jenis Kelamin</label>
+          <select id="jk" name="jk" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+            <option value="">Pilih Jenis Kelamin</option>
+            <option value="L">Laki-laki</option>
+            <option value="P">Perempuan</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="nisn" class="block text-gray-700 font-medium mb-1">Nomor Induk Siswa Nasional (NISN)</label>
+          <input type="number" id="nisn" placeholder="10 Digit Angka" name="nisn" inputmode="numeric" pattern="[0-9]{10}"
+           maxlength="10" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+           <p class="text-xs text-gray-500 mt-1">
+        Masukan 10 digit angka NISN
+      </p>
+        </div>
+
+        
+    <!-- Nomor KK -->
+    <div>
+      <label for="noKK" class="block text-gray-700 font-medium mb-1">
+        Nomor Kartu Keluarga (KK)
+      </label>
+      <input
+        type="text"
+        id="noKK"
+        placeholder="16 Digit Angka"
+        name="noKK"
+        inputmode="numeric"
+        pattern="[0-9]{16}"
+        maxlength="16"
+        class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+        required
+      >
+      <p class="text-xs text-gray-500 mt-1">
+        Masukkan 16 digit nomor Kartu Keluarga.
+      </p>
+    </div>
+
+    <!-- Nomor Akte -->
+    <div>
+      <label for="noAkte" class="block text-gray-700 font-medium mb-1">
+        Nomor Akte Kelahiran
+      </label>
+      <input
+        type="text"
+        id="noAkte"
+        name="noAkte"
+        class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+        
+      >
+      <p class="text-xs text-gray-500 mt-1">
+        Lihat di akte kelahiran
+      </p>
+    </div>
+
+
+        <div>
+          <label for="asrama" class="block text-gray-700 font-medium mb-1">Pilihan Sekolah :</label>
+          <select id="asrama" name="asrama" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+            <option value="">Pilih Jenis Sekolah</option>
+            <option value="Full Day">Full Day</option>
+            <option value="Asrama">Asrama</option>
+          </select>
+        </div>
+
+        
+        <div>
+          <label for="transportasi" class="block text-gray-700 font-medium mb-1">Transportasi ke sekolah :</label>
+          <select id="transportasi" name="transportasi" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+            <option value="">Pilih transportasi</option>
+            <option value="Jalan Kaki">Jalan Kaki</option>
+            <option value="Kendaraan Pribadi">Kendaraan Pribadi</option>
+            <option value="Kendaraan Umum/angkot">Kendaraan Umum/angkot</option>
+          </select>
+        </div>
+
+
+        <div>
+          <label for="anakke" class="block text-gray-700 font-medium mb-1">Anak ke</label>
+          <input type="number" id="anakke" name="anakke" placeholder="Contoh: 1" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+        
+
+        <div >
+          <label for="alamat" class="block text-gray-700 font-medium mb-1">Alamat Tempat Tinggal</label>
+          <textarea id="alamat" name="alamat" placeholder="Masukkan alamat lengkap" rows="3" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required></textarea>
+          <p class="text-sm text-gray-500 mt-1">
+            Jalan, Kelurahan, Kecamatan, Kabupaten/Kota
+          </p>
+        </div>
+        <br>
+
+              
+
+<!-- Data Sekolah Asal -->
+<div id="dataSekolahAsal" class="contents" >
+
+<div>
+  <h3 class="font-semibold text-green-600 bg-green-100 text-lg mb-3"> Data Sekolah Asal</h3>
+      </div> 
+
+  <!-- Sekolah Asal -->
+  <div class="mb-5">
+    <label for="sekolahAsal"
+      class="block text-gray-700 font-medium mb-2">
+      Nama Sekolah Asal
+    </label>
+
+    <input
+      type="text"
+      id="sekolahAsal"
+      name="sekolahAsal"
+      placeholder="Masukkan nama sekolah asal"
+      class="w-full p-3 border border-gray-300 rounded-xl
+             focus:ring-2 focus:ring-green-400 outline-none"
+      required
+    >
+  </div>
+
+  <!-- NPSN Sekolah Asal -->
+  <div class="mb-6">
+    <label for="npsn"
+      class="block text-gray-700 font-medium mb-2">
+      Nomor Pokok Sekolah Nasional (NPSN) Sekolah Asal
+    </label>
+
+    <input
+      type="text"
+      id="npsn"
+      name="npsn"
+      placeholder="Masukkan 8 digit NPSN"
+      inputmode="numeric"
+      pattern="[0-9]{8}"
+      maxlength="8"
+      class="w-full p-3 border border-gray-300 rounded-xl
+             focus:ring-2 focus:ring-green-400 outline-none"
+      required
+    >
+
+     <p class="text-sm text-gray-600 mt-2">
+      Belum mengetahui NPSN sekolah?
+      <a
+        href="https://data.kemendikdasmen.go.id/data-induk/satpen/daftar"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-green-700 font-semibold underline
+               hover:text-green-800"
+      >
+        Cek NPSN di situs resmi Kemendikdasmen ↗
+      </a>
+    </p>
+  </div>
+
+  <!-- Pemisah bagian -->
+  <div class="border-t border-gray-200 pt-5 mt-2 mb-5 md:col-span-2">
+
+    <h3 class="text-gray-800 font-semibold text-base mb-1">
+      Alamat Sekolah Asal
+    </h3>
+
+    <p class="text-sm text-gray-500">
+      Pilih lokasi sekolah asal sesuai wilayah administratif.
+    </p>
+
+  </div>
+
+  <!-- Dropdown Wilayah -->
+  <div class="space-y-5 md:col-span-2">
+
+    <!-- Provinsi -->
+    <div>
+      <label for="provinsiSekolah"
+        class="block text-gray-700 font-medium mb-2">
+        Provinsi
+      </label>
+
+      <select
+        id="provinsiSekolah"
+        name="provinsiSekolah"
+        class="w-full p-3 border border-gray-300 rounded-xl
+               focus:ring-2 focus:ring-green-400 outline-none
+               bg-white"
+        required
+      >
+        <option value="">Memuat provinsi...</option>
+      </select>
+    </div>
+
+    <!-- Kabupaten/Kota -->
+    <div>
+      <label for="kabupatenSekolah"
+        class="block text-gray-700 font-medium mb-2">
+        Kabupaten / Kota
+      </label>
+
+      <select
+        id="kabupatenSekolah"
+        name="kabupatenSekolah"
+        class="w-full p-3 border border-gray-300 rounded-xl
+               focus:ring-2 focus:ring-green-400 outline-none
+               bg-white disabled:bg-gray-100
+               disabled:text-gray-400"
+        required
+        disabled
+      >
+        <option value="">Pilih provinsi terlebih dahulu</option>
+      </select>
+    </div>
+
+    <!-- Kecamatan -->
+    <div>
+      <label for="kecamatanSekolah"
+        class="block text-gray-700 font-medium mb-2">
+        Kecamatan
+      </label>
+
+      <select
+        id="kecamatanSekolah"
+        name="kecamatanSekolah"
+        class="w-full p-3 border border-gray-300 rounded-xl
+               focus:ring-2 focus:ring-green-400 outline-none
+               bg-white disabled:bg-gray-100
+               disabled:text-gray-400"
+        required
+        disabled
+      >
+        <option value="">Pilih kabupaten/kota terlebih dahulu</option>
+      </select>
+    </div>
+
+  </div>
+
+</div>
+
+      <div>
+          <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Program Pemerintah </h3>
+        </div>
+
+        
+         <!-- Kesediaan menerima PIP -->
+        <div>
+          <label for="menerimaPIP" class="block text-gray-700 font-medium mb-1">
+            Apakah bersedia menerima PIP?
+          </label>
+
+          <select id="menerimaPIP" name="menerimaPIP"
+            class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+            required>
+            <option value="">- Pilih kesediaan -</option>
+            <option value="Bersedia">Bersedia</option>
+            <option value="Tidak Bersedia">Tidak Bersedia</option>
+          </select>
+        </div>
+
+        <!-- Alasan menerima PIP -->
+        <div id="containerAlasanPIP" class="hidden">
+          <label for="alasanPIP" class="block text-gray-700 font-medium mb-1">
+            Alasan menerima PIP?
+          </label>
+
+          <select id="alasanPIP" name="alasanPIP"
+            class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none">
+            <option value="">- Pilih alasan -</option>
+            <option value="yatim dan/atau piatu">
+              Siswa yang berstatus yatim dan/atau piatu.
+            </option>
+            <option value="Siswa di panti sosial/panti asuhan">
+              Siswa di panti sosial/panti asuhan
+            </option>
+            <option value="Siswa berkebutuhan khusus">
+              Siswa berkebutuhan khusus
+            </option>
+            <option value="Siswa yang orang tua/walinya terkena pemutusan hubungan kerja (PHK)">
+              Siswa yang orang tua/walinya terkena pemutusan hubungan kerja (PHK)
+            </option>
+            <option value="Siswa yang orang tua/walinya berstatus narapidana">
+              Siswa yang orang tua/walinya berstatus narapidana
+            </option>
+            <option value="Siswa yang berkonflik dengan hukum atau menjadi anak binaan di lembaga pembinaan khusus anak">
+              Siswa yang berkonflik dengan hukum atau menjadi anak binaan di lembaga pembinaan khusus anak
+            </option>
+          </select>
+        </div>
+
+         <div>
+          <label for="menerimaMBG" class="block text-gray-700 font-medium mb-1">
+            Apakah bersedia menerima Makan Bergizi Gratis (MBG) ?
+          </label>
+
+          <select id="menerimaMBG" name="menerimaMBG"
+            class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+            required>
+            <option value="">- Pilih kesediaan -</option>
+            <option value="Bersedia">Bersedia</option>
+            <option value="Tidak Bersedia">Tidak Bersedia</option>
+          </select>
+        </div>
+
+
+
+
+
+        <div>
+          <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Periodik Siswa</h3>
+        </div>
+
+        <div>
+              <label for="tinggibadan" class="block text-gray-700 font-medium mb-1">Tinggi Badan (cm) :</label>
+          <input type="number" id="tinggibadan" name="tinggibadan" placeholder="Contoh: 130" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+
+        <div>
+              <label for="beratbadan" class="block text-gray-700 font-medium mb-1">Berat Badan (kg) :</label>
+          <input type="number" id="beratbadan" name="beratbadan" placeholder="Contoh: 50" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+
+        <div>
+              <label for="lingkarkepala" class="block text-gray-700 font-medium mb-1">Lingkar Kepala (cm) :</label>
+          <input type="number" id="lingkarkepala" name="lingkarkepala" placeholder="Contoh: 35" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+
+        <div>
+              <label for="jarakrumah" class="block text-gray-700 font-medium mb-1">Jarak Rumah (km) :</label>
+          <input type="number" id="jarakrumah" name="jarakrumah" placeholder="Contoh: 5" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+        
+        <div>
+              <label for="jlhsaudara" class="block text-gray-700 font-medium mb-1">Jumlah Saudara Kandung:</label>
+          <input type="number" id="jlhsaudara" name="jlhsaudara" placeholder="Contoh: 5" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+
+        
+
+              
+
+        <button type="button" id="next1" class="w-full bg-green-600 text-white font-semibold p-3 rounded-xl shadow hover:bg-green-700 transition">
+          Selanjutnya →
+        </button>
+        
+
+<button
+  type="button"
+  onclick="simpanSementara()"
+  class="btn-simpan-sementara w-full mt-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-xl"
+>
+  <span aria-hidden="true">▣</span>
+        Simpan Sementara
+</button>
+
+
+
+        
+        
+
+
+        
+        
+
+
+      </div>
+
+      <!-- STEP 2: Data Orang Tua Kandung -->
+      <div id="step2" class="step hidden space-y-4">
+        
+        <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Diri Ayah</h3>
+        
+         <div>
+          <label for="namaAyah" class="block text-gray-700 font-medium mb-1">Nama Ayah</label>
+          <input type="text" id="namaAyah" name="namaAyah" placeholder="Nama Ayah Kandung" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+
+        <div>
+        <label for="nikAyah" class="block text-gray-700 font-medium mb-1">
+          Nomor Induk Kependudukan (NIK) Ayah
+        </label>
+        <input
+          type="text"
+          id="nikAyah"
+          placeholder="16 Digit Angka"
+          name="nikAyah"
+          inputmode="numeric"
+          pattern="[0-9]{16}"
+          maxlength="16"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          required
+        >
+        <p class="text-xs text-gray-500 mt-1">
+          Masukkan 16 digit Nomor Induk Kependudukan.
+        </p>
+      </div>
+
+      <div>
+        <label for="thnLhrAyah" class="block text-gray-700 font-medium mb-1">
+          Tahun Lahir Ayah
+        </label>
+        <input
+          type="text"
+          id="thnLhrAyah"
+          placeholder="4 Digit Angka"
+          name="thnLhrAyah"
+          inputmode="numeric"
+          pattern="[0-9]{4}"
+          maxlength="4"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          required
+        >
+       
+      </div>
+
+      
+      <div>
+        <label for="pendidikanAyah" class="block text-gray-700 font-medium mb-1">
+          Pendidikan Ayah
+        </label>
+
+        <select
+          id="pendidikanAyah"
+          name="pendidikanAyah"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          required
+        >
+          <option value="">- Pilih Pendidikan Ayah -</option>
+          <option value="Tidak Sekolah">Tidak Sekolah</option>
+          <option value="Putus SD">Putus SD</option>
+          <option value="SD Sederajat">SD Sederajat</option>
+          <option value="SMP Sederajat">SMP Sederajat</option>
+          <option value="SMA Sederajat">SMA Sederajat</option>
+          <option value="D1">D1</option>
+          <option value="D2">D2</option>
+          <option value="D3">D3</option>
+          <option value="D4/S1">D4/S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+        </select>
+      </div>
+
+      
+<div>
+  <label for="pekerjaanAyah" class="block text-gray-700 font-medium mb-1">
+    Pekerjaan Ayah
+  </label>
+
+  <select
+    id="pekerjaanAyah"
+    name="pekerjaanAyah"
+    class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+    required
+  >
+    <option value="">- Pilih Pekerjaan Orang Tua -</option>
+    <option value="Tidak bekerja">Tidak bekerja</option>
+    <option value="Nelayan">Nelayan</option>
+    <option value="Petani">Petani</option>
+    <option value="Peternak">Peternak</option>
+    <option value="PNS/TNI/POLRI">PNS/TNI/POLRI</option>
+    <option value="Karyawan Swasta">Karyawan Swasta</option>
+    <option value="Pedagang Kecil">Pedagang Kecil</option>
+    <option value="Pedagang Besar">Pedagang Besar</option>
+    <option value="Wiraswasta">Wiraswasta</option>
+    <option value="Wirausaha">Wirausaha</option>
+    <option value="Buruh">Buruh</option>
+    <option value="Pensiunan">Pensiunan</option>
+    <option value="Guru">Guru</option>
+    <option value="Lainnya">Lainnya</option>
+    <option value="Sudah meninggal">Sudah meninggal</option>
+  </select>
+</div>
+
+
+  <div>
+    <label for="penghasilanAyah" class="block text-gray-700 font-medium mb-1">
+      Penghasilan Ayah
+    </label>
+
+    <select
+      id="penghasilanAyah"
+      name="penghasilanAyah"
+      class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+      required
+    >
+      <option value="">- Pilih Penghasilan Orang Tua -</option>
+      <option value="&lt; Rp. 500.000">&lt; Rp. 500.000</option>
+      <option value="Rp. 500.000 - Rp. 999.999">Rp. 500.000 - Rp. 999.999</option>
+      <option value="Rp. 1.000.000 - Rp. 1.999.999">Rp. 1.000.000 - Rp. 1.999.999</option>
+      <option value="Rp. 2.000.000 - Rp. 4.999.999">Rp. 2.000.000 - Rp. 4.999.999</option>
+      <option value="Rp. 5.000.000 - Rp. 20.000.000">Rp. 5.000.000 - Rp. 20.000.000</option>
+      <option value="&gt; Rp. 20.000.000">&gt; Rp. 20.000.000</option>
+      <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+    </select>
+  </div>
+
+    
+         <div>
+          <label for="WaAyah" class="block text-gray-700 font-medium mb-1">No. HP / WA Ayah</label>
+          <input type="number" id="WaAyah" name="WaAyah" placeholder="Nomor HP/WA Aktif" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+           </div>
+
+            <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Diri Ibu</h3>
+
+        <div>
+          <label for="namaIbu" class="block text-gray-700 font-medium mb-1">Nama Ibu</label>
+          <input type="text" id="namaIbu" name="namaIbu" placeholder="Nama Ibu Kandung" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+        </div>
+
+         <div>
+        <label for="nikIbu" class="block text-gray-700 font-medium mb-1">
+          Nomor Induk Kependudukan (NIK) Ibu
+        </label>
+        <input
+          type="text"
+          id="nikIbu"
+          placeholder="16 Digit Angka"
+          name="nikIbu"
+          inputmode="numeric"
+          pattern="[0-9]{16}"
+          maxlength="16"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          required
+        >
+        <p class="text-xs text-gray-500 mt-1">
+          Masukkan 16 digit Nomor Induk Kependudukan.
+        </p>
+      </div>
+
+      <div>
+        <label for="thnLhrIbu" class="block text-gray-700 font-medium mb-1">
+          Tahun Lahir Ibu
+        </label>
+        <input
+          type="text"
+          id="thnLhrIbu"
+          placeholder="4 Digit Angka"
+          name="thnLhrIbu"
+          inputmode="numeric"
+          pattern="[0-9]{4}"
+          maxlength="4"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          required
+        >
+       
+      </div>
+
+      
+      <div>
+        <label for="pendidikanIbu" class="block text-gray-700 font-medium mb-1">
+          Pendidikan Ibu
+        </label>
+
+        <select
+          id="pendidikanIbu"
+          name="pendidikanIbu"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          required
+        >
+          <option value="">- Pilih Pendidikan Ibu -</option>
+          <option value="Tidak Sekolah">Tidak Sekolah</option>
+          <option value="Putus SD">Putus SD</option>
+          <option value="SD Sederajat">SD Sederajat</option>
+          <option value="SMP Sederajat">SMP Sederajat</option>
+          <option value="SMA Sederajat">SMA Sederajat</option>
+          <option value="D1">D1</option>
+          <option value="D2">D2</option>
+          <option value="D3">D3</option>
+          <option value="D4/S1">D4/S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+        </select>
+      </div>
+
+      
+<div>
+  <label for="pekerjaanIbu" class="block text-gray-700 font-medium mb-1">
+    Pekerjaan Ibu
+  </label>
+
+  <select
+    id="pekerjaanIbu"
+    name="pekerjaanIbu"
+    class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+    required
+  >
+    <option value="">- Pilih Pekerjaan Ibu -</option>
+    <option value="Ibu Rumah Tangga">Ibu Rumah Tangga</option>
+    <option value="Nelayan">Nelayan</option>
+    <option value="Petani">Petani</option>
+    <option value="Peternak">Peternak</option>
+    <option value="PNS/TNI/POLRI">PNS/TNI/POLRI</option>
+    <option value="Karyawan Swasta">Karyawan Swasta</option>
+    <option value="Pedagang Kecil">Pedagang Kecil</option>
+    <option value="Pedagang Besar">Pedagang Besar</option>
+    <option value="Wiraswasta">Wiraswasta</option>
+    <option value="Wirausaha">Wirausaha</option>
+    <option value="Buruh">Buruh</option>
+    <option value="Pensiunan">Pensiunan</option>
+    <option value="Guru">Guru</option>
+    <option value="Lainnya">Lainnya</option>
+    <option value="Sudah meninggal">Sudah meninggal</option>
+  </select>
+</div>
+
+
+  <div>
+    <label for="penghasilanIbu" class="block text-gray-700 font-medium mb-1">
+      Penghasilan Ibu
+    </label>
+
+    <select
+      id="penghasilanIbu"
+      name="penghasilanIbu"
+      class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+      required
+    >
+      <option value="">- Pilih Penghasilan Ibu -</option>
+      <option value="&lt; Rp. 500.000">&lt; Rp. 500.000</option>
+      <option value="Rp. 500.000 - Rp. 999.999">Rp. 500.000 - Rp. 999.999</option>
+      <option value="Rp. 1.000.000 - Rp. 1.999.999">Rp. 1.000.000 - Rp. 1.999.999</option>
+      <option value="Rp. 2.000.000 - Rp. 4.999.999">Rp. 2.000.000 - Rp. 4.999.999</option>
+      <option value="Rp. 5.000.000 - Rp. 20.000.000">Rp. 5.000.000 - Rp. 20.000.000</option>
+      <option value="&gt; Rp. 20.000.000">&gt; Rp. 20.000.000</option>
+      <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+    </select>
+  </div>
+  
+      <div>
+          <label for="WaIbu" class="block text-gray-700 font-medium mb-1">No. HP / WA Ibu</label>
+          <input type="number" id="WaIbu" name="WaIbu" placeholder="Nomor HP/WA Aktif" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
+          
+        </div>
+
+               
+        <!-- Field Khusus Jalur KBUN -->
+        <div id="fieldKBUN" class="hidden space-y-4">
+           <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Yayasan </h3>
+
+          <!-- Orang Tua yang Bertugas -->
+          <div>
+            <label for="tugasOrtu" class="block text-gray-700 font-medium mb-1">
+              Orang Tua yang Bertugas
+            </label>
+            <select
+              id="tugasOrtu"
+              name="tugasOrtu"
+              class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+            >
+              <option value="">- Pilih Orang Tua -</option>
+              <option value="Ayah">Ayah</option>
+              <option value="Ibu">Ibu</option>
+            </select>
+          </div>
+
+          <!-- Unit Tugas Orang Tua -->
+          <div>
+            <label for="unitOrtu" class="block text-gray-700 font-medium mb-1">
+              Unit Tugas Orang Tua
+            </label>
+            <select
+              id="unitOrtu"
+              name="unitOrtu"
+              class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+            >
+              <option value="">- Pilih Unit Tugas -</option>
+              <option value="Pembina">Pembina</option>
+              <option value="Pengawas">Pengawas</option>
+              <option value="Yayasan">Yayasan</option>
+              <option value="RA">RA</option>
+              <option value="SD">SD</option>
+              <option value="SMP">SMP</option>
+              <option value="SMA">SMA</option>
+              <option value="UNBS">UNBS</option>
+              <option value="IMUN">IMUN</option>
+              <option value="DOMSOS">DOMSOS</option>
+            </select>
+          </div>
+
+          <!-- Masa Kerja Orang Tua -->
+          <div>
+            <label for="masaKerjaOrtu" class="block text-gray-700 font-medium mb-1">
+              Masa Kerja Orang Tua
+            </label>
+            <select
+              id="masaKerjaOrtu"
+              name="masaKerjaOrtu"
+              class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+            >
+              <option value="">- Pilih Masa Kerja -</option>
+              <option value="< 3 Tahun">&lt; 3 Tahun</option>
+              <option value="3 Tahun">3 Tahun</option>
+              <option value="> 3 Tahun">&gt; 3 Tahun</option>
+            </select>
+          </div>
+
+        </div>
+
+ 
+        
+
+        <div class="flex gap-3">
+          <button type="button" id="prev2" class="flex-1 bg-gray-300 text-gray-800 font-semibold p-3 rounded-xl shadow hover:bg-gray-400 transition">
+            ← Sebelumnya
+          </button>
+          <button type="button" id="next2" class="flex-1 bg-green-600 text-white font-semibold p-3 rounded-xl shadow hover:bg-green-700 transition">
+            Selanjutnya →
+          </button>
+                      
+        </div>
+            
+<button
+  type="button"
+  onclick="simpanSementara()"
+  class="btn-simpan-sementara w-full mt-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-xl"
+>
+  <span aria-hidden="true">▣</span>
+        Simpan Sementara
+</button>
+
+      </div>
+
+      <!-- STEP 3: Pernyataan -->
+      <div id="step3" class="step hidden space-y-4">
+        <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Berkas & Pernyataan </h3>
+
+        
+        
+
+      <div class="bg-green-50 p-3 rounded-xl border border-green-200">
+          <label for="pasfotoFile" class="block font-medium text-gray-700 mb-1">Pas Foto:</label>
+          <span id="pasfotoLink" class="text-sm text-gray-600">Belum upload</span>
+          <input
+                type="file"
+                id="pasfotoFile"
+                accept="image/png,image/jpeg"
+                class="w-full mt-2 text-sm border p-2 rounded-lg bg-white"
+              >
+        </div>
+
+        <div class="bg-green-50 p-3 rounded-xl border border-green-200">
+          <label for="kkFile" class="block font-medium text-gray-700 mb-1">Kartu Keluarga (KK):</label>
+          <span id="kkLink" class="text-sm text-gray-600">Belum upload</span>
+          <input type="file" id="kkFile" accept="image/*,.pdf" class="w-full mt-2 text-sm border p-2 rounded-lg bg-white">
+        </div>
+
+        <div class="bg-green-50 p-3 rounded-xl border border-green-200">
+          <label for="akteFile" class="block font-medium text-gray-700 mb-1">AKte Kelahiran:</label>
+          <span id="akteLink" class="text-sm text-gray-600">Belum upload</span>
+          <input type="file" id="akteFile" accept="image/*,.pdf" class="w-full mt-2 text-sm border p-2 rounded-lg bg-white">
+        </div>
+
+        <div class="bg-green-50 p-3 rounded-xl border border-green-200">
+          <label for="skFile" class="block font-medium text-gray-700 mb-1">Surat Keterangan Siswa dari SD/MI Asal:</label>
+          <span id="skLink" class="text-sm text-gray-600">Belum upload</span>
+          <input type="file" id="skFile" accept="image/*,.pdf" class="w-full mt-2 text-sm border p-2 rounded-lg bg-white">
+        </div>
+
+       
+<!-- Pernyataan Persetujuan -->
+<div class="bg-green-50 border border-green-200 rounded-xl p-4 space-y-4 text-gray-700">
+
+  <div class="flex items-start gap-3">
+    <div class="flex-shrink-0 mt-0.5 text-green-600">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           class="w-5 h-5"
+           fill="none"
+           viewBox="0 0 24 24"
+           stroke="currentColor">
+        <path stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 3
+                 c-2.755 0-5.293.93-7.311 2.495
+                 A11.955 11.955 0 003 12c0 4.97 3.03 9.234 7.337 11
+                 .5.194 1.05.194 1.55 0C16.97 21.234 20 16.97 20 12
+                 c0-2.015-.498-3.914-1.382-5.58z"/>
+      </svg>
+    </div>
+
+        <div>
+          <p class="text-sm font-semibold text-green-800">
+            Pernyataan Kebenaran Data
+          </p>
+          <p class="text-sm leading-relaxed mt-1">
+            Dengan ini saya menyatakan bahwa seluruh data yang saya isi
+            dalam formulir pendaftaran ini adalah
+            <span class="font-semibold text-green-700">
+              benar dan dapat dipertanggungjawabkan.
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <label class="flex items-start gap-3 border-t border-green-200 pt-3 cursor-pointer">
+        <input
+          type="checkbox"
+          id="setuju"
+          class="w-5 h-5 mt-0.5 flex-shrink-0 accent-green-600 rounded border-gray-300 focus:ring-green-500"
+          required
+        >
+        <span class="text-sm leading-relaxed">
+          Saya telah membaca dan menyetujui pernyataan kebenaran data di atas.
+        </span>
+      </label>
+
+    </div>
+
+    <!-- Tombol Navigasi dan Penyimpanan -->
+    <div class="grid grid-cols-2 gap-3 mt-5">
+
+      <button type="button" id="prev3" class="flex-1 bg-gray-300 w-full mt-3 text-gray-800 font-semibold p-3 rounded-xl shadow hover:bg-gray-400 transition">
+            ← Sebelumnya
+          </button>
+
+      <button
+      type="button"
+      onclick="simpanSementara()"
+      class="btn-simpan-sementara w-full mt-3 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 px-4 rounded-xl"
+    >
+      <span aria-hidden="true">▣</span>
+        Simpan Sementara
+    </button>
+
+    </div>
+
+    <!-- Tombol Akhiri Pendaftaran -->
+    <button
+      type="submit"
+      id="saveBtn"
+      class="w-full mt-3 flex items-center justify-center gap-2
+            bg-green-600 text-white font-bold py-3.5 px-4
+            rounded-xl shadow-sm hover:bg-green-700
+            focus:outline-none focus:ring-4 focus:ring-green-200
+            transition"
+    >
+      Akhiri Pendaftaran
+      <span aria-hidden="true">✓</span>
+    </button>
+
+    
+</div>
+
+       <!-- Tab Pengumuman -->
+        
+        <div id="tab-content-pengumuman" class="tab-content hidden">
+          <div class="bg-white p-3 rounded-xl shadow">
+
+            <h2 class="text-lg font-bold mb-2 text-green-700">
+              Pengumuman SPMB
+            </h2>
+
+            <div id="isiPengumuman" class="w-full">
+              <p class="text-gray-500 text-sm">
+                Tidak ada pengumuman untuk saat ini.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+
+    </form>
+  </div>
+</main>
+
+
+
+
+
+
+<script>
+const menerimaPIP = document.getElementById('menerimaPIP');
+const alasanPIP = document.getElementById('alasanPIP');
+const containerAlasanPIP = document.getElementById('containerAlasanPIP');
+
+function aturAlasanPIP() {
+  if (menerimaPIP.value === 'Bersedia') {
+    containerAlasanPIP.classList.remove('hidden');
+    alasanPIP.required = true;
+  } else {
+    containerAlasanPIP.classList.add('hidden');
+    alasanPIP.required = false;
+    alasanPIP.value = '';
+  }
+}
+
+menerimaPIP.addEventListener('change', aturAlasanPIP);
+
+// Kondisi awal saat halaman dibuka
+aturAlasanPIP();
+</script>
+
+
+<script>
+ 
+function cariKodeWilayah(dataWilayah, nilai) {
+  const dicari = String(nilai ?? '').trim();
+
+  if (!dicari) return '';
+
+  // Jika nilai sudah berupa kode ID
+  const berdasarkanKode = dataWilayah.find(
+    item => String(item.id) === dicari
+  );
+
+  if (berdasarkanKode) {
+    return String(berdasarkanKode.id);
+  }
+
+  // Jika nilai berupa nama wilayah
+  const normalisasi = teks =>
+    String(teks ?? '')
+      .trim()
+      .toLowerCase()
+      .replace(/^(provinsi|kabupaten|kota|kecamatan)\s+/i, '')
+      .replace(/\s+/g, ' ');
+
+  const berdasarkanNama = dataWilayah.find(
+    item => normalisasi(item.name) === normalisasi(dicari)
+  );
+
+  return berdasarkanNama ? String(berdasarkanNama.id) : '';
+}
+
+  
+document.addEventListener('DOMContentLoaded', function () {
+  const provinsi = document.getElementById('provinsiSekolah');
+  const kabupaten = document.getElementById('kabupatenSekolah');
+  const kecamatan = document.getElementById('kecamatanSekolah');
+
+  const API = 'https://www.emsifa.com/api-wilayah-indonesia/api';
+
+  let wilayahSiap = false;
+
+  function isiDropdown(select, data, placeholder) {
+    select.innerHTML = '';
+
+    const opsiAwal = document.createElement('option');
+    opsiAwal.value = '';
+    opsiAwal.textContent = placeholder;
+    select.appendChild(opsiAwal);
+
+    data.forEach(item => {
+      const opsi = document.createElement('option');
+      opsi.value = String(item.id);
+      opsi.textContent = item.name;
+      select.appendChild(opsi);
+    });
+  }
+
+  async function ambilData(url) {
+    const response = await fetch(url);
+
+    if (!response.ok) {
+      throw new Error('Gagal mengambil data wilayah');
+    }
+
+    return response.json();
+  }
+
+  async function muatProvinsi() {
+    const data = await ambilData(`${API}/provinces.json`);
+    isiDropdown(provinsi, data, 'Pilih Provinsi');
+    wilayahSiap = true;
+  }
+
+  async function muatKabupaten(idProvinsi) {
+    isiDropdown(kabupaten, [], 'Memuat kabupaten/kota...');
+    isiDropdown(kecamatan, [], 'Pilih kabupaten/kota terlebih dahulu');
+
+    kabupaten.disabled = true;
+    kecamatan.disabled = true;
+
+    if (!idProvinsi) {
+      isiDropdown(kabupaten, [], 'Pilih provinsi terlebih dahulu');
+      return;
+    }
+
+    try {
+      const data = await ambilData(
+        `${API}/regencies/${idProvinsi}.json`
+      );
+
+      isiDropdown(kabupaten, data, 'Pilih Kabupaten/Kota');
+      kabupaten.disabled = false;
+    } catch (error) {
+      isiDropdown(kabupaten, [], 'Gagal memuat kabupaten/kota');
+      console.error(error);
+      throw error;
+    }
+  }
+
+  async function muatKecamatan(idKabupaten) {
+    isiDropdown(kecamatan, [], 'Memuat kecamatan...');
+    kecamatan.disabled = true;
+
+    if (!idKabupaten) {
+      isiDropdown(kecamatan, [], 'Pilih kabupaten/kota terlebih dahulu');
+      return;
+    }
+
+    try {
+      const data = await ambilData(
+        `${API}/districts/${idKabupaten}.json`
+      );
+
+      isiDropdown(kecamatan, data, 'Pilih Kecamatan');
+      kecamatan.disabled = false;
+    } catch (error) {
+      isiDropdown(kecamatan, [], 'Gagal memuat kecamatan');
+      console.error(error);
+      throw error;
+    }
+  }
+
+  // Dipanggil dari loadUserData() setelah data Spreadsheet diterima
+  
+window.muatWilayahSekolah = async function (data = {}) {
+  try {
+    // 1. Muat daftar provinsi
+    if (!wilayahSiap) {
+      await muatProvinsi();
+    }
+
+    const daftarProvinsi = await ambilData(
+      `${API}/provinces.json`
+    );
+
+    // 2. Konversi nama/kode provinsi menjadi ID
+    const idProvinsi = cariKodeWilayah(
+      daftarProvinsi,
+      data.provinsiSekolah
+    );
+
+    provinsi.value = idProvinsi;
+
+    // 3. Muat kabupaten sesuai provinsi
+    await muatKabupaten(idProvinsi);
+
+    if (!idProvinsi) return;
+
+    const daftarKabupaten = await ambilData(
+      `${API}/regencies/${idProvinsi}.json`
+    );
+
+    // 4. Konversi nama/kode kabupaten menjadi ID
+    const idKabupaten = cariKodeWilayah(
+      daftarKabupaten,
+      data.kabupatenSekolah
+    );
+
+    kabupaten.value = idKabupaten;
+
+    // 5. Muat kecamatan sesuai kabupaten
+    await muatKecamatan(idKabupaten);
+
+    if (!idKabupaten) return;
+
+    const daftarKecamatan = await ambilData(
+      `${API}/districts/${idKabupaten}.json`
+    );
+
+    // 6. Konversi nama/kode kecamatan menjadi ID
+    const idKecamatan = cariKodeWilayah(
+      daftarKecamatan,
+      data.kecamatanSekolah
+    );
+
+    kecamatan.value = idKecamatan;
+
+    console.log('Pemulihan wilayah:', {
+      provinsiAsli: data.provinsiSekolah,
+      provinsiKode: idProvinsi,
+      kabupatenAsli: data.kabupatenSekolah,
+      kabupatenKode: idKabupaten,
+      kecamatanAsli: data.kecamatanSekolah,
+      kecamatanKode: idKecamatan
+    });
+
+  } catch (error) {
+    console.error('Gagal memulihkan wilayah:', error);
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Data wilayah belum termuat',
+      text: 'Periksa koneksi internet dan coba muat ulang halaman.'
+    });
+  }
+};
+
+
+  // Ketika pengguna memilih provinsi secara manual
+  provinsi.addEventListener('change', async function () {
+    try {
+      await muatKabupaten(this.value);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  // Ketika pengguna memilih kabupaten secara manual
+  kabupaten.addEventListener('change', async function () {
+    try {
+      await muatKecamatan(this.value);
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
+  // Siapkan dropdown provinsi saat halaman dibuka
+  muatProvinsi().catch(error => {
+    isiDropdown(provinsi, [], 'Gagal memuat provinsi');
+    console.error(error);
+  });
+});
+
+
+</script>
+
+
+
+
+
+
+
+
+<script>
+
+  
+function aturFieldKBUN() {
+  const jalur = (getCookie('jalurPendaftaran') || '')
+    .trim()
+    .toLowerCase();
+
+  const fieldKBUN = document.getElementById('fieldKBUN');
+  const tugasOrtu = document.getElementById('tugasOrtu');
+  const unitOrtu = document.getElementById('unitOrtu');
+  const masaKerjaOrtu = document.getElementById('masaKerjaOrtu');
+
+  const khususKBUN = jalur === 'kbun';
+
+  fieldKBUN.classList.toggle('hidden', !khususKBUN);
+
+  // Wajib diisi hanya untuk jalur KBUN
+  tugasOrtu.required = khususKBUN;
+  unitOrtu.required = khususKBUN;
+  masaKerjaOrtu.required = khususKBUN;
+
+  // Kosongkan field jika bukan jalur KBUN
+  if (!khususKBUN) {
+    tugasOrtu.value = '';
+    unitOrtu.value = '';
+    masaKerjaOrtu.value = '';
+  }
+}
+
+// Jalankan saat halaman selesai dimuat
+document.addEventListener('DOMContentLoaded', aturFieldKBUN);
+
+  
+function aturFieldSekolahAsal() {
+  const jalur = (getCookie('jalurPendaftaran') || '')
+    .trim()
+    .toLowerCase();
+
+  const dataSekolah = document.getElementById('dataSekolahAsal');
+
+  if (!dataSekolah) return;
+
+  const khususAlumni = jalur === 'alumni';
+
+  // Sembunyikan field jika jalur Alumni
+  dataSekolah.classList.toggle('hidden', khususAlumni);
+
+  // Nonaktifkan required ketika disembunyikan
+  dataSekolah.querySelectorAll('input, select, textarea').forEach(field => {
+    field.required = !khususAlumni;
+    field.disabled = khususAlumni;
+  });
+}
+
+// Jalankan saat halaman selesai dimuat
+document.addEventListener('DOMContentLoaded', aturFieldSekolahAsal);
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  const nisnInput = document.getElementById('nisn');
+  const noKKInput = document.getElementById('noKK');
+
+  // Mencegah Swal muncul berulang
+  let swalValidasiAktif = false;
+
+  function tampilkanPeringatan(judul, pesan, input) {
+    if (swalValidasiAktif) return;
+
+    swalValidasiAktif = true;
+
+    Swal.fire({
+      icon: 'warning',
+      title: judul,
+      text: pesan,
+      confirmButtonText: 'OK',
+      confirmButtonColor: '#16a34a',
+      allowOutsideClick: false
+    }).then(() => {
+      swalValidasiAktif = false;
+
+      // Fokus tanpa memicu blur berulang
+      input.focus({ preventScroll: true });
+    });
+  }
+
+  // NISN: hanya angka, maksimal 10 digit
+  nisnInput.addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 10);
+  });
+
+  nisnInput.addEventListener('blur', function () {
+    const nisn = this.value.trim();
+
+    if (nisn !== '' && !/^\d{10}$/.test(nisn)) {
+      tampilkanPeringatan(
+        'NISN Tidak Valid',
+        'NISN harus terdiri dari tepat 10 digit angka.',
+        this
+      );
+    }
+  });
+
+  // Nomor KK: hanya angka, maksimal 16 digit
+  noKKInput.addEventListener('input', function () {
+    this.value = this.value.replace(/\D/g, '').slice(0, 16);
+  });
+
+  noKKInput.addEventListener('blur', function () {
+    const noKK = this.value.trim();
+
+    if (noKK !== '' && !/^\d{16}$/.test(noKK)) {
+      tampilkanPeringatan(
+        'Nomor KK Tidak Valid',
+        'Nomor KK harus terdiri dari tepat 16 digit angka.',
+        this
+      );
+    }
+  });
+});
+</script>
+
+
+<script>
+function setupFileValidation(inputId) {
+  document.getElementById(inputId).addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file && file.size > 5 * 1024 * 1024) { // 2MB
+      Swal.fire({
+        icon: 'error',
+        title: 'Ukuran File Terlalu Besar!',
+        text: 'Maksimal ukuran file adalah 5 MB.',
+        confirmButtonColor: '#16a34a',
+      });
+      e.target.value = '';
+    }
+  });
+}
+
+// Terapkan ke dua input
+setupFileValidation('pasfotoFile');
+setupFileValidation('kkFile');
+setupFileValidation('akteFile');
+setupFileValidation('skFile');
+</script>
+
+
+<script>
+  
+document.addEventListener('DOMContentLoaded', () => {
+  const tabs = document.querySelectorAll('.tab-btn');
+  const steps = ['tab-content-beranda','step1', 'step2', 'step3', 'tab-content-pengumuman'];
+
+  document.getElementById('startForm').addEventListener('click', () => {
+  showTab('tab-casisba'); // langsung tampilkan tab pertama "Calon Siswa"
+});
+
+  function showTab(tabId) {
+    steps.forEach(step => document.getElementById(step).classList.add('hidden'));
+    tabs.forEach(btn => {
+      btn.classList.remove('text-green-700', 'border-green-700', 'bg-green-50');
+      btn.classList.add('text-gray-600', 'border-transparent');
+    });
+
+    let activeStep;
+    switch(tabId) {
+      case 'tab-beranda': activeStep='tab-content-beranda'; break;
+      case 'tab-casisba': activeStep='step1'; break;
+      case 'tab-saudara': activeStep='step2'; break;
+      case 'tab-pernyataan': activeStep='step3'; break;
+      case 'tab-pengumuman': activeStep='tab-content-pengumuman'; break;
+    }
+
+    document.getElementById(activeStep).classList.remove('hidden');
+    document.getElementById(tabId).classList.add('text-green-700', 'border-green-700', 'bg-green-50');
+  }
+
+  function validateStep(stepId) {
+    const inputs = document.querySelectorAll(`#${stepId} input[required], #${stepId} select[required], #${stepId} textarea[required]`);
+    for (let input of inputs) {
+      if (!input.value.trim()) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Lengkapi Data',
+          text: 'Mohon isi semua field sebelum melanjutkan.',
+        });
+        input.focus();
+        return false;
+      }
+    }
+    return true;
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Jika tab Beranda, langsung tampilkan tanpa validasi
+      if(tab.id === 'tab-beranda'){
+        showTab(tab.id);
+        return;
+      }
+
+      const currentStep = steps.map(id => document.getElementById(id)).find(el => !el.classList.contains('hidden'));
+      if (!currentStep) return;
+
+      if (validateStep(currentStep.id)) {
+        showTab(tab.id);
+      }
+    });
+  });
+
+  // Tombol "Selanjutnya" & "Sebelumnya"
+  document.getElementById('next1').addEventListener('click', () => {
+    if (validateStep('step1')) showTab('tab-saudara');
+  });
+  document.getElementById('next2').addEventListener('click', () => {
+    if (validateStep('step2')) showTab('tab-pernyataan');
+  });
+  document.getElementById('prev2').addEventListener('click', () => showTab('tab-casisba'));
+  document.getElementById('prev3').addEventListener('click', () => showTab('tab-saudara'));
+
+  // Tampilkan Beranda awal
+  showTab('tab-beranda');
+});
+
+</script>
+
+
+
+
+  
+
+
+
+    <!-- Bukti Daftar  -->
+    <div id="buktiArea" class="hidden mt-6 mx-4 sm:mx-6 md:mx-10 lg:mx-16 p-4 sm:p-6 bg-white rounded-2xl shadow-md">
+      <div id="buktiCard" class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
+     
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-3">
+         
+            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+              <img src="logo.png" alt="Logo Sekolah" class="w-24 mx-auto mb-2" id="logoPPDB">
+
+            </div>
+            <div>
+              <div class="text-sm font-semibold">ULUN NUHA BOARDING SCHOOL</div>
+              <div class="text-xs text-gray-600">Sistem Penerimaan Murid Baru (SPMB)</div>
+              <div class="text-xs text-gray-600">T.P. 2027 / 2028</div>
+            </div>
+          </div>
+          <div class="text-right text-xs text-gray-600">
+            <div id="buktiTanggal">Tanggal: -</div>
+            <div class="text-xs">No. Pendaftaran: <span id="buktiNo"></span></div>
+          </div>
+        </div>
+
+        <hr class="my-2">
+
+        
+<div class="flex items-start gap-4">
+
+  <!-- Data siswa di sebelah kiri -->
+  <div class="text-sm flex-1 min-w-0">
+    <table class="w-full text-sm">
+      <tr>
+        <td class="py-1 font-medium w-36">Nama</td>
+        <td class="py-1" id="buktiNama">-</td>
+      </tr>
+      <tr>
+        <td class="py-1 font-medium">NIK</td>
+        <td class="py-1" id="buktiNIK">-</td>
+      </tr>
+      <tr>
+        <td class="py-1 font-medium">Tempat, Tgl Lahir</td>
+        <td class="py-1" id="buktiTTL">-</td>
+      </tr>
+      <tr>
+        <td class="py-1 font-medium">Sekolah Asal</td>
+        <td class="py-1" id="buktiSekolah">-</td>
+      </tr>
+      <tr>
+        <td class="py-1 font-medium">Alamat Tinggal</td>
+        <td class="py-1" id="buktiUnit">-</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- Pasfoto di sebelah kanan -->
+  <div class="flex-shrink-0">
+    <img
+      id="pasfotoBukti"
+      src=""
+      alt="Pasfoto Calon Siswa"
+      class="hidden w-20 h-28 object-cover border border-gray-300 rounded-md bg-white"
+    />
+  </div>
+
+</div>
+
+       
+      
+        <div class="flex items-end justify-between mt-4 gap-4">
+          <div class="text-xs text-gray-600 flex-1">
+            Simpan bukti ini dan tunjukkan saat ujian SPMB.
+          </div>
+
+          <div class="flex flex-col items-center gap-2">
+            <!-- Pasfoto di atas QR Code -->
+           
+                 <!-- QR Code di bawah pasfoto -->
+            <div id="qrcodeBukti" class="p-2 bg-white rounded-md"></div>
+          </div>
+        </div>
+
+
+
+        <div class="mt-4 flex gap-2">
+         <div class="flex flex-col sm:flex-row gap-3 w-full mt-4">
+  <button 
+    id="downloadPngBtn" 
+    class="flex-1 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-xl shadow transition-all duration-150 w-full sm:w-auto hover:scale-[1.02]">
+    Download PNG
+  </button>
+
+  <button 
+    id="downloadPdfBtn" 
+    class="flex-1 bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-xl shadow transition-all duration-150 w-full sm:w-auto hover:scale-[1.02]">
+    Download PDF
+  </button>
+
+  <button 
+    id="closeBuktiBtn" 
+    class="flex-1 bg-red-100 hover:bg-red-200 text-gray-700 font-semibold py-2 px-4 rounded-xl shadow transition-all duration-150 w-full sm:w-auto hover:scale-[1.02]">
+    Tutup
+  </button>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="text-center text-sm text-gray-500 py-4">
+  &copy; 2025 SPMB Online | ULUN NUHA BOARDING SCHOOL
+</footer>
+
+<!-- Animasi -->
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn { animation: fadeIn 0.6s ease-out; }
+</style>
+
+
+<script>
+
+
+  
+/* ========== Utility Cookie Functions ========== */
+function setCookie(name, value, days = 30) {
+  const d = new Date();
+  d.setTime(d.getTime() + (days*24*60*60*1000));
+  const expires = "expires="+ d.toUTCString();
+  document.cookie = name + "=" + encodeURIComponent(value) + ";" + expires + ";path=/";
+}
+function getCookie(name){
+  const v = `; ${document.cookie}`;
+  const parts = v.split(`; ${name}=`);
+  if(parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+  return "";
+}
+
+
+  // --- Load data user dari cookie / localStorage ---
+  const nama = getCookie('nama');
+  const nik = getCookie('nik');
+
+  document.getElementById('userInfo').innerHTML = `
+    <div class="font-bold">${nama || '-'}</div>
+    <div class="text-xs text-white">(${nik || '-'})</div>
+  `;
+
+  // --- Load Jalur Pendaftaran ---
+  const jalur =
+    getCookie('jalurPendaftaran') ||
+    getCookie('jalur') ||
+    localStorage.getItem('jalurPendaftaran') ||
+    localStorage.getItem('jalur') ||
+    '';
+
+  const jalurElement = document.getElementById('jalurPendaftaran');
+
+  jalurElement.textContent = jalur || 'Belum dipilih';
+
+  
+/* ========== Proteksi Halaman PPDB ========== */
+(function () {
+  const token = getCookie('token');
+
+  if (!token) {
+    window.location.replace('login.html');
+  }
+})();
+
+/* Cegah halaman lama terbuka melalui tombol Back */
+window.addEventListener('pageshow', function () {
+  if (!getCookie('token')) {
+    window.location.replace('login.html');
+  }
+});
+
+
+
+// Tampilkan nama di Beranda
+document.getElementById('userNama').innerHTML = `<div class="font-bold text-xl">${nama} !</div>`;
+
+
+
+function deleteCookie(name){
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+}
+
+
+
+
+/* ========== Logout ========== */
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  Swal.fire({
+    title: 'Keluar dari akun?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Ya, Logout',
+    cancelButtonText: 'Batal'
+  }).then((result) => {
+    if (result.isConfirmed) {
+
+      // Hapus seluruh cookie login
+      deleteCookie('token');
+      deleteCookie('nik');
+      deleteCookie('nama');
+      deleteCookie('jalurPendaftaran');
+      deleteCookie('jalur');
+      deleteCookie('unitPendaftaran');
+
+      // Hapus data autentikasi dari localStorage
+      localStorage.removeItem('jalurPendaftaran');
+      localStorage.removeItem('jalur');
+      
+      Swal.fire({
+        title: 'Logout berhasil',
+        icon: 'success',
+        timer: 1200,
+        showConfirmButton: false
+      });
+
+      setTimeout(() => {
+        window.location.replace('login.html');
+      }, 1200);
+    }
+  });
+});
+
+
+/* ========== Global config ========== */
+const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxjEOShFk1-X0H3mz-JMD4Y4wKUshq-qZDdio8jyEBx1fKTxUcvNDiye7AZKnMY5nne/exec'; // ganti jika beda
+const token = getCookie('token');
+if(!token) {
+
+  window.location.href = 'login.html';
+}
+
+
+let modeSimpan = 'lengkap';
+
+function simpanSementara() {
+  const form = document.getElementById('dataForm');
+
+  modeSimpan = 'sementara';
+
+  // Lewati validasi bawaan HTML untuk penyimpanan sementara
+  form.noValidate = true;
+
+  // Panggil submit handler yang sudah ada
+  form.requestSubmit();
+}
+
+
+
+/* ========== Load User Data (existing behaviour preserved) ========== */
+async function loadUserData() {
+      deleteCookie("nik");
+      deleteCookie("nama");
+  Swal.fire({
+    title: 'Memuat data...',
+    didOpen: () => Swal.showLoading(),
+    allowOutsideClick: false
+    
+  });
+
+  const formData = new URLSearchParams();
+  formData.append('action', 'getUserData');
+  formData.append('token', token);
+
+  try {
+    const response = await fetch(GAS_ENDPOINT, { method: 'POST', body: formData });
+    const result = await response.json();
+    Swal.close();
+
+    // Periksa apakah token tidak valid
+  if (
+    result.status === 'error' &&
+    result.message &&
+    result.message.includes('Token tidak valid')
+  ) {
+    await Swal.fire({
+      icon: 'error',
+      title: 'Sesi Berakhir',
+      text: result.message,
+      confirmButtonText: 'OK',
+      allowOutsideClick: false,
+      allowEscapeKey: false
+    });
+
+    // Hapus cookie token
+    document.cookie =
+      'token=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/';
+
+    // Arahkan ke halaman login
+    window.location.href = 'login.html';
+    return;
+  }
+
+  
+    
+
+    if (result.status === 'success') {
+      const data = result.data || {};
+      
+
+    await window.muatWilayahSekolah(data);
+      document.getElementById('namaSiswa').value = data.namaSiswa || '';
+      document.getElementById('tempat').value = data.tempatLahir || '';
+
+      document.getElementById('menerimaPIP').value =
+      data.menerimaPIP || '';
+
+    document.getElementById('alasanPIP').value =
+      data.alasanPIP || '';
+
+    // Tampilkan/sembunyikan alasan berdasarkan data tersimpan
+    aturAlasanPIP();
+      
+
+      
+      if (data.tanggalLahir) {
+        let formattedDate = data.tanggalLahir;
+
+      
+        if (typeof formattedDate === 'object') {
+          formattedDate = new Date(formattedDate).toISOString().split('T')[0];
+        } else if (typeof formattedDate === 'string') {
+         
+          const parsed = new Date(formattedDate);
+          if (!isNaN(parsed)) {
+            formattedDate = parsed.toISOString().split('T')[0];
+          }
+        }
+
+        document.getElementById('tanggal').value = formattedDate;
+      } else {
+        document.getElementById('tanggal').value = '';
+      }
+
+      document.getElementById('namaAyah').value = data.namaAyah || '';
+      document.getElementById('namaIbu').value = data.namaIbu || '';
+      document.getElementById('sekolahAsal').value = data.sekolahAsal || '';
+      document.getElementById('alamat').value = data.alamat || '';
+      document.getElementById('WaAyah').value = data.WaAyah || '';
+      document.getElementById('WaIbu').value = data.WaIbu || '';
+      document.getElementById('jk').value = data.jenisKelamin || '';
+      document.getElementById('anakke').value = data.anakKe || '';
+      document.getElementById('tanggalDaftar').value = data.tanggalDaftar || '';
+      document.getElementById('noPendaftaran').value = data.noPendaftaran || '';
+      document.getElementById('nisn').value = data.nisn || '';
+      document.getElementById('noKK').value = data.noKK || '';
+      document.getElementById('noAkte').value = data.noAkte || '';
+      document.getElementById('asrama').value = data.asrama || '';
+      document.getElementById('transportasi').value = data.transportasi || '';
+      document.getElementById('tinggibadan').value = data.tinggibadan || '';
+      document.getElementById('beratbadan').value = data.beratbadan || '';
+      document.getElementById('lingkarkepala').value = data.lingkarkepala || '';
+      document.getElementById('jarakrumah').value = data.jarakrumah || '';
+      document.getElementById('jlhsaudara').value = data.jlhsaudara || '';
+      document.getElementById('npsn').value = data.npsn || '';
+      document.getElementById('menerimaPIP').value = data.menerimaPIP || '';
+      document.getElementById('alasanPIP').value = data.alasanPIP || '';
+      document.getElementById('menerimaMBG').value = data.menerimaMBG || '';
+
+      document.getElementById('nikAyah').value = data.nikAyah || '';
+      document.getElementById('thnLhrAyah').value = data.thnLhrAyah || '';
+      document.getElementById('pendidikanAyah').value = data.pendidikanAyah || '';
+      document.getElementById('pekerjaanAyah').value = data.pekerjaanAyah || '';
+      document.getElementById('penghasilanAyah').value = data.penghasilanAyah || '';
+     
+      document.getElementById('nikIbu').value = data.nikIbu || '';
+      document.getElementById('thnLhrIbu').value = data.thnLhrIbu || '';
+      document.getElementById('pendidikanIbu').value = data.pendidikanIbu || '';
+      document.getElementById('pekerjaanIbu').value = data.pekerjaanIbu || '';
+      document.getElementById('penghasilanIbu').value = data.penghasilanIbu || '';
+      
+      document.getElementById('tugasOrtu').value = data.tugasOrtu || '';
+      document.getElementById('unitOrtu').value = data.unitOrtu || '';
+      document.getElementById('masaKerjaOrtu').value = data.masaKerjaOrtu || '';
+
+      
+     
+   
+
+const isiPengumuman = document.getElementById('isiPengumuman');
+
+const statusKelulusan = (data.pengumuman || '')
+  .toString()
+  .trim()
+  .toLowerCase();
+
+const pengumumanConfig = {
+  'lulus': {
+    warna: 'green',
+    ikon: '🎓',
+    judul: 'SELAMAT!',
+    status: 'DINYATAKAN LULUS',
+    subjudul: 'Selamat! Kamu Dinyatakan Lulus Seleksi',
+    pesan: 'Berdasarkan hasil seleksi Penerimaan Peserta Didik Baru Sekolah Islam Ulun Nuha, Kamu dinyatakan LULUS dan berhak melanjutkan ke tahap berikutnya.',
+    tambahan: 'Selamat bergabung bersama keluarga besar Ulun Nuha!',
+    keterangan: 'Informasi mengenai tahapan daftar ulang akan disampaikan melalui informasi resmi sekolah.'
+  },
+
+  'tidak lulus': {
+    warna: 'red',
+    ikon: '📋',
+    judul: 'HASIL SELEKSI',
+    status: 'TIDAK LULUS',
+    subjudul: 'Terima Kasih Telah Mengikuti Seleksi',
+    pesan: 'Berdasarkan hasil seleksi Penerimaan Peserta Didik Baru Sekolah Islam Ulun Nuha, Kamu dinyatakan TIDAK LULUS pada periode penerimaan ini.',
+    tambahan: 'Jangan berkecil hati dan tetap semangat! Semoga Allah SWT memberikan jalan pendidikan terbaik bagi Kamu.',
+    keterangan: 'Terima kasih atas kepercayaan dan partisipasi Kamu dalam proses penerimaan peserta didik baru Sekolah Islam Ulun Nuha.'
+  },
+
+  'lulus asrama': {
+    warna: 'green',
+    ikon: '🏫',
+    judul: 'SELAMAT!',
+    status: 'LULUS PROGRAM ASRAMA',
+    subjudul: 'Selamat! Kamu Diterima pada Program Asrama',
+    pesan: 'Berdasarkan hasil seleksi Penerimaan Peserta Didik Baru Sekolah Islam Ulun Nuha, Kamu dinyatakan LULUS pada program ASRAMA.',
+    tambahan: 'Selamat bergabung dalam keluarga besar Ulun Nuha. Bersiaplah menjalani pengalaman pendidikan dan pembinaan bersama lingkungan asrama.',
+    keterangan: 'Informasi mengenai daftar ulang, persiapan masuk asrama, dan tahapan selanjutnya akan disampaikan melalui informasi resmi sekolah.'
+  },
+
+  'lulus full day': {
+    warna: 'green',
+    ikon: '🎒',
+    judul: 'SELAMAT!',
+    status: 'LULUS PROGRAM FULL DAY',
+    subjudul: 'Selamat! Kamu Diterima pada Program Full Day',
+    pesan: 'Berdasarkan hasil seleksi Penerimaan Peserta Didik Baru Sekolah Islam Ulun Nuha, Kamu dinyatakan LULUS pada program FULL DAY (Tidak Asrama).',
+    tambahan: 'Selamat bergabung bersama keluarga besar Ulun Nuha. Semoga menjadi awal perjalanan pendidikan yang penuh prestasi dan keberkahan.',
+    keterangan: 'Informasi mengenai daftar ulang dan tahapan selanjutnya akan disampaikan melalui informasi resmi sekolah.'
+  }
+};
+
+const hasil = pengumumanConfig[statusKelulusan];
+
+
+const namaSiswaPengumuman = String(data.namaSiswa || '-')
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;')
+  .replace(/"/g, '&quot;')
+  .replace(/'/g, '&#039;');
+
+if (hasil) {
+
+  const isLulus = hasil.warna === 'green';
+
+  const warnaHeader = isLulus
+    ? 'from-green-700 to-emerald-500'
+    : 'from-gray-700 to-gray-500';
+
+  const warnaStatus = isLulus
+    ? 'bg-green-100 text-green-800'
+    : 'bg-red-100 text-red-800';
+
+  const warnaTeks = isLulus
+    ? 'text-green-700'
+    : 'text-red-700';
+
+  
+isiPengumuman.innerHTML = `
+  
+  <div class="max-w-2xl mx-auto rounded-xl border border-gray-200 bg-white shadow-md overflow-hidden">
+
+    <div class="bg-gradient-to-r ${warnaHeader} px-4 py-5 text-center text-white">
+
+      
+
+      <p class="text-xs uppercase tracking-widest font-semibold opacity-90">
+        Pengumuman Hasil Seleksi
+      </p>
+
+      <h2 class="text-2xl font-extrabold mt-0">
+        ${hasil.judul}
+      </h2>
+
+      <p class="text-xs mt-1 opacity-90">
+        Penerimaan Peserta Didik Baru • Sekolah Islam Ulun Nuha
+      </p>
+
+    </div>
+
+    <div class="px-5 py-4 text-center">
+
+      <span class="inline-block rounded-full ${warnaStatus} px-4 py-1.5 text-xs font-bold mb-2">
+        ${hasil.status}
+      </span>
+
+      <!-- NAMA CALON SISWA -->
+      <div class="bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 mb-3">
+
+        <p class="text-xs text-gray-500 mb-1">
+          NAMA CALON SISWA
+        </p>
+
+        <p class="text-base font-extrabold text-gray-800">
+          ${namaSiswaPengumuman}
+        </p>
+
+      </div>
+
+      <h3 class="text-lg font-bold text-gray-800 mb-2">
+        ${hasil.subjudul}
+      </h3>
+
+      <p class="text-sm text-gray-600 leading-relaxed">
+        ${hasil.pesan}
+      </p>
+
+      <p class="text-sm font-semibold ${warnaTeks} mt-3">
+        ${hasil.tambahan}
+      </p>
+
+      <p class="text-xs text-gray-500 mt-2 leading-relaxed">
+        ${hasil.keterangan}
+      </p>
+
+      <div class="border-t border-gray-100 mt-3 pt-2">
+        <p class="text-xs font-bold text-gray-500">
+          PANITIA SPMB TERPADU • SEKOLAH ISLAM ULUN NUHA
+        </p>
+      </div>
+
+    </div>
+  </div>
+`;
+
+} else {
+
+  isiPengumuman.innerHTML = `
+    <div class="max-w-2xl mx-auto rounded-xl border border-blue-200 bg-blue-50 p-5 text-center">
+      <div class="text-3xl mb-2">📢</div>
+      <h3 class="text-lg font-bold text-blue-800 mb-1">
+        Pengumuman Belum Tersedia
+      </h3>
+      <p class="text-sm text-gray-600">
+        Hasil seleksi belum diumumkan oleh panitia SPMB.
+        Silakan periksa kembali halaman ini secara berkala.
+      </p>
+    </div>
+  `;
+}
+
+
+
+
+      
+
+
+
+      
+
+       
+      // file links
+      document.getElementById('pasfotoLink').innerHTML = data.pasfoto
+        ? `<a href="${data.pasfoto}" target="_blank" class="text-blue-500 underline">Sudah upload</a>`
+        : 'Belum upload';
+
+        console.log('Data pasfoto dari server:', data.pasfoto);
+        
+      document.getElementById('kkLink').innerHTML = data.kk
+        ? `<a href="${data.kk}" target="_blank" class="text-blue-500 underline">Sudah upload</a>`
+        : 'Belum upload';
+         document.getElementById('akteLink').innerHTML = data.akte
+        ? `<a href="${data.akte}" target="_blank" class="text-blue-500 underline">Sudah upload</a>`
+        : 'Belum upload';
+      document.getElementById('skLink').innerHTML = data.sk
+        ? `<a href="${data.sk}" target="_blank" class="text-blue-500 underline">Sudah upload</a>`
+        : 'Belum upload';
+
+
+        
+
+const pasfotoBukti = document.getElementById('pasfotoBukti');
+
+if (pasfotoBukti) {
+  pasfotoBukti.classList.add('hidden');
+  pasfotoBukti.onload = null;
+
+  if (data.pasfotoBase64) {
+    // Gunakan Base64 agar foto bisa diekspor oleh html2canvas
+    pasfotoBukti.onload = function () {
+      pasfotoBukti.classList.remove('hidden');
+      console.log('Pasfoto Base64 berhasil dimuat');
+    };
+
+    pasfotoBukti.onerror = function () {
+      pasfotoBukti.classList.add('hidden');
+      console.error('Gagal memuat pasfoto Base64');
+    };
+
+    pasfotoBukti.src =
+      'data:' +
+      (data.pasfotoMimeType || 'image/jpeg') +
+      ';base64,' +
+      data.pasfotoBase64;
+
+  } else if (data.pasfoto) {
+    // Fallback untuk preview jika Base64 tidak tersedia
+    const match = String(data.pasfoto).match(/\/d\/([^/]+)/);
+
+    if (match) {
+      pasfotoBukti.onload = function () {
+        pasfotoBukti.classList.remove('hidden');
+      };
+
+      pasfotoBukti.src =
+        'https://drive.google.com/thumbnail?id=' +
+        encodeURIComponent(match[1]) +
+        '&sz=w400';
+    }
+
+    console.warn(
+      'Base64 pasfoto tidak tersedia; unduhan mungkin tidak menyertakan foto.'
+    );
+  }
+}
+
+
+
+        
+             
+      
+
+
+
+
+   
+       
+    const setujuCheckbox = document.getElementById('setuju');
+    const startFormButton = document.getElementById('startForm');
+    const infoLengkap = document.getElementById('infoLengkap'); // elemen kosong buat pesan
+    const syaratPengisian = document.getElementById('syaratPengisian');
+
+    if (data.lengkap === 'YA') {
+      setujuCheckbox.checked = true;
+
+      // 🔽 Sembunyikan tombol Mulai Isi Form
+      if (startFormButton) startFormButton.style.display = 'none';
+      
+
+      // 🔽 Tampilkan pesan “Data kamu sudah lengkap”
+      if (infoLengkap) {
+        infoLengkap.innerHTML = `
+          <div class="p-3 bg-yellow-100 border border-green-300 text-green-700 rounded-lg mt-3 text-center font-semibold">
+            ✅ Data kamu sudah lengkap. Syukron telah mendaftar, lihat bukti daftar di beranda!
+            
+          </div>
+        `;
+      }
+
+      
+   
+    } else {
+      // Jika belum lengkap tombol muncul dan pesan dihapus
+      if (startFormButton) startFormButton.style.display = 'inline-block';
+      if (infoLengkap) infoLengkap.innerHTML = '';
+      if (syaratPengisian) syaratPengisian.classList.remove('hidden');
+      
+    }
+
+
+         
+     
+const saveBtn = document.getElementById('saveBtn');
+const previewBtn = document.getElementById('previewBuktiBtn');
+const pernyataan = document.getElementById('pernyataan');
+
+const tombolSimpanSementara = document.querySelectorAll(
+  '.btn-simpan-sementara'
+);
+
+if (data.lengkap && data.lengkap.toString().toUpperCase() === 'YA') {
+
+  // Kunci semua input formulir
+  document.querySelectorAll(
+    '#dataForm input, #dataForm select, #dataForm textarea'
+  ).forEach(el => {
+    el.disabled = true;
+    el.classList.add('bg-gray-100', 'cursor-not-allowed');
+  });
+
+  // Checkbox pernyataan dicentang dan dikunci
+  if (pernyataan) {
+    pernyataan.checked = true;
+    pernyataan.disabled = true;
+  }
+
+  // Sembunyikan tombol simpan
+  saveBtn.classList.add('hidden');
+
+  // Tampilkan tombol bukti pendaftaran
+  previewBtn.classList.remove('hidden');
+  previewBtn.textContent = 'Lihat Bukti Daftar';
+
+  // Sembunyikan semua tombol Simpan Sementara
+  tombolSimpanSementara.forEach(btn => {
+    btn.classList.add('hidden');
+  });
+
+} else {
+
+  // Data belum lengkap: aktifkan kembali input
+  document.querySelectorAll(
+    '#dataForm input, #dataForm select, #dataForm textarea'
+  ).forEach(el => {
+    el.disabled = false;
+    el.classList.remove('bg-gray-100', 'cursor-not-allowed');
+  });
+
+  if (pernyataan) {
+    pernyataan.disabled = false;
+    pernyataan.checked = false;
+  }
+
+  // Tampilkan tombol simpan
+  saveBtn.classList.remove('hidden');
+
+  // Sembunyikan tombol bukti pendaftaran
+  previewBtn.classList.add('hidden');
+
+  // Tampilkan tombol Simpan Sementara
+  tombolSimpanSementara.forEach(btn => {
+    btn.classList.remove('hidden');
+  });
+}
+
+      
+
+      if (data.nik) {
+  
+      if (data.nik) setCookie('nik', data.nik, 365);
+      if (data.namaSiswa) setCookie('nama', data.namaSiswa, 365);
+
+      }
+      // Refresh indikator setelah seluruh data selesai dimuat
+refreshSemuaIndikator();
+
+    } else {
+      Swal.fire('Error', result.message || 'Gagal memuat data', 'error');
+    }
+  } catch (err) {
+    Swal.close();
+    Swal.fire('Error', 'Terjadi kesalahan koneksi ke server load data', 'error');
+    console.error(err);
+  }
+}
+
+loadUserData();
+
+
+
+
+
+/* ========== Submit/Update Data (preserve original logic) ========== */
+
+
+document.getElementById('dataForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const simpanSementaraAktif = modeSimpan === 'sementara';
+
+  // Konfirmasi hanya untuk Akhiri Pendaftaran,
+  // bukan untuk Simpan Sementara
+  if (!simpanSementaraAktif) {
+    
+    const konfirmasi = await Swal.fire({
+      
+      html: `
+        <div style="
+          font-size: 13px;
+          line-height: 1.6;
+          text-align: center;
+          color: #475569;
+        ">
+          Pastikan seluruh data dan berkas yang kamu isi
+          sudah benar dan lengkap.
+
+          <div style="
+            margin: 14px 0;
+            padding: 11px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 10px;
+            color: #9a3412;
+            text-align: left;
+          ">
+            <b style="font-size: 13px;">Perhatian!</b>
+            <br>
+            Setelah pendaftaran diakhiri, data tidak dapat
+            diedit atau diubah kembali.
+          </div>
+
+          Apakah kamu yakin ingin mengakhiri pendaftaran?
+        </div>
+      `,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Akhiri',
+      cancelButtonText: 'Periksa Kembali',
+      confirmButtonColor: '#15803d',
+      cancelButtonColor: '#64748b',
+      reverseButtons: true,
+      allowOutsideClick: false,
+      focusCancel: true,
+      width: 'min(360px, calc(100% - 32px))',
+      padding: '20px 16px',
+      buttonsStyling: true,
+      customClass: {
+        title: 'swal-judul-mobile',
+        htmlContainer: 'swal-isi-mobile',
+        confirmButton: 'swal-tombol-mobile',
+        cancelButton: 'swal-tombol-mobile'
+      }
+    });
+
+
+    // Jika dibatalkan, formulir tetap bisa diedit
+    if (!konfirmasi.isConfirmed) {
+      return;
+    }
+  }
+
+  // Reset mode agar submit berikutnya kembali normal
+  modeSimpan = 'lengkap';
+  this.noValidate = false;
+
+ 
+
+
+  // Ambil nilai field seperti kode Anda sebelumnya
+
+  // ambil nilai
+  const namaSiswa = document.getElementById('namaSiswa').value.trim();
+  const tempat = document.getElementById('tempat').value.trim();
+  const tanggal = document.getElementById('tanggal').value;
+  const jk = document.getElementById('jk').value;
+  const namaAyah = document.getElementById('namaAyah').value.trim();
+  const namaIbu = document.getElementById('namaIbu').value.trim();
+  const sekolahAsal = document.getElementById('sekolahAsal').value;
+  const alamat = document.getElementById('alamat').value.trim();
+  const WaAyah = document.getElementById('WaAyah').value.trim();
+  const WaIbu = document.getElementById('WaIbu').value;
+  const nisn = document.getElementById('nisn').value;
+  const noKK= document.getElementById('noKK').value;
+  const noAkte= document.getElementById('noAkte').value;
+  const anakke = document.getElementById('anakke').value;
+  const asrama = document.getElementById('asrama').value;
+  const transportasi = document.getElementById('transportasi').value;
+  const tinggibadan = document.getElementById('tinggibadan').value;
+  const beratbadan= document.getElementById('beratbadan').value;
+  const lingkakepala= document.getElementById('lingkarkepala').value;
+  const jarakrumah = document.getElementById('jarakrumah').value;
+  const jlhsaudara = document.getElementById('jlhsaudara').value;
+  const npsn= document.getElementById('npsn').value;
+  const menerimaPIP = document.getElementById('menerimaPIP').value;
+  const alasanPIP = document.getElementById('alasanPIP').value;
+  const menerimaMBG = document.getElementById('menerimaMBG').value;
+  const nikAyah = document.getElementById('nikAyah').value;
+  const thnLhrAyah = document.getElementById('thnLhrAyah').value;
+  const pendidikanAyah = document.getElementById('pendidikanAyah').value;
+  const pekerjaanAyah = document.getElementById('pekerjaanAyah').value;
+  const penghasilanAyah = document.getElementById('penghasilanAyah').value;
+
+  const nikIbu = document.getElementById('nikIbu').value;
+  const thnLhrIbu = document.getElementById('thnLhrIbu').value;
+  const pendidikanIbu = document.getElementById('pendidikanIbu').value;
+  const pekerjaanIbu = document.getElementById('pekerjaanIbu').value;
+  const penghasilanIbu = document.getElementById('penghasilanIbu').value;
+  
+  const tugasOrtu = document.getElementById('tugasOrtu').value;
+  const unitOrtu = document.getElementById('unitOrtu').value;
+  const masaKerjaOrtu = document.getElementById('masaKerjaOrtu').value;
+
+  const provinsiSekolah = document.getElementById('provinsiSekolah').selectedOptions[0]?.text || '';
+  const kabupatenSekolah = document.getElementById('kabupatenSekolah').selectedOptions[0]?.text || '';
+  const kecamatanSekolah = document.getElementById('kecamatanSekolah').selectedOptions[0]?.text || '';
+
+
+  const pasfotoFile = document.getElementById('pasfotoFile').files[0];
+  const kkFile = document.getElementById('kkFile').files[0];
+  const akteFile = document.getElementById('akteFile').files[0];
+  const skFile = document.getElementById('skFile').files[0];
+
+  // status teks upload (dari innerText)
+  const pasfotoStatus = document.getElementById('pasfotoLink').innerText.trim();
+  const kkStatus = document.getElementById('kkLink').innerText.trim();
+  const akteStatus = document.getElementById('akteLink').innerText.trim();
+  const skStatus = document.getElementById('skLink').innerText.trim();
+
+  // validasi: jika sebelumnya belum upload (Belum upload) maka wajib pilih file
+  
+if (!simpanSementaraAktif) {
+  if (pasfotoStatus === 'Belum upload' && !pasfotoFile) {
+    Swal.fire('Wajib Upload!', 'Silakan upload file Pas Foto terlebih dahulu.', 'warning');
+    return;
+  }
+   
+  if (kkStatus === 'Belum upload' && !kkFile) {
+    Swal.fire('Wajib Upload!', 'Silakan upload file Kartu Keluarga terlebih dahulu.', 'warning');
+    return;
+  }
+
+  if (akteStatus === 'Belum upload' && !akteFile) {
+    Swal.fire('Wajib Upload!', 'Silakan upload file akte kelahiran terlebih dahulu.', 'warning');
+    return;
+  }
+
+  if (skStatus === 'Belum upload' && !skFile) {
+    Swal.fire('Wajib Upload!', 'Silakan upload file Surat Keterangan Siswa terlebih dahulu.', 'warning');
+    return;
+  }
+}
+
+
+  // --- Fungsi bantu: kompres gambar sebelum diubah ke base64 ---
+async function compressImage(file, maxWidth = 800, maxHeight = 800, quality = 0.7) {
+  return new Promise((resolve, reject) => {
+    if (!file.type.startsWith('image/')) {
+      // kalau bukan gambar, lewati kompres
+      resolve(file);
+      return;
+    }
+
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.src = url;
+
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+
+      const canvas = document.createElement('canvas');
+      let width = img.width;
+      let height = img.height;
+
+      // atur proporsi
+      if (width > height) {
+        if (width > maxWidth) {
+          height *= maxWidth / width;
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width *= maxHeight / height;
+          height = maxHeight;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (blob) {
+            const newFile = new File([blob], file.name, { type: blob.type });
+            resolve(newFile);
+          } else {
+            reject(new Error('Gagal mengompres gambar.'));
+          }
+        },
+        'image/jpeg',
+        quality
+      );
+    };
+
+    img.onerror = (err) => {
+      URL.revokeObjectURL(url);
+      reject(err);
+    };
+  });
+}
+
+// --- Fungsi bantu: ubah file jadi base64 ---
+function readFileBase64(file) {
+  return new Promise(resolve => {
+    if (!file) resolve('');
+    else {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result.split(',')[1]);
+      reader.readAsDataURL(file);
+    }
+  });
+}
+
+
+
+ 
+
+
+  // disable tombol simpan untuk mencegah klik ganda
+  const saveBtn = document.getElementById('saveBtn');
+  const previewBtn = document.getElementById('previewBuktiBtn');
+  const pernyataan = document.getElementById('pernyataan');
+  saveBtn.disabled = true;
+  saveBtn.classList.add('opacity-60','cursor-not-allowed');
+
+  Swal.fire({
+    title: 'Menyimpan data...',
+    text: 'Mohon tunggu, sedang menyimpan ke server...',
+    allowOutsideClick: false,
+    didOpen: () => Swal.showLoading()
+  });
+
+  try {
+    
+        let kkBase64 = '';
+        let akteBase64 = '';
+        let skBase64 = '';
+        let pasfotoBase64 = '';
+
+        async function fileKeBase64(file) {
+          if (!file) return '';
+
+          // Kompres gambar saja, jangan kompres PDF menggunakan Canvas
+          if (file.type.startsWith('image/')) {
+            const hasilKompresi = await compressImage(file);
+            return await readFileBase64(hasilKompresi);
+          }
+
+          // PDF dibaca langsung
+          return await readFileBase64(file);
+        }
+
+        if (pasfotoFile) {
+          if (!['image/png', 'image/jpeg'].includes(pasfotoFile.type)) {
+            await Swal.fire(
+              'Format Tidak Valid',
+              'Pasfoto harus berformat PNG, JPG, atau JPEG.',
+              'warning'
+            );
+            return;
+          }
+
+          pasfotoBase64 = await fileKeBase64(pasfotoFile);
+        }
+
+        if (kkFile) {
+          kkBase64 = await fileKeBase64(kkFile);
+        }
+
+        if (akteFile) {
+          akteBase64 = await fileKeBase64(akteFile);
+        }
+
+        if (skFile) {
+          skBase64 = await fileKeBase64(skFile);
+        }
+
+
+
+    const formData = new URLSearchParams();
+    formData.append('action','lengkapiData');
+    formData.append('token', token);
+    formData.append('namaSiswa', namaSiswa);
+    formData.append('tempat', tempat);
+    formData.append('tanggal', tanggal);
+    formData.append('jk', jk);
+    formData.append('namaAyah', namaAyah);
+    formData.append('namaIbu', namaIbu);
+    formData.append('sekolahAsal', sekolahAsal);
+    formData.append('alamat', alamat);
+    formData.append('WaAyah', WaAyah);
+    formData.append('WaIbu', WaIbu);
+    formData.append('anakke', anakke);
+    formData.append('nisn', nisn);
+    formData.append('noKK', noKK);
+    formData.append('noAkte', noAkte);
+    formData.append('asrama', asrama);
+    formData.append('transportasi', transportasi);
+    formData.append('tinggibadan', tinggibadan);
+    formData.append('beratbadan', beratbadan);
+    formData.append('lingkarkepala', lingkakepala);
+    formData.append('jarakrumah', jarakrumah);
+    formData.append('jlhsaudara', jlhsaudara);
+    formData.append('npsn', npsn);
+    formData.append('provinsiSekolah', provinsiSekolah);
+    formData.append('kabupatenSekolah', kabupatenSekolah);
+    formData.append('kecamatanSekolah', kecamatanSekolah);
+    formData.append('menerimaPIP', menerimaPIP);
+    formData.append('alasanPIP', alasanPIP);
+    formData.append('menerimaMBG', menerimaMBG);
+    formData.append('nikAyah', nikAyah);
+    formData.append('thnLhrAyah', thnLhrAyah);
+    formData.append('pendidikanAyah', pendidikanAyah);
+    formData.append('pekerjaanAyah', pekerjaanAyah);
+    formData.append('penghasilanAyah', penghasilanAyah);
+
+    formData.append('nikIbu', nikIbu);
+    formData.append('thnLhrIbu', thnLhrIbu);
+    formData.append('pendidikanIbu', pendidikanIbu);
+    formData.append('pekerjaanIbu', pekerjaanIbu);
+    formData.append('penghasilanIbu', penghasilanIbu);
+   
+    formData.append('tugasOrtu', tugasOrtu);
+    formData.append('unitOrtu', unitOrtu);
+    formData.append('masaKerjaOrtu', masaKerjaOrtu);
+
+    formData.append('pasfotoFile', pasfotoBase64);
+    formData.append('kkFile', kkBase64);
+    formData.append('akteFile', akteBase64);
+    formData.append('skFile', skBase64);
+    formData.append('modeSimpan', simpanSementaraAktif ? 'sementara' : 'lengkap');
+    formData.append('Lengkap', simpanSementaraAktif ? 'FALSE' : 'TRUE');
+
+    
+
+    const response = await fetch(GAS_ENDPOINT, { method:'POST', body: formData });
+    const result = await response.json();
+    Swal.close();
+    saveBtn.disabled = false;
+    saveBtn.classList.remove('opacity-60','cursor-not-allowed');
+
+   
+if (result.status === 'success') {
+  if (simpanSementaraAktif) {
+    await Swal.fire({
+      icon: 'success',
+      title: 'Data Sementara Tersimpan',
+      text: 'Data berhasil disimpan. kamu masih bisa melanjutkan dan mengedit formulir ini.',
+      confirmButtonText: 'Oke'
+    });
+
+  
+
+    // Pastikan form tetap bisa diedit
+    document.querySelectorAll(
+      '#dataForm input, #dataForm select, #dataForm textarea'
+    ).forEach(el => {
+      el.disabled = false;
+      el.classList.remove('bg-gray-100', 'cursor-not-allowed');
+    });
+
+    // Tombol simpan tetap tersedia
+    saveBtn.classList.remove('hidden');
+
+    // Tombol bukti daftar tetap disembunyikan
+    previewBtn.classList.add('hidden');
+
+  } else {
+    await Swal.fire({
+      icon: 'success',
+      title: 'Data Berhasil Disimpan',
+      text: 'Silakan lihat bukti pendaftaran di beranda.',
+      timer: 2500,
+      showConfirmButton: false
+    });
+
+    await loadUserData();
+    refreshSemuaIndikator();
+
+    // Kunci form setelah data lengkap berhasil disimpan
+    document.querySelectorAll(
+      '#dataForm input, #dataForm select, #dataForm textarea'
+    ).forEach(el => {
+      el.disabled = true;
+      el.classList.add('bg-gray-100', 'cursor-not-allowed');
+    });
+
+    saveBtn.classList.add('hidden');
+
+    if (previewBtn) {
+      previewBtn.classList.remove('hidden');
+      previewBtn.textContent = 'Lihat Bukti Daftar';
+    }
+
+    
+  }
+} else {
+  Swal.fire(
+    'Gagal',
+    result.message || 'Gagal menyimpan data',
+    'error'
+  );
+}
+
+  } catch (error) {
+  console.error('Error submit:', error);
+
+  Swal.fire({
+    icon: 'error',
+    title: 'Gagal Memproses Data',
+    text: error.message || 'Terjadi kesalahan saat mengirim data.'
+  });
+}
+});
+
+/* ========== Bukti Daftar (client-side) ========== */
+/*
+- NIK diambil dari cookie 'nik' jika ada, jika tidak ambil dari server (variabel local saat loadUserData akan mencoba menyimpan data.nik ke cookie)
+- QR dibangun dari NIK (kamu bisa ubah format QR menjadi misalnya: "PPDB|NIK|Nama|Tanggal")
+*/
+
+const previewBuktiBtn = document.getElementById('previewBuktiBtn');
+const buktiArea = document.getElementById('buktiArea');
+const qrcodeBuktiEl = document.getElementById('qrcodeBukti');
+
+let lastBuktiData = {}; // simpan data terakhir untuk export
+
+previewBuktiBtn.addEventListener('click', async () => {
+  // ambil NIK dari cookie, fallback ke server data jika cookie belum ada
+  let nik = getCookie('nik') || '';
+  // ambil data form sebagai sumber data utama (supaya user bisa lihat preview sebelum simpan)
+  const nama = document.getElementById('namaSiswa').value.trim();
+  const tempat = document.getElementById('tempat').value.trim();
+  const tanggal = document.getElementById('tanggalDaftar').value;
+  const sekolahAsal = document.getElementById('sekolahAsal').value.trim();
+  const unitOrtu = document.getElementById('alamat').value;
+  const noDaftar = document.getElementById('noPendaftaran').value;
+  const tglLhr = document.getElementById('tanggal').value;
+
+  
+  
+
+  if(!nik){
+    // kalau cookie tidak ada, coba minta server (sinkron) untuk memastikan — gunakan getUserData quick call
+    try {
+      const tmp = new URLSearchParams();
+      tmp.append('action','getUserData');
+      tmp.append('token', token);
+      const resp = await fetch(GAS_ENDPOINT, { method:'POST', body: tmp });
+      const resj = await resp.json();
+      if(resj.status === 'success' && resj.data && resj.data.nik){
+        nik = resj.data.nik;
+        setCookie('nik', nik, 365);
+      }
+    } catch(e) {
+      console.warn('Gagal ambil NIK dari server', e);
+    }
+  }
+
+  if(!nik){
+    // beri pilihan kepada user jika NIK tidak tersedia
+    const { value: manualNik } = await Swal.fire({
+      title: 'NIK tidak ditemukan',
+      input: 'text',
+      inputLabel: 'Masukkan NIK (otomatis disimpan di cookie)',
+      inputPlaceholder: 'Contoh: 3275xxxxxxxxxxxx',
+      showCancelButton: true
+    });
+    if(manualNik){
+      nik = manualNik.trim();
+      setCookie('nik', nik, 365);
+    } else {
+      return; // batal
+    }
+  }
+
+  // Format tampilan bukti
+  const tanggalText = tanggal ? (new Date(tanggal)).toLocaleDateString('id-ID') : '-';
+  const tanggalNow = new Date().toLocaleDateString('id-ID');
+  const buktiTglLhr = tglLhr ? (new Date(tglLhr)).toLocaleDateString('id-ID') : '-';
+
+  
+
+  document.getElementById('buktiNama').textContent = nama || '-';
+  document.getElementById('buktiNIK').textContent = nik;
+  document.getElementById('buktiTTL').textContent = (tempat || '-') + ', ' + (buktiTglLhr || '-');
+  document.getElementById('buktiSekolah').textContent = sekolahAsal || '-';
+  document.getElementById('buktiUnit').textContent = unitOrtu || '-';
+  document.getElementById('buktiTanggal').textContent = 'Tanggal: ' + tanggalText;
+  // nomor pendaftaran: gabungan token + waktu (bisa disesuaikan)
+  document.getElementById('buktiNo').textContent = noDaftar || '-';
+
+  // generate QR
+  qrcodeBuktiEl.innerHTML = '';
+  // isi QR: kita buat format => "PPDB|NIK|Nama|TanggalGenerate"
+  const qrText = `SPMB|${nik}|${nama || '-'}|${noDaftar}`;
+  new QRCode(qrcodeBuktiEl, {
+    text: qrText,
+    width: 120,
+    height: 120,
+    correctLevel: QRCode.CorrectLevel.H
+  });
+
+  // simpan data untuk export
+  lastBuktiData = {
+    nama: nama || '-',
+    nik,
+    ttl: (tempat || '-') + ', ' + buktiTglLhr,
+    sekolah: sekolahAsal || '-',
+    alamat: alamat || '-',
+    tanggalCetak: tanggalNow,
+    noDaftar,
+    qrText
+  };
+
+  // tampilkan area bukti
+  buktiArea.classList.remove('hidden');
+  // scroll ke area bukti
+  buktiArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+
+/* Tutup bukti */
+document.getElementById('closeBuktiBtn').addEventListener('click', () => {
+  buktiArea.classList.add('hidden');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+
+async function siapkanPasfotoUntukDownload() {
+  const foto = document.getElementById('pasfotoBukti');
+
+  if (!foto || !foto.src || foto.classList.contains('hidden')) {
+    return;
+  }
+
+  // Pastikan gambar sudah selesai dimuat
+  if (!foto.complete || foto.naturalWidth === 0) {
+    await new Promise((resolve, reject) => {
+      foto.addEventListener('load', resolve, { once: true });
+      foto.addEventListener(
+        'error',
+        () => reject(new Error('Pasfoto gagal dimuat')),
+        { once: true }
+      );
+    });
+  }
+
+  // Coba buat gambar lokal dari foto yang sudah tampil
+  const canvasFoto = document.createElement('canvas');
+  canvasFoto.width = foto.naturalWidth;
+  canvasFoto.height = foto.naturalHeight;
+
+  const ctx = canvasFoto.getContext('2d');
+
+  try {
+    ctx.drawImage(foto, 0, 0);
+
+    // Jika gambar lintas domain diblokir, baris ini dapat gagal
+    return canvasFoto.toDataURL('image/png');
+  } catch (error) {
+    console.error('Foto diblokir oleh CORS:', error);
+    throw new Error(
+      'Google Drive membatasi pengambilan foto untuk download.'
+    );
+  }
+}
+
+
+
+/* ========== Download PNG Bukti PPDB ========== */
+document.getElementById('downloadPngBtn').addEventListener('click', async () => {
+  const buktiCard = document.getElementById('buktiCard');
+  const buttons = buktiCard.querySelectorAll('button');
+
+  // Simpan gaya awal
+  const oldWidth = buktiCard.style.width;
+  const oldTransform = buktiCard.style.transform;
+  const oldMargin = buktiCard.style.margin;
+
+  try {
+    // Sembunyikan tombol saat membuat gambar
+    buttons.forEach(btn => btn.style.display = 'none');
+
+    buktiCard.style.width = '600px';
+    buktiCard.style.transform = 'scale(1)';
+    buktiCard.style.transformOrigin = 'top left';
+    buktiCard.style.margin = '0 auto';
+
+    // Tunggu sampai gambar pasfoto selesai dimuat
+    const pasfoto = document.getElementById('pasfotoBukti');
+
+    if (pasfoto && !pasfoto.classList.contains('hidden') && pasfoto.src) {
+      if (!pasfoto.complete) {
+        await new Promise((resolve, reject) => {
+          pasfoto.onload = resolve;
+          pasfoto.onerror = () => reject(
+            new Error('Pasfoto gagal dimuat')
+          );
+        });
+      }
+
+      if (pasfoto.naturalWidth === 0) {
+        throw new Error('Pasfoto tidak dapat dibaca');
+      }
+    }
+
+    await siapkanPasfotoUntukDownload();
+
+    const canvas = await html2canvas(buktiCard, {
+  scale: 3,
+  useCORS: true,
+  allowTaint: false,
+  backgroundColor: '#ffffff'
+
+  
+
+});
+
+
+    // Unduh gambar
+    const link = document.createElement('a');
+    link.download = `Bukti_SPMB_${lastBuktiData.nama || 'Siswa'}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+
+    Swal.fire(
+      'Berhasil!',
+      'Bukti pendaftaran berhasil diunduh sebagai PNG.',
+      'success'
+    );
+
+  } catch (error) {
+    console.error('Gagal membuat PNG:', error);
+
+    Swal.fire(
+      'Gagal',
+      'Terjadi kesalahan saat membuat gambar. Periksa kembali pasfoto dan koneksi gambar.',
+      'error'
+    );
+
+  } finally {
+    // Pulihkan tampilan awal
+    buktiCard.style.width = oldWidth;
+    buktiCard.style.transform = oldTransform;
+    buktiCard.style.margin = oldMargin;
+
+    buttons.forEach(btn => btn.style.display = '');
+  }
+});
+
+/* ========== Download PDF Bukti PPDB ========== */
+document.getElementById('downloadPdfBtn').addEventListener('click', async () => {
+  const buktiCard = document.getElementById('buktiCard');
+  const buttons = buktiCard.querySelectorAll('button');
+
+  // Simpan gaya awal
+  const oldWidth = buktiCard.style.width;
+  const oldTransform = buktiCard.style.transform;
+  const oldMargin = buktiCard.style.margin;
+
+  try {
+    // Sembunyikan tombol saat membuat PDF
+    buttons.forEach(btn => btn.style.display = 'none');
+
+    buktiCard.style.width = '600px';
+    buktiCard.style.transform = 'scale(1)';
+    buktiCard.style.transformOrigin = 'top left';
+    buktiCard.style.margin = '0 auto';
+
+    // Tunggu gambar pasfoto selesai dimuat
+    const pasfoto = document.getElementById('pasfotoBukti');
+
+    if (pasfoto && !pasfoto.classList.contains('hidden') && pasfoto.src) {
+      if (!pasfoto.complete) {
+        await new Promise((resolve, reject) => {
+          pasfoto.onload = resolve;
+          pasfoto.onerror = () => reject(
+            new Error('Pasfoto gagal dimuat')
+          );
+        });
+      }
+
+      if (pasfoto.naturalWidth === 0) {
+        throw new Error('Pasfoto tidak dapat dibaca');
+      }
+    }
+
+    const canvas = await html2canvas(buktiCard, {
+      scale: 3,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+
+    const pdf = new jsPDF({
+      orientation: 'portrait',
+      unit: 'pt',
+      format: 'a4'
+    });
+
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    // Sesuaikan jika gambar lebih tinggi dari satu halaman A4
+    const maxHeight = pdf.internal.pageSize.getHeight();
+    const scale = Math.min(1, maxHeight / pdfHeight);
+
+    pdf.addImage(
+      imgData,
+      'PNG',
+      0,
+      0,
+      pdfWidth * scale,
+      pdfHeight * scale
+    );
+
+    pdf.save(`Bukti_SPMB_${lastBuktiData.nama || 'Siswa'}.pdf`);
+
+    Swal.fire(
+      'Berhasil!',
+      'Bukti pendaftaran berhasil diunduh sebagai PDF.',
+      'success'
+    );
+
+  } catch (error) {
+    console.error('Gagal membuat PDF:', error);
+
+    Swal.fire(
+      'Gagal',
+      'Terjadi kesalahan saat membuat PDF. Periksa kembali pasfoto dan koneksi gambar.',
+      'error'
+    );
+
+  } finally {
+    // Pulihkan tampilan awal
+    buktiCard.style.width = oldWidth;
+    buktiCard.style.transform = oldTransform;
+    buktiCard.style.margin = oldMargin;
+
+    buttons.forEach(btn => btn.style.display = '');
+  }
+});
+
+
+</script>
+
+<script>
+/* ==========================================
+   INDIKATOR FIELD SUDAH TERISI
+========================================== */
+
+function pasangIndikatorField(root = document) {
+
+  const fields = root.querySelectorAll(
+    '.step input:not([type="hidden"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]), .step select, .step textarea'
+  );
+
+  fields.forEach(field => {
+
+    // Jangan memasang indikator dua kali
+    if (field.dataset.indikatorTerpasang === 'true') return;
+
+    field.dataset.indikatorTerpasang = 'true';
+
+    // Bungkus field dengan posisi relative
+    const wrapper = document.createElement('div');
+    wrapper.className = 'relative w-full';
+
+    field.parentNode.insertBefore(wrapper, field);
+    wrapper.appendChild(field);
+
+    // Beri ruang untuk ikon
+    field.classList.add('pr-10');
+
+    // Buat ikon centang
+    const icon = document.createElement('span');
+
+    icon.className = `
+      field-check absolute right-3 top-1/2
+      -translate-y-1/2 text-green-600
+      hidden pointer-events-none
+    `;
+
+    icon.innerHTML = `
+      <svg class="w-5 h-5" fill="none"
+        stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2.5"
+          d="M5 13l4 4L19 7"/>
+      </svg>
+    `;
+
+    icon.setAttribute('aria-hidden', 'true');
+
+    // Textarea: ikon diletakkan di bagian atas
+    if (field.tagName === 'TEXTAREA') {
+      icon.classList.remove('top-1/2', '-translate-y-1/2');
+      icon.classList.add('top-3');
+    }
+
+    wrapper.appendChild(icon);
+
+    // Perbarui status indikator
+    updateIndikatorField(field);
+
+  });
+
+}
+
+
+// Fungsi mengecek apakah field sudah benar
+function updateIndikatorField(field) {
+
+  if (!field || !field.dataset.indikatorTerpasang) return;
+
+  const icon = field.parentElement.querySelector('.field-check');
+
+  if (!icon) return;
+
+  const value = field.value.trim();
+
+  const terisi = value !== '';
+  const valid = field.checkValidity();
+
+  if (terisi && valid) {
+    icon.classList.remove('hidden');
+  } else {
+    icon.classList.add('hidden');
+  }
+
+}
+
+
+// Pantau perubahan semua field
+document.addEventListener('input', function(e) {
+
+  if (e.target.matches('.step input, .step textarea')) {
+    updateIndikatorField(e.target);
+  }
+
+});
+
+document.addEventListener('change', function(e) {
+
+  if (e.target.matches('.step select, .step input')) {
+    updateIndikatorField(e.target);
+  }
+
+});
+
+
+// Pasang indikator ketika halaman selesai dimuat
+document.addEventListener('DOMContentLoaded', function() {
+  pasangIndikatorField();
+});
+
+
+// Fungsi untuk memperbarui indikator setelah data dimuat
+function refreshSemuaIndikator() {
+
+  document.querySelectorAll('.step input, .step select, .step textarea')
+    .forEach(field => {
+
+      if (field.dataset.indikatorTerpasang === 'true') {
+        updateIndikatorField(field);
+      }
+
+    });
+
+}
+</script>
+
+</body>
+</html>

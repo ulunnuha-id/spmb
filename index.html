@@ -1,0 +1,900 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Login - SPMB Terpadu Ulun Nuha</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+
+  .login-card {
+    animation: fadeUp .7s ease-out;
+  }
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .input-field {
+    transition: all .25s ease;
+  }
+
+  .input-field:focus {
+    background: #ffffff;
+    border-color: #059669;
+    box-shadow: 0 0 0 4px rgba(16,185,129,.10);
+  }
+
+  .login-button {
+    transition: all .25s ease;
+  }
+
+  .login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(5,150,105,.20);
+  }
+
+  .login-button:active {
+    transform: scale(.98);
+  }
+</style>
+</head>
+
+<body class="min-h-screen bg-slate-50">
+
+<!-- ===================================== -->
+<!-- BACKGROUND -->
+<!-- ===================================== -->
+
+<div class="fixed inset-0 overflow-hidden pointer-events-none">
+  <div class="absolute -top-32 -right-32 w-96 h-96 bg-emerald-200/40 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-green-200/40 rounded-full blur-3xl"></div>
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-100/20 rounded-full blur-3xl"></div>
+</div>
+
+
+<!-- ===================================== -->
+<!-- NAVBAR -->
+<!-- ===================================== -->
+
+<header class="relative z-10 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+
+    <a href="index.html" class="flex items-center gap-3">
+
+      <img src="log yayasan.png"
+        alt="Logo Ulun Nuha"
+        class="w-11 h-11 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-emerald-100">
+
+      <div>
+        <h1 class="text-lg sm:text-xl font-extrabold text-emerald-800 tracking-tight">
+          SPMB Terpadu
+        </h1>
+
+        <p class="text-[10px] sm:text-xs text-gray-500 tracking-widest uppercase">
+          Sekolah Islam Ulun Nuha
+        </p>
+      </div>
+
+    </a>
+
+    <div class="hidden sm:flex items-center gap-2 text-xs sm:text-sm text-gray-500">
+
+      <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+
+      Yayasan Minhajus Sunnah Medan
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- ===================================== -->
+<!-- MAIN -->
+<!-- ===================================== -->
+
+<main class="relative z-10 min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-8 sm:py-12">
+
+  <div class="login-card w-full max-w-6xl grid lg:grid-cols-2 bg-white rounded-3xl shadow-xl shadow-emerald-900/5 overflow-hidden border border-gray-100">
+
+
+    <!-- ===================================== -->
+    <!-- LEFT PANEL -->
+    <!-- ===================================== -->
+
+    <section class="hidden lg:flex relative bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 p-10 xl:p-14 flex-col justify-between overflow-hidden">
+
+      <!-- Dekorasi -->
+      <div class="absolute -right-24 -top-24 w-80 h-80 border border-white/10 rounded-full"></div>
+      <div class="absolute -right-12 -top-12 w-56 h-56 border border-white/10 rounded-full"></div>
+      <div class="absolute -bottom-32 -left-20 w-80 h-80 bg-emerald-400/10 rounded-full blur-2xl"></div>
+
+      <div class="relative z-10">
+
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-emerald-100 text-xs font-semibold">
+
+          <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
+
+          Penerimaan Murid Baru
+
+        </div>
+
+
+        <h2 class="mt-10 text-4xl xl:text-5xl font-extrabold text-white leading-tight">
+
+          Ahlan Wa Sahlan di
+
+          <span class="block text-emerald-300 mt-2">
+            SPMB Terpadu
+          </span>
+
+          Ulun Nuha
+
+        </h2>
+
+
+        <p class="mt-6 text-emerald-100/80 leading-7 text-sm xl:text-base">
+
+          Satu pintu layanan penerimaan murid baru untuk seluruh unit pendidikan Ulun Nuha.
+
+          Silakan masuk menggunakan akun yang telah Anda daftarkan.
+
+        </p>
+
+
+        <!-- FITUR -->
+        <div class="mt-10 space-y-6">
+
+
+          <div class="flex items-center gap-4">
+
+            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-emerald-200 shrink-0">
+
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 9h.01M15 9h.01"/>
+              </svg>
+
+            </div>
+
+            <div>
+              <p class="text-white font-semibold text-sm">
+                Enam Unit Pendidikan
+              </p>
+
+              <p class="text-emerald-100/60 text-xs mt-1">
+                Terintegrasi dalam satu sistem
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="flex items-center gap-4">
+
+            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-emerald-200 shrink-0">
+
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M9 12l2 2 4-4m5-4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3 8 3z"/>
+              </svg>
+
+            </div>
+
+            <div>
+              <p class="text-white font-semibold text-sm">
+                Layanan Digital
+              </p>
+
+              <p class="text-emerald-100/60 text-xs mt-1">
+                Proses pendaftaran lebih mudah
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="flex items-center gap-4">
+
+            <div class="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-emerald-200 shrink-0">
+
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M12 15v2m-7 4h14a2 2 0 002-2v-7a2 2 0 00-2-2H5a2 2 0 00-2 2v7a2 2 0 002 2zm3-9V7a4 4 0 118 0v3"/>
+              </svg>
+
+            </div>
+
+            <div>
+              <p class="text-white font-semibold text-sm">
+                Akses Akun Terpadu
+              </p>
+
+              <p class="text-emerald-100/60 text-xs mt-1">
+                Satu akun untuk unit yang dipilih
+              </p>
+            </div>
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+
+      <!-- FOOTER PANEL -->
+      <div class="relative z-10 border-t border-white/10 pt-6 mt-10">
+
+        <p class="text-xs text-emerald-100/60">
+          © 2026 SPMB Terpadu Ulun Nuha
+        </p>
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ===================================== -->
+    <!-- RIGHT PANEL LOGIN -->
+    <!-- ===================================== -->
+
+    <section class="p-6 sm:p-10 lg:p-12 xl:p-14 flex flex-col justify-center">
+
+
+      <!-- MOBILE BRAND -->
+      <div class="lg:hidden text-center mb-8">
+
+        <img src="logo.png"
+          alt="Logo Ulun Nuha"
+          class="w-20 h-20 mx-auto rounded-full border-4 border-emerald-50 shadow-sm object-cover">
+
+        <h2 class="mt-4 text-2xl font-extrabold text-emerald-800">
+          SPMB Terpadu
+        </h2>
+
+        <p class="text-xs text-gray-500 mt-1">
+          Ulun Nuha Islamic Education
+        </p>
+
+      </div>
+
+
+
+      <!-- HEADING -->
+      <div class="mb-8">
+
+        <div class="w-12 h-1 bg-emerald-500 rounded-full mb-5"></div>
+
+      
+
+        <p class="text-gray-500 text-sm mt-2 leading-6">
+          Silakan masuk menggunakan akun SPMB Anda untuk melanjutkan proses pendaftaran.
+        </p>
+
+      </div>
+
+
+
+      <!-- ===================================== -->
+      <!-- FORM LOGIN -->
+      <!-- ===================================== -->
+
+      <form id="loginForm" class="space-y-2">
+
+
+        <!-- UNIT PENDIDIKAN -->
+        <div>
+
+          <label for="unitPendaftaran"
+            class="block text-sm font-semibold text-gray-700 mb-2">
+
+            Unit Pendidikan
+
+          </label>
+
+
+          <div class="relative">
+
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-emerald-600">
+
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6"/>
+              </svg>
+
+            </div>
+
+
+            <select
+              id="unitPendaftaran"
+              name="unitPendaftaran"
+              class="input-field w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none appearance-none"
+              required>
+
+              <option value="" selected disabled>
+                -- Pilih Unit Pendidikan --
+              </option>
+
+              <option value="RA">RA</option>
+              <option value="SD">SD</option>
+              <option value="SMP">SMP</option>
+              <option value="SMA">SMA</option>
+              <option value="Boarding">UNBS</option>
+              <option value="Sekolah Tinggi">I'dad Mualimin</option>
+
+            </select>
+
+
+            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-gray-400">
+
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 9l-7 7-7-7"/>
+              </svg>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- NIK -->
+        <div>
+
+          <label for="nik"
+            class="block text-sm font-semibold text-gray-700 mb-2">
+
+            Nomor Induk Kependudukan (NIK)
+
+          </label>
+
+
+          <div class="relative">
+
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2m6-10a4 4 0 100-8 4 4 0 000 8zm8-1h4m-2-2v4"/>
+              </svg>
+
+            </div>
+
+
+            <input
+              type="text"
+              id="nik"
+              name="nik"
+              placeholder="Masukkan NIK Anda"
+              autocomplete="username"
+              class="input-field w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none"
+              required>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- PASSWORD -->
+        <div>
+
+          <label for="password"
+            class="block text-sm font-semibold text-gray-700 mb-2">
+
+            Password
+
+          </label>
+
+
+          <div class="relative">
+
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M7 10V7a5 5 0 0110 0v3m-12 0h14v11H5V10z"/>
+              </svg>
+
+            </div>
+
+
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Masukkan password"
+              autocomplete="current-password"
+              class="input-field w-full pl-12 pr-12 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none"
+              required>
+
+
+            <!-- TOGGLE PASSWORD -->
+            <button
+              type="button"
+              id="togglePassword"
+              aria-label="Tampilkan password"
+              class="absolute inset-y-0 right-0 px-4 flex items-center text-gray-400 hover:text-emerald-600 transition">
+
+              <!-- Mata terbuka -->
+              <svg id="eyeOpen"
+                class="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M2.5 12s3.5-7 9.5-7 9.5 7 9.5 7-3.5 7-9.5 7-9.5-7-9.5-7z"/>
+
+                <circle cx="12" cy="12" r="3" stroke-width="1.8"/>
+
+              </svg>
+
+
+              <!-- Mata tertutup -->
+              <svg id="eyeClosed"
+                class="w-5 h-5 hidden"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24">
+
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M3 3l18 18M10.6 10.6a3 3 0 004.2 4.2M9.9 5.3A10 10 0 0112 5c6 0 9.5 7 9.5 7a15 15 0 01-3 4.1M6.2 6.2A15 15 0 002.5 12s3.5 7 9.5 7c1.4 0 2.7-.3 3.8-.8"/>
+
+              </svg>
+
+            </button>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- BUTTON LOGIN -->
+        <button
+          type="submit"
+          class="login-button w-full flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-700 to-green-600 hover:from-emerald-800 hover:to-green-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-700/20">
+
+          <span>Masuk ke Akun</span>
+
+          <svg class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5 12h14m-6-6l6 6-6 6"/>
+
+          </svg>
+
+        </button>
+
+
+
+        <!-- REGISTER -->
+        <div class="relative flex items-center py-2">
+
+          <div class="flex-grow border-t border-gray-200"></div>
+
+          <span class="px-4 text-xs text-gray-400">
+            Belum memiliki akun?
+          </span>
+
+          <div class="flex-grow border-t border-gray-200"></div>
+
+        </div>
+
+
+        <a href="registrasi.html"
+          class="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl border-2 border-emerald-100 text-emerald-700 font-bold text-sm hover:bg-emerald-50 hover:border-emerald-300 transition">
+
+          <svg class="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24">
+
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 5v14m7-7H5"/>
+
+          </svg>
+
+          Daftar Akun Baru
+
+        </a>
+
+
+      </form>
+
+
+
+      <!-- FOOTER -->
+      <div class="mt-8 text-center">
+
+        <p class="text-xs text-gray-400">
+          © 2026 SPMB Terpadu Ulun Nuha
+        </p>
+
+        <p class="text-[10px] text-gray-400 mt-1">
+          Sistem Penerimaan Murid Baru
+        </p>
+
+      </div>
+
+
+    </section>
+
+  </div>
+
+</main>
+
+
+
+<!-- ===================================== -->
+<!-- JAVASCRIPT PASSWORD -->
+<!-- ===================================== -->
+
+<script>
+
+const togglePassword = document.getElementById('togglePassword');
+
+const passwordInput = document.getElementById('password');
+
+const eyeOpen = document.getElementById('eyeOpen');
+
+const eyeClosed = document.getElementById('eyeClosed');
+
+
+togglePassword.addEventListener('click', () => {
+
+  const type = passwordInput.getAttribute('type') === 'password'
+    ? 'text'
+    : 'password';
+
+  passwordInput.setAttribute('type', type);
+
+  eyeOpen.classList.toggle('hidden');
+
+  eyeClosed.classList.toggle('hidden');
+
+});
+
+</script>
+
+
+
+<!-- ===================================== -->
+<!-- KONFIGURASI API BERDASARKAN UNIT -->
+<!-- ===================================== -->
+
+<script>
+
+// =====================================
+// KONFIGURASI API
+// =====================================
+
+const API_UNIT = {
+
+  'RA': 'https://script.google.com/macros/s/AKfycbyo1SmDLlaSbb35ufmtfcpAx5K2yS7fCMJH0Uea6JFq3FDFYp8IHKNKjVFMphkUYp13Zw/exec',
+
+  'SD': 'https://script.google.com/macros/s/AKfycbwuRwKQUu-2NRLrD1PgY8cWI_uiMElWXtJJIuk734WW1viNnouaEO_GWiFGRBxHZK2y/exec',
+
+  'SMP': 'https://script.google.com/macros/s/AKfycbzpV3wfB2wjJ5-Kj1oooGasfrRxNsiJTas8TUYkAd7OD_7COJo-0aZGShbQ_tqiHyCr/exec',
+
+  'SMA': 'https://script.google.com/macros/s/AKfycbyBxOen3Ttv8mo-xiuwo-iaeke66cqC1QcNUgdTeHzCDZ8PRmzTh8Jn3hF41b37310/exec',
+
+  'Boarding': 'https://script.google.com/macros/s/AKfycbxjEOShFk1-X0H3mz-JMD4Y4wKUshq-qZDdio8jyEBx1fKTxUcvNDiye7AZKnMY5nne/exec',
+
+  'Sekolah Tinggi': 'https://script.google.com/macros/s/AKfycbxDF3INP9MhMU5tuTodzOUMxm79JQQKFNQ8JpKp6TBYQ58MqUt3-wVT0dzUuqPOiRtaCQ/exec'
+
+};
+
+
+// =====================================
+// KONFIGURASI HALAMAN TUJUAN
+// =====================================
+
+const HALAMAN_UNIT = {
+
+  'RA': 'ppdbRA.html',
+
+  'SD': 'ppdbSD.html',
+
+  'SMP': 'ppdbSMP.html',
+
+  'SMA': 'ppdbSMA.html',
+
+  'Boarding': 'ppdbUNBS.html',
+
+  'Sekolah Tinggi': 'ppdbIMUN.html'
+
+};
+
+
+// =====================================
+// PROSES LOGIN
+// =====================================
+
+document.getElementById('loginForm').addEventListener(
+  'submit',
+  async function(e) {
+
+    e.preventDefault();
+
+    const nik = this.nik.value.trim();
+
+    const password = this.password.value.trim();
+
+    const unit = this.unitPendaftaran.value;
+
+
+    // VALIDASI UNIT
+    if (!unit) {
+
+      Swal.fire(
+        'Peringatan',
+        'Silakan pilih unit pendidikan terlebih dahulu.',
+        'warning'
+      );
+
+      return;
+
+    }
+
+
+    // AMBIL API BERDASARKAN UNIT
+    const apiTujuan = API_UNIT[unit];
+
+    const halamanTujuan = HALAMAN_UNIT[unit];
+
+
+    // CEK KONFIGURASI API
+    if (
+      !apiTujuan ||
+      !halamanTujuan ||
+      apiTujuan.startsWith('URL_API_')
+    ) {
+
+      Swal.fire(
+        'Konfigurasi Belum Lengkap',
+        'API untuk unit ' + unit + ' belum dikonfigurasi.',
+        'warning'
+      );
+
+      return;
+
+    }
+
+
+    // TAMPILKAN LOADING
+    Swal.fire({
+
+      title: 'Memproses Login',
+
+      text: 'Memeriksa akun unit ' + unit,
+
+      didOpen: () => Swal.showLoading(),
+
+      allowOutsideClick: false,
+
+      allowEscapeKey: false
+
+    });
+
+
+    // SIAPKAN DATA
+    const formData = new URLSearchParams();
+
+    formData.append('action', 'login');
+
+    formData.append('nik', nik);
+
+    formData.append('password', password);
+
+
+    try {
+
+      // KIRIM LOGIN KE API SESUAI UNIT
+      const response = await fetch(apiTujuan, {
+
+        method: 'POST',
+
+        body: formData
+
+      });
+
+
+      if (!response.ok) {
+
+        throw new Error('HTTP ' + response.status);
+
+      }
+
+
+      const result = await response.json();
+
+
+      Swal.close();
+
+
+      // =====================================
+      // LOGIN BERHASIL
+      // =====================================
+
+      if (result.status === 'success') {
+
+
+        // SIMPAN COOKIE LOGIN
+        setCookie('token', result.token, 1);
+
+        setCookie('nik', nik, 1);
+
+        setCookie('unitPendaftaran', unit, 1);
+
+
+        if (result.nama) {
+
+          setCookie('nama', result.nama, 1);
+
+        }
+
+
+        if (result.jalurPendaftaran) {
+
+          setCookie(
+            'jalurPendaftaran',
+            result.jalurPendaftaran,
+            1
+          );
+
+        }
+
+
+        // PESAN BERHASIL
+        Swal.fire({
+
+          title: 'Login Berhasil',
+
+          html: `
+            <div class="text-gray-600 text-sm">
+              Selamat datang di
+              <b class="text-emerald-700">
+                SPMB Unit ${unit}
+              </b>
+            </div>
+          `,
+
+          icon: 'success',
+
+          timer: 1200,
+
+          showConfirmButton: false
+
+        });
+
+
+        // ARAHKAN KE HALAMAN SESUAI UNIT
+        setTimeout(() => {
+
+          window.location.href = halamanTujuan;
+
+        }, 1200);
+
+
+      }
+
+
+      // =====================================
+      // AKUN MENUNGGU PERSETUJUAN
+      // =====================================
+
+      else if (result.status === 'pending') {
+
+        Swal.fire(
+
+          'Menunggu Persetujuan',
+
+          result.message ||
+          'Akun Anda masih menunggu persetujuan admin.',
+
+          'info'
+
+        );
+
+      }
+
+
+      // =====================================
+      // LOGIN GAGAL
+      // =====================================
+
+      else {
+
+        Swal.fire(
+
+          'Login Gagal',
+
+          result.message || 'NIK atau password salah.',
+
+          'error'
+
+        );
+
+      }
+
+
+    }
+
+    catch (err) {
+
+      console.error('Kesalahan login:', err);
+
+      Swal.fire(
+
+        'Error',
+
+        'Terjadi kesalahan koneksi ke server unit ' + unit + '.',
+
+        'error'
+
+      );
+
+    }
+
+  }
+
+);
+
+
+// =====================================
+// FUNGSI COOKIE
+// =====================================
+
+function setCookie(name, value, days) {
+
+  const d = new Date();
+
+  d.setTime(
+    d.getTime() + (days * 24 * 60 * 60 * 1000)
+  );
+
+  const expires = 'expires=' + d.toUTCString();
+
+  document.cookie =
+    name + '=' + encodeURIComponent(value) +
+    ';' + expires +
+    ';path=/;SameSite=Lax';
+
+}
+
+</script>
+
+
+</body>
+</html>
