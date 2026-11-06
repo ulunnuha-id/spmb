@@ -17,11 +17,82 @@
 
   body {
     font-family: 'Segoe UI', Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
 
+  /* Responsif untuk layar kecil dan sedang */
   .login-card {
-    animation: fadeUp .7s ease-out;
+    min-height: 620px;
   }
+
+  @media (max-width: 1023px) {
+    .login-card {
+      min-height: auto;
+      max-width: 560px;
+      margin-inline: auto;
+    }
+  }
+
+  @media (max-width: 640px) {
+    body {
+      background: #f8fafc;
+    }
+
+    header > div {
+      min-height: 68px;
+    }
+
+    main {
+      align-items: flex-start !important;
+      min-height: calc(100svh - 68px) !important;
+      padding: 22px 14px 28px !important;
+    }
+
+    .login-card {
+      border-radius: 22px !important;
+      box-shadow: 0 12px 35px rgba(15, 23, 42, .07) !important;
+    }
+
+    .login-card section:last-child {
+      padding: 25px 20px 22px !important;
+    }
+
+    .input-field {
+      min-height: 52px;
+      font-size: 16px !important;
+      border-radius: 13px !important;
+    }
+
+    .login-button {
+      min-height: 54px;
+      border-radius: 13px !important;
+    }
+
+    #loginForm {
+      gap: 15px;
+    }
+  }
+
+  @media (min-width: 641px) and (max-width: 1023px) {
+    main {
+      padding-top: 36px;
+      padding-bottom: 36px;
+    }
+
+    .login-card section:last-child {
+      padding: 42px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .login-card {
+      min-height: 650px;
+    }
+  }
+
+
 
   @keyframes fadeUp {
     from {
@@ -84,7 +155,7 @@
 
       <img src="log yayasan.png"
         alt="Logo Ulun Nuha"
-        class="w-11 h-11 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-emerald-100">
+        class="w-10 h-10 sm:w-14 sm:h-14 rounded-full object-cover border-2 border-emerald-100 shrink-0">
 
       <div>
         <h1 class="text-lg sm:text-xl font-extrabold text-emerald-800 tracking-tight">
@@ -117,14 +188,14 @@
 
 <main class="relative z-10 min-h-[calc(100vh-80px)] flex items-center justify-center px-4 py-8 sm:py-12">
 
-  <div class="login-card w-full max-w-6xl grid lg:grid-cols-2 bg-white rounded-3xl shadow-xl shadow-emerald-900/5 overflow-hidden border border-gray-100">
+  <div class="login-card w-full max-w-5xl grid lg:grid-cols-[0.95fr_1.05fr] bg-white rounded-3xl shadow-xl shadow-emerald-900/5 overflow-hidden border border-gray-100">
 
 
     <!-- ===================================== -->
     <!-- LEFT PANEL -->
     <!-- ===================================== -->
 
-    <section class="hidden lg:flex relative bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 p-10 xl:p-14 flex-col justify-between overflow-hidden">
+    <section class="hidden lg:flex relative bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 p-9 xl:p-12 flex-col justify-between overflow-hidden">
 
       <!-- Dekorasi -->
       <div class="absolute -right-24 -top-24 w-80 h-80 border border-white/10 rounded-full"></div>
@@ -262,10 +333,13 @@
     <!-- RIGHT PANEL LOGIN -->
     <!-- ===================================== -->
 
-    <section class="p-6 sm:p-10 lg:p-12 xl:p-14 flex flex-col justify-center">
+    <section class="p-6 sm:p-10 lg:p-10 xl:p-14 flex flex-col justify-center">
 
 
-      
+     
+
+
+
       <!-- HEADING -->
       <div class="mb-8">
 
@@ -285,7 +359,7 @@
       <!-- FORM LOGIN -->
       <!-- ===================================== -->
 
-      <form id="loginForm" class="space-y-2">
+      <form id="loginForm" class="space-y-4 sm:space-y-5">
 
 
         <!-- UNIT PENDIDIKAN -->
