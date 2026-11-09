@@ -1632,18 +1632,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Tombol "Selanjutnya" & "Sebelumnya"
-  document.getElementById('next1').addEventListener('click', () => {
-    if (validateStep('step1')) showTab('tab-saudara');
-  });
-  document.getElementById('next2').addEventListener('click', () => {
-    if (validateStep('step2')) showTab('tab-pernyataan');
-  });
-  document.getElementById('prev2').addEventListener('click', () => showTab('tab-casisba'));
-  document.getElementById('prev3').addEventListener('click', () => showTab('tab-saudara'));
+// Tombol "Selanjutnya" & "Sebelumnya"
 
-  // Tampilkan Beranda awal
-  showTab('tab-beranda');
+// Step 1 → Step 2
+document.getElementById('next1').addEventListener('click', () => {
+
+  if (!validateStep('step1')) return;
+
+  // Periksa ceklis field wajib
+  if (!validasiTab('step1')) return;
+
+  showTab('tab-saudara');
+});
+
+
+// Step 2 → Step 3
+document.getElementById('next2').addEventListener('click', () => {
+
+  if (!validateStep('step2')) return;
+
+  // Periksa ceklis field wajib
+  if (!validasiTab('step2')) return;
+
+  showTab('tab-pernyataan');
+});
+
+
+// Tombol Sebelumnya
+document.getElementById('prev2').addEventListener('click', () => {
+  showTab('tab-casisba');
+});
+
+document.getElementById('prev3').addEventListener('click', () => {
+  showTab('tab-saudara');
+});
+
+
+// Tampilkan Beranda awal
+showTab('tab-beranda');
 });
 
 </script>
@@ -3310,6 +3336,60 @@ function refreshSemuaIndikator() {
 
     });
 
+}
+
+function validasiTab(stepId) {
+  const step = document.getElementById(stepId);
+
+  if (!step) return true;
+
+  const fields = step.querySelectorAll(
+    'input:not([type="hidden"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([disabled]), select:not([disabled]), textarea:not([disabled])'
+  );
+
+  let fieldBelumLengkap = [];
+
+  fields.forEach(field => {
+    // Abaikan field yang tersembunyi
+    if (field.closest('.hidden') || field.offsetParent === null) {
+      return;
+    }
+
+    // Hanya periksa field wajib
+    if (!field.required) return;
+
+    const sudahTerisi =
+      String(field.value || '').trim() !== '';
+
+    const valid = field.checkValidity();
+
+    if (!sudahTerisi || !valid) {
+      fieldBelumLengkap.push(field);
+      updateIndikatorField(field);
+    }
+  });
+
+  if (fieldBelumLengkap.length > 0) {
+    const fieldPertama = fieldBelumLengkap[0];
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Pengisian Belum Benar',
+      text: 'Silakan periksa pengisian yang belum ceklis hijau',
+      confirmButtonText: 'Periksa Form'
+    }).then(() => {
+      fieldPertama.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+
+      fieldPertama.focus();
+    });
+
+    return false;
+  }
+
+  return true;
 }
 </script>
 
