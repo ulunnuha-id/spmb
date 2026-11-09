@@ -1093,8 +1093,17 @@ document.getElementById('registerForm').addEventListener(
     const jalurPendaftaran =
       form.elements.namedItem('jalurPendaftaran').value;
 
-    const wa =
-      form.elements.namedItem('wa').value.trim();
+    let wa =
+  form.elements.namedItem('wa').value.trim();
+
+// Normalisasi nomor WhatsApp ke format 62
+wa = wa.replace(/\D/g, '');
+
+if (wa.startsWith('0')) {
+  wa = '62' + wa.substring(1);
+} else if (wa.startsWith('8')) {
+  wa = '62' + wa;
+}
 
     const nik =
       form.elements.namedItem('nik').value.trim();
@@ -1192,17 +1201,16 @@ document.getElementById('registerForm').addEventListener(
     // VALIDASI WHATSAPP
     // =====================================
 
-    if (!/^08\d{8,15}$/.test(wa)) {
+    if (!/^628\d{8,13}$/.test(wa)) {
 
-      Swal.fire(
-        'Peringatan',
-        'Nomor WhatsApp tidak valid. Gunakan format 08xxxx.',
-        'warning'
-      );
+  Swal.fire(
+    'Peringatan',
+    'Nomor WhatsApp tidak valid. Periksa kembali nomor WhatsApp kamu.',
+    'warning'
+  );
 
-      return;
-
-    }
+  return;
+}
 
 
 
