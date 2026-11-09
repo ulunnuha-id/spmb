@@ -37,7 +37,7 @@
 
     <div class="min-w-0">
       <div id="userInfo" class="text-sm opacity-90">
-        (Nama Siswa - NIK)
+        (Nama Mahasiswa - NIK)
       </div>
 
       <!-- Jalur Pendaftaran -->
@@ -79,7 +79,7 @@
     </button>
     <button id="tab-casisba"
       class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
-      Calon Siswa
+      Calon Mahasiswa
     </button>
     <button id="tab-saudara"
       class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
@@ -282,9 +282,9 @@
 
       <!-- STEP 1: Data Calon Siswa -->
       <div id="step1" class="step space-y-4">
-        <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Administrasi Siswa</h3>
+        <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Administrasi Mahasiswa</h3>
         <div>
-          <label for="namaSiswa" class="block text-gray-700 font-medium mb-1">Nama Siswa</label>
+          <label for="namaSiswa" class="block text-gray-700 font-medium mb-1">Nama Mahasiswa</label>
           <input type="text" id="namaSiswa" name="namaSiswa" placeholder="Masukkan nama lengkap" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" required>
         </div>
 
@@ -535,6 +535,8 @@
 
 </div>
 
+<div id="programPemerintah" class="hidden">
+
       <div>
           <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Program Pemerintah </h3>
         </div>
@@ -548,7 +550,7 @@
 
           <select id="menerimaPIP" name="menerimaPIP"
             class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
-            required>
+            >
             <option value="">- Pilih kesediaan -</option>
             <option value="Bersedia">Bersedia</option>
             <option value="Tidak Bersedia">Tidak Bersedia</option>
@@ -592,13 +594,13 @@
 
           <select id="menerimaMBG" name="menerimaMBG"
             class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
-            required>
+            >
             <option value="">- Pilih kesediaan -</option>
             <option value="Bersedia">Bersedia</option>
             <option value="Tidak Bersedia">Tidak Bersedia</option>
           </select>
         </div>
-
+</div>
 
 
 
@@ -1048,7 +1050,7 @@
         </div>
 
         <div class="bg-green-50 p-3 rounded-xl border border-green-200">
-          <label for="skFile" class="block font-medium text-gray-700 mb-1">Surat Keterangan Siswa dari SD/MI Asal:</label>
+          <label for="skFile" class="block font-medium text-gray-700 mb-1">Surat Keterangan Siswa dari Sekolah Asal:</label>
           <span id="skLink" class="text-sm text-gray-600">Belum upload</span>
           <input type="file" id="skFile" accept="image/*,.pdf" class="w-full mt-2 text-sm border p-2 rounded-lg bg-white">
         </div>
@@ -1632,18 +1634,44 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Tombol "Selanjutnya" & "Sebelumnya"
-  document.getElementById('next1').addEventListener('click', () => {
-    if (validateStep('step1')) showTab('tab-saudara');
-  });
-  document.getElementById('next2').addEventListener('click', () => {
-    if (validateStep('step2')) showTab('tab-pernyataan');
-  });
-  document.getElementById('prev2').addEventListener('click', () => showTab('tab-casisba'));
-  document.getElementById('prev3').addEventListener('click', () => showTab('tab-saudara'));
+ // Tombol "Selanjutnya" & "Sebelumnya"
 
-  // Tampilkan Beranda awal
-  showTab('tab-beranda');
+// Step 1 → Step 2
+document.getElementById('next1').addEventListener('click', () => {
+
+  if (!validateStep('step1')) return;
+
+  // Periksa ceklis field wajib
+  if (!validasiTab('step1')) return;
+
+  showTab('tab-saudara');
+});
+
+
+// Step 2 → Step 3
+document.getElementById('next2').addEventListener('click', () => {
+
+  if (!validateStep('step2')) return;
+
+  // Periksa ceklis field wajib
+  if (!validasiTab('step2')) return;
+
+  showTab('tab-pernyataan');
+});
+
+
+// Tombol Sebelumnya
+document.getElementById('prev2').addEventListener('click', () => {
+  showTab('tab-casisba');
+});
+
+document.getElementById('prev3').addEventListener('click', () => {
+  showTab('tab-saudara');
+});
+
+
+// Tampilkan Beranda awal
+showTab('tab-beranda');
 });
 
 </script>
@@ -3310,6 +3338,60 @@ function refreshSemuaIndikator() {
 
     });
 
+}
+
+function validasiTab(stepId) {
+  const step = document.getElementById(stepId);
+
+  if (!step) return true;
+
+  const fields = step.querySelectorAll(
+    'input:not([type="hidden"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not([disabled]), select:not([disabled]), textarea:not([disabled])'
+  );
+
+  let fieldBelumLengkap = [];
+
+  fields.forEach(field => {
+    // Abaikan field yang tersembunyi
+    if (field.closest('.hidden') || field.offsetParent === null) {
+      return;
+    }
+
+    // Hanya periksa field wajib
+    if (!field.required) return;
+
+    const sudahTerisi =
+      String(field.value || '').trim() !== '';
+
+    const valid = field.checkValidity();
+
+    if (!sudahTerisi || !valid) {
+      fieldBelumLengkap.push(field);
+      updateIndikatorField(field);
+    }
+  });
+
+  if (fieldBelumLengkap.length > 0) {
+    const fieldPertama = fieldBelumLengkap[0];
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Pengisian Belum Benar',
+      text: 'Silakan periksa pengisian yang belum ceklis hijau',
+      confirmButtonText: 'Periksa Form'
+    }).then(() => {
+      fieldPertama.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+
+      fieldPertama.focus();
+    });
+
+    return false;
+  }
+
+  return true;
 }
 </script>
 
