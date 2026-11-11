@@ -86,7 +86,10 @@
 
 </head>
 
-<body class="min-h-screen bg-slate-50">
+<body
+  class="min-h-screen bg-cover bg-center bg-fixed bg-no-repeat"
+  style="background-image: url('bgweb.jpeg');"
+>
 
 <!-- ===================================== -->
 <!-- BACKGROUND -->
@@ -103,7 +106,7 @@
 <!-- NAVBAR -->
 <!-- ===================================== -->
 
-<header class="relative z-10 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm">
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-xl border-b border-gray-100 shadow-sm">
 
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
 
@@ -139,197 +142,19 @@
 <!-- MAIN CONTENT -->
 <!-- ===================================== -->
 
-<main class="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-12">
+<main
+  class="relative z-10 w-full min-h-screen bg-cover bg-center bg-fixed bg-no-repeat px-4 py-8 sm:py-10"
+  
+>
 
-  <div class="register-card grid lg:grid-cols-5 gap-6 items-start">
-
-
-    <!-- ===================================== -->
-    <!-- LEFT PANEL / PANDUAN -->
-    <!-- ===================================== -->
-
-    <section class="lg:col-span-2 bg-gradient-to-br from-emerald-800 via-green-800 to-teal-900 rounded-3xl p-7 sm:p-9 text-white shadow-xl shadow-emerald-900/10 relative overflow-hidden">
-
-      <!-- Dekorasi -->
-      <div class="absolute -right-24 -top-24 w-80 h-80 border border-white/10 rounded-full"></div>
-      <div class="absolute -right-12 -top-12 w-56 h-56 border border-white/10 rounded-full"></div>
-      <div class="absolute -bottom-32 -left-20 w-80 h-80 bg-emerald-400/10 rounded-full blur-2xl"></div>
+  <div class="w-full max-w-xl ml-auto mr-0 lg:mr-12">
 
 
-      <div class="relative z-10">
-
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/10 text-emerald-100 text-xs font-semibold">
-
-          <span class="w-2 h-2 rounded-full bg-yellow-400"></span>
-
-          Pendaftaran Murid Baru
-
-        </div>
+   <!-- ===================================== -->
+<!-- LEFT PANEL / GAMBAR PROMOSI SPMB -->
+<!-- ===================================== -->
 
 
-        <h2 class="mt-8 text-3xl sm:text-4xl font-extrabold leading-tight">
-
-          Mulai Langkah
-          <span class="block text-emerald-300">
-            Pendidikan Kamu
-          </span>
-
-        </h2>
-
-
-        <p class="mt-5 text-emerald-100/80 text-sm leading-7">
-
-          Selamat datang di layanan SPMB Terpadu Ulun Nuha.
-
-          Berikut informasi seputar pendaftaran :
-
-        </p>
-
-
-        <!-- PANDUAN -->
-        <div class="mt-9 space-y-7">
-
-           <!-- PANDUAN 3: PEMBAYARAN -->
-          <div class="flex gap-4">
-            <div class="w-11 h-11 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-emerald-200">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M3 10h18M5 6h14a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2zm3 9h4"/>
-              </svg>
-            </div>
-
-            <div class="min-w-0">
-              <p class="font-semibold text-sm">
-                Pembayaran Biaya Pendaftaran
-              </p>
-
-              <p class="text-xs text-emerald-100/60 mt-1 leading-5">
-                Khusus Jalur Umum dan SKA, biaya pendaftaran sebesar Rp 100.000,- dapat dibayarkan melalui transfer atau langsung melalui loket pembayaran di masing-masing gedung sekolah.
-              </p>
-
-              <div class="mt-3 bg-white/10 border border-white/10 rounded-xl p-3 space-y-1">
-                <p class="text-xs font-semibold text-emerald-200 mb-2">
-                  Informasi Rekening Transfer
-                </p>
-                <p class="text-xs text-white">
-                  <strong>Nominal:</strong> Rp 100.000,-
-                </p>
-                <p class="text-xs text-white">
-                  <strong>Bank:</strong> BSI
-                </p>
-                <p class="text-xs text-white">
-                  <strong>Rekening:</strong> 123-555-7777
-                </p>
-                <p class="text-xs text-white">
-                  <strong>Atas Nama:</strong> Yayasan Minhajus Sunnah Medan
-                </p>
-              </div>
-
-              <p class="text-xs text-emerald-100/60 mt-2 leading-5">
-                Setelah transfer, unggah bukti pembayaran pada formulir pendaftaran. Jika membayar melalui loket, silakan unggah bukti pembayaran yang diberikan.
-              </p>
-            </div>
-          </div>
-
-          <!-- PANDUAN 1 -->
-          <div class="flex gap-4">
-            <div class="w-11 h-11 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-emerald-200">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M12 4v16m8-8H4"/>
-              </svg>
-            </div>
-
-            <div>
-              <p class="font-semibold text-sm">
-                Lengkapi Data Diri
-              </p>
-              <p class="text-xs text-emerald-100/60 mt-1 leading-5">
-                Masukkan nama, NIK, nomor WhatsApp, dan password dengan benar.
-              </p>
-            </div>
-          </div>
-
-
-          <!-- PANDUAN 2 -->
-          <div class="flex gap-4">
-            <div class="w-11 h-11 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-emerald-200">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M4 16.5V20h16v-3.5M12 3v12m-5-5l5 5 5-5"/>
-              </svg>
-            </div>
-
-            <div>
-              <p class="font-semibold text-sm">
-                Upload Dokumen
-              </p>
-              <p class="text-xs text-emerald-100/60 mt-1 leading-5">
-                Siapkan dokumen sesuai jalur pendaftaran dalam format JPG, PNG, atau PDF.
-              </p>
-            </div>
-          </div>
-
-
-         
-
-
-          <!-- PANDUAN 4 -->
-          <div class="flex gap-4">
-            <div class="w-11 h-11 shrink-0 rounded-xl bg-white/10 flex items-center justify-center text-emerald-200">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M9 12l2 2 4-4m5-4v6c0 5-3.5 8-8 10-4.5-2-8-5-8-10V6l8-3 8 3z"/>
-              </svg>
-            </div>
-
-            <div>
-              <p class="font-semibold text-sm">
-                Verifikasi Akun
-              </p>
-              <p class="text-xs text-emerald-100/60 mt-1 leading-5">
-                Akun akan melalui proses pemeriksaan dan persetujuan admin. Pastikan seluruh data dan dokumen yang diunggah sudah benar.
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-
-        <!-- INFORMASI -->
-        <div class="mt-9 p-4 rounded-2xl bg-white/10 border border-white/10">
-
-          <div class="flex items-center gap-2 mb-2">
-
-            <svg class="w-5 h-5 text-yellow-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                d="M12 9v4m0 4h.01M10.3 3.9L2.8 17.5A2 2 0 004.5 20h15a2 2 0 001.7-2.5L13.7 3.9a2 2 0 00-3.4 0z"/>
-            </svg>
-
-            <p class="font-bold text-sm">
-              Informasi Penting
-            </p>
-
-          </div>
-
-          <p class="text-xs text-emerald-100/80 leading-6">
-            Pastikan seluruh data yang dimasukkan sesuai dokumen resmi. Simpan NIK dan password untuk digunakan saat login.
-          </p>
-
-        </div>
-
-
-        <div class="mt-8 border-t border-white/10 pt-5">
-
-          <p class="text-xs text-emerald-100/60">
-            © 2026 SPMB Terpadu Ulun Nuha
-          </p>
-
-        </div>
-
-      </div>
-
-    </section>
 
 
 
@@ -337,7 +162,7 @@
     <!-- RIGHT PANEL / FORM -->
     <!-- ===================================== -->
 
-    <section class="lg:col-span-3 bg-white rounded-3xl p-6 sm:p-9 lg:p-10 shadow-xl shadow-emerald-900/5 border border-gray-100">
+    <section class="w-full bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-9 lg:p-10 shadow-xl shadow-emerald-900/10 border border-white/50">
 
 
       <!-- JUDUL -->
@@ -361,7 +186,44 @@
       <!-- FORM REGISTRASI -->
       <!-- ===================================== -->
 
-      <form id="registerForm" class="space-y-5">
+      <form id="registerForm" class="space-y-2 sm:space-y-2" novalidate>
+
+        <!-- NIK -->
+        <div>
+
+          <label for="nik" class="block text-sm font-semibold text-gray-700 mb-2">
+            Nomor Induk Kependudukan (NIK) Calon Siswa
+          </label>
+
+          <div class="relative">
+
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
+
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                  d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2m6-10a4 4 0 100-8 4 4 0 000 8zm8-1h4m-2-2v4"/>
+              </svg>
+
+            </div>
+
+            <input
+              type="text"
+              id="nik"
+              name="nik"
+              placeholder="Masukkan NIK 16 digit"
+              inputmode="numeric"
+              maxlength="16"
+              autocomplete="off"
+              required
+              class="input-field w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none">
+
+          </div>
+
+          <p class="text-xs text-gray-400 mt-2">
+            NIK harus terdiri dari 16 digit angka.
+          </p>
+
+        </div>
 
 
         <!-- NAMA -->
@@ -379,6 +241,43 @@
             autocomplete="name"
             required
             class="input-field w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none">
+
+        </div>
+
+        <!-- JENIS KELAMIN -->
+        <div>
+
+          <label for="jenisKelamin" class="block text-sm font-semibold text-gray-700 mb-2">
+            Jenis Kelamin
+          </label>
+
+          <div class="relative">
+
+            <select
+              id="jenisKelamin"
+              name="jenisKelamin"
+              required
+              class="input-field w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none appearance-none">
+
+              <option value="" selected disabled>
+                -- Pilih Jenis Kelamin --
+              </option>
+
+              <option value="L">Laki-laki</option>
+              <option value="P">Perempuan</option>
+
+            </select>
+
+            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-gray-400">
+
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M19 9l-7 7-7-7"/>
+              </svg>
+
+            </div>
+
+          </div>
 
         </div>
 
@@ -405,8 +304,9 @@
             <select
               id="unitPendaftaran"
               name="unitPendaftaran"
+              onchange="aturProgramPendidikan()"              
               required
-              class="input-field w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none appearance-none">
+              class="input-field w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none appearance-none" >
 
               <option value="" selected disabled>
                 -- Pilih Unit Pendidikan --
@@ -433,6 +333,50 @@
           </div>
 
         </div>
+
+        <!-- FIELD ABK -->
+<div id="fieldABK" class="hidden">
+  <label for="statusABK" class="block text-sm font-semibold text-gray-700 mb-2">
+    Apakah Anak Berkebutuhan Khusus (ABK)?
+  </label>
+
+  <select
+    id="statusABK"
+    name="statusABK"
+    class="w-full rounded-xl border border-gray-300 px-4 py-3 focus:ring-2 focus:ring-emerald-500"
+  >
+    <option value="">Pilih Jawaban</option>
+    <option value="Ya">Ya</option>
+    <option value="Tidak">Tidak</option>
+  </select>
+</div>
+
+        
+<!-- PROGRAM PENDIDIKAN -->
+<div>
+
+  <label for="programPendaftaran"
+    class="block text-sm font-semibold text-gray-700 mb-2">
+    Program Pendidikan
+  </label>
+
+  <select
+    id="programPendaftaran"
+    name="programPendaftaran"
+    required
+    class="input-field w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none">
+
+    <option value="" selected disabled>
+      -- Pilih Program Pendidikan --
+    </option>
+
+    <option value="Fullday">Full Day</option>
+    <option value="Asrama">Asrama</option>
+
+  </select>
+
+</div>
+
 
 
 
@@ -493,7 +437,21 @@
 
         </div>
 
+        <!-- INFORMASI KUOTA -->
+<div id="informasiKuota" class="hidden space-y-4">
 
+  <div id="cardStatusKuota"
+    class="rounded-xl border border-emerald-200 bg-emerald-50 p-4">
+
+    <p id="judulStatusKuota" class="font-bold text-emerald-800">
+      Kuota tersedia
+    </p>
+
+    <p id="detailKuota" class="text-sm text-emerald-700 mt-1"></p>
+
+  </div>
+
+<div id="areaDokumen" class="hidden space-y-5">
 
         <!-- DOKUMEN UTAMA -->
         <div>
@@ -545,6 +503,106 @@
           </p>
 
         </div>
+</div>
+        
+
+
+
+<!-- CARD PEMBAYARAN -->
+<div id="cardPembayaran"
+  class="hidden rounded-xl border border-emerald-200 bg-white overflow-hidden shadow-sm">
+
+  <!-- HEADER HIJAU -->
+  <div class="bg-gradient-to-r from-emerald-700 to-green-600 px-4 py-3 flex items-center justify-between">
+
+    <div class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+        <span class="text-lg">🏦</span>
+      </div>
+
+      <div>
+        <p class="text-white font-bold text-sm">
+          Pembayaran Pendaftaran
+        </p>
+        <p class="text-emerald-100 text-xs">
+          Bank Syariah Indonesia
+        </p>
+      </div>
+    </div>
+
+    <span class="text-white text-xs font-semibold bg-white/20 px-2 py-1 rounded-md">
+      BSI
+    </span>
+
+  </div>
+
+  <!-- NOMINAL -->
+  <div class="px-4 pt-3 pb-2">
+
+    <p class="text-xs text-gray-500 font-medium">
+      Total Biaya Pendaftaran
+    </p>
+
+    <p class="text-2xl font-extrabold text-emerald-700">
+      Rp100.000
+    </p>
+
+  </div>
+
+  <!-- REKENING -->
+  <div class="mx-4 mb-3 rounded-lg bg-emerald-50 border border-emerald-100 p-3">
+
+    <div class="flex items-center justify-between gap-3">
+
+      <div class="min-w-0">
+        <p class="text-xs text-gray-500">
+          Nomor Rekening BSI
+        </p>
+
+        <p class="text-lg font-bold tracking-wide text-gray-800">
+          123-555-7777
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onclick="salinRekening()"
+        class="shrink-0 bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-semibold px-3 py-2 rounded-lg transition">
+        <span class="flex items-center gap-1">
+          <span>📋</span>
+          Salin
+        </span>
+      </button>
+
+    </div>
+
+    <div class="border-t border-emerald-200 mt-2 pt-2">
+
+      <p class="text-xs text-gray-500">
+        Atas Nama
+      </p>
+
+      <p class="text-sm font-semibold text-gray-800">
+        Yayasan Minhajus Sunnah Medan
+      </p>
+
+    </div>
+
+  </div>
+
+  <!-- CATATAN -->
+  <div class="px-4 pb-3">
+    <p class="text-xs text-gray-500 leading-relaxed">
+      <span class="text-emerald-700 font-semibold">Catatan:</span>
+      Transfer sesuai nominal, kemudian unggah bukti pembayaran pada formulir pendaftaran.
+    </p>
+  </div>
+
+</div>
+
+
+</div>
+
 
 
 
@@ -585,45 +643,7 @@
 
 
 
-        <!-- NIK -->
-        <div>
-
-          <label for="nik" class="block text-sm font-semibold text-gray-700 mb-2">
-            Nomor Induk Kependudukan (NIK) Calon Siswa
-          </label>
-
-          <div class="relative">
-
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400">
-
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2m6-10a4 4 0 100-8 4 4 0 000 8zm8-1h4m-2-2v4"/>
-              </svg>
-
-            </div>
-
-            <input
-              type="text"
-              id="nik"
-              name="nik"
-              placeholder="Masukkan NIK 16 digit"
-              inputmode="numeric"
-              maxlength="16"
-              autocomplete="off"
-              required
-              class="input-field w-full pl-12 pr-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none">
-
-          </div>
-
-          <p class="text-xs text-gray-400 mt-2">
-            NIK harus terdiri dari 16 digit angka.
-          </p>
-
-        </div>
-
-
-
+        
         <!-- PASSWORD -->
         <div>
 
@@ -696,38 +716,16 @@
 
 
 
-        <!-- CATATAN -->
-        <div class="bg-amber-50 border border-amber-100 rounded-xl p-4">
-
-          <div class="flex gap-3">
-
-            <svg class="w-5 h-5 shrink-0 text-amber-600 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                d="M12 9v4m0 4h.01M10.3 3.9L2.8 17.5A2 2 0 004.5 20h15a2 2 0 001.7-2.5L13.7 3.9a2 2 0 00-3.4 0z"/>
-            </svg>
-
-            <div>
-
-              <p class="text-sm font-bold text-amber-800">
-                Perhatian
-              </p>
-
-              <p class="text-xs text-amber-700 mt-1 leading-5">
-                Pendaftaran ini untuk siswa Full Day, sedangkan kuota Asrama sudah penuh.
-              </p>
-
-            </div>
-
-          </div>
-
-        </div>
+     
 
 
 
         <!-- TOMBOL DAFTAR -->
         <button
-          type="submit"
-          class="register-button w-full flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-700 to-green-600 hover:from-emerald-800 hover:to-green-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-700/20">
+  id="btnDaftar"
+  type="submit"
+  disabled
+  class="register-button w-full flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-700 to-green-600 text-white font-bold py-4 rounded-xl shadow-lg shadow-emerald-700/20 opacity-50 cursor-not-allowed">
 
           <span>Daftar Sekarang</span>
 
@@ -791,30 +789,242 @@
 
 
 
-<!-- ===================================== -->
-<!-- JAVASCRIPT: DOKUMEN PENDAFTARAN -->
-<!-- ===================================== -->
-
 <script>
+// =====================================
+// ELEMEN FORM
+// =====================================
 
 const jalurSelect = document.getElementById('jalurPendaftaran');
+const unitSelect = document.getElementById('unitPendaftaran');
+const jkSelect = document.getElementById('jenisKelamin');
+const programSelect = document.getElementById('programPendaftaran');
 
 const labelDokumenUtama = document.getElementById('labelDokumenUtama');
-
 const uploadSuratSKA = document.getElementById('uploadSuratSKA');
 
 const buktiTransferInput = document.getElementById('buktiTransfer');
-
 const buktiSuratSKAInput = document.getElementById('buktiSuratSKA');
 
+const informasiKuota = document.getElementById('informasiKuota');
+const cardStatusKuota = document.getElementById('cardStatusKuota');
+const judulStatusKuota = document.getElementById('judulStatusKuota');
+const detailKuota = document.getElementById('detailKuota');
+const cardPembayaran = document.getElementById('cardPembayaran');
+const areaDokumen = document.getElementById('areaDokumen');
 
-const MAX_FILE_SIZE = 2 * 1024 * 1024;
+const tombolDaftar = document.querySelector(
+  '#registerForm button[type="submit"]'
+);
+
+const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
 const TIPE_FILE_VALID = [
   'image/jpeg',
   'image/png',
   'application/pdf'
 ];
+
+let kuotaValid = false;
+let nomorPengecekan = 0;
+
+
+// =====================================
+// SEMUA JALUR PENDAFTARAN
+// =====================================
+
+const semuaJalur = Array.from(jalurSelect.options).map(option => ({
+  value: option.value,
+  text: option.text
+}));
+
+
+// =====================================
+// RESET HASIL PENGECEKAN
+// =====================================
+
+function resetHasilKuota() {
+
+  nomorPengecekan++;
+
+  kuotaValid = false;
+
+  informasiKuota.classList.add('hidden');
+  areaDokumen.classList.add('hidden');
+  cardPembayaran.classList.add('hidden');
+
+  tombolDaftar.disabled = true;
+  tombolDaftar.classList.add('opacity-50', 'cursor-not-allowed');
+
+  buktiTransferInput.required = false;
+  buktiSuratSKAInput.required = false;
+
+}
+
+
+
+
+// =====================================
+// ATUR JALUR dan PROGRAM PENDIDIKAN BERDASARKAN UNIT, ABK
+// =====================================
+
+function aturFieldABK() {
+  const unit = unitSelect.value;
+  const fieldABK = document.getElementById('fieldABK');
+  const statusABK = document.getElementById('statusABK');
+
+  if (['RA', 'SD'].includes(unit)) {
+    fieldABK.classList.remove('hidden');
+  } else {
+    fieldABK.classList.add('hidden');
+    statusABK.value = '';
+  }
+}
+
+document.getElementById('statusABK').addEventListener('change', function() {
+
+  if (this.value === 'Ya') {
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Mohon Maaf',
+      text: 'Mohon maaf, saat ini Sekolah Islam Ulun Nuha belum dapat menerima pendaftaran anak berkebutuhan khusus (ABK) karena keterbatasan fasilitas dan tenaga pendidik yang tersedia.',
+      confirmButtonText: 'Mengerti',
+      confirmButtonColor: '#047857',
+      allowOutsideClick: false,
+      allowEscapeKey: false
+    }).then(() => {
+
+      // Kosongkan pilihan ABK
+      this.value = '';
+
+      // Batasi tombol pendaftaran
+      tombolDaftar.disabled = true;
+
+    });
+
+  } else if (this.value === 'Tidak') {
+
+    tombolDaftar.disabled = false;
+
+  }
+
+});
+
+function aturProgramPendidikan() {
+  const unit = unitSelect.value;
+  const opsiAsrama = programSelect.querySelector('option[value="Asrama"]');
+
+  if (['RA', 'SD', 'Sekolah Tinggi'].includes(unit)) {
+    // Sembunyikan pilihan Asrama
+    opsiAsrama.hidden = true;
+
+    // Otomatis pilih Full Day
+    programSelect.value = 'Fullday';
+  } else {
+    // Tampilkan kembali pilihan Asrama
+    opsiAsrama.hidden = false;
+  }
+
+  // Perbarui pengecekan kuota
+  cekKuotaOtomatis();
+  aturFieldABK();
+}
+
+function aturJalurPendaftaran() {
+
+  const unit = unitSelect.value;
+  const jalurSebelumnya = jalurSelect.value;
+
+  jalurSelect.innerHTML = '';
+
+  semuaJalur.forEach(jalur => {
+
+    if (!jalur.value) {
+      const option = document.createElement('option');
+      option.value = '';
+      option.textContent = jalur.text;
+      option.disabled = true;
+      option.selected = true;
+      jalurSelect.appendChild(option);
+      return;
+    }
+
+    if (unit === 'SD' && jalur.value === 'Umum') {
+      return;
+    }
+
+    if (
+      unit === 'Sekolah Tinggi' &&
+      jalur.value === 'Alumni'
+    ) {
+      return;
+    }
+
+    const option = document.createElement('option');
+    option.value = jalur.value;
+    option.textContent = jalur.text;
+
+    jalurSelect.appendChild(option);
+
+  });
+
+  if (
+    Array.from(jalurSelect.options)
+      .some(option => option.value === jalurSebelumnya)
+  ) {
+    jalurSelect.value = jalurSebelumnya;
+  } else {
+    jalurSelect.value = '';
+  }
+
+  updateDokumenPendaftaran();
+  resetHasilKuota();
+
+}
+
+
+// =====================================
+// UPDATE DOKUMEN BERDASARKAN JALUR
+// =====================================
+
+function updateDokumenPendaftaran() {
+
+  const jalur = jalurSelect.value;
+
+  labelDokumenUtama.textContent =
+    'Upload Bukti Transfer (JPG, PNG, PDF)';
+
+  uploadSuratSKA.classList.add('hidden');
+
+  buktiTransferInput.required = false;
+  buktiSuratSKAInput.required = false;
+
+  if (jalur === 'KBUN') {
+
+    labelDokumenUtama.textContent =
+      'Upload SK Yayasan (JPG, PNG, PDF)';
+
+  } else if (jalur === 'SKA') {
+
+    labelDokumenUtama.textContent =
+      'Upload Bukti Transfer (JPG, PNG, PDF)';
+
+    uploadSuratSKA.classList.remove('hidden');
+
+    buktiSuratSKAInput.required = true;
+
+  } else if (jalur === 'Alumni') {
+
+    labelDokumenUtama.textContent =
+      'Upload Surat Rekomendasi (JPG, PNG, PDF)';
+
+  }
+
+  // Dokumen utama wajib untuk semua jalur,
+  // tetapi hanya setelah kuota tersedia.
+  buktiTransferInput.required = kuotaValid;
+
+}
 
 
 // =====================================
@@ -827,21 +1037,18 @@ function validasiFile(input, namaDokumen) {
 
   if (!file) return true;
 
-
   if (file.size > MAX_FILE_SIZE) {
 
     Swal.fire(
       'Ukuran file terlalu besar',
-      namaDokumen + ' maksimal 2 MB.',
+      namaDokumen + ' maksimal 5 MB.',
       'error'
     );
 
     input.value = '';
-
     return false;
 
   }
-
 
   if (!TIPE_FILE_VALID.includes(file.type)) {
 
@@ -852,113 +1059,496 @@ function validasiFile(input, namaDokumen) {
     );
 
     input.value = '';
-
     return false;
 
   }
-
 
   return true;
 
 }
 
 
-
-// =====================================
-// VALIDASI DOKUMEN UTAMA
-// =====================================
-
 buktiTransferInput.addEventListener('change', function() {
 
   let nama = 'Bukti Transfer';
 
-
   if (jalurSelect.value === 'KBUN') {
-
     nama = 'SK Yayasan';
-
   } else if (jalurSelect.value === 'Alumni') {
-
     nama = 'Surat Rekomendasi';
-
   }
-
 
   validasiFile(this, nama);
 
 });
 
 
-
-// =====================================
-// VALIDASI SURAT SKA
-// =====================================
-
 buktiSuratSKAInput.addEventListener('change', function() {
 
-  validasiFile(
-    this,
-    'Surat Aktif Saudara Kandung'
-  );
+  validasiFile(this, 'Surat Aktif Saudara Kandung');
 
 });
 
 
+// =====================================
+// TAMPILKAN HASIL KUOTA
+// =====================================
+
+function tampilkanKuota(hasil) {
+
+  informasiKuota.classList.remove('hidden');
+
+  if (hasil.tersedia) {
+
+    cardStatusKuota.className =
+      'rounded-xl border border-emerald-200 bg-emerald-50 p-4';
+
+    judulStatusKuota.textContent = '✓ Kuota Tersedia';
+
+    judulStatusKuota.className =
+      'font-bold text-emerald-800';
+
+    detailKuota.textContent =
+      'Kuota: ' + hasil.kuota +
+      ' | Pendaftar: ' + hasil.terdaftar +
+      ' | Sisa: ' + hasil.sisaKuota;
+
+    // Card pembayaran hanya untuk Umum dan SKA
+    if (
+      jalurSelect.value === 'Umum' ||
+      jalurSelect.value === 'SKA'
+    ) {
+      cardPembayaran.classList.remove('hidden');
+    } else {
+      cardPembayaran.classList.add('hidden');
+    }
+
+    areaDokumen.classList.remove('hidden');
+
+    kuotaValid = true;
+
+    buktiTransferInput.required = true;
+
+    buktiSuratSKAInput.required =
+      jalurSelect.value === 'SKA';
+
+    tombolDaftar.disabled = false;
+    tombolDaftar.classList.remove(
+      'opacity-50',
+      'cursor-not-allowed'
+    );
+
+  } else {
+
+  cardStatusKuota.className =
+    'rounded-xl border border-red-200 bg-red-50 p-4';
+
+  judulStatusKuota.textContent = 'Kuota Sudah Penuh';
+
+  judulStatusKuota.className =
+    'font-bold text-red-800';
+
+  detailKuota.textContent =
+    'Mohon maaf, kuota pendaftaran sudah penuh. Silakan mendaftar melalui jalur waiting list untuk tahun depan atau jika ada siswa yang mengundurkan diri.';
+
+  // Sembunyikan pembayaran dan upload dokumen
+  cardPembayaran.classList.add('hidden');
+  areaDokumen.classList.add('hidden');
+
+  // Nonaktifkan pendaftaran reguler
+  kuotaValid = false;
+  tombolDaftar.disabled = true;
+
+  // Tombol Waiting List
+  const tombolWaiting = document.createElement('button');
+
+  tombolWaiting.type = 'button';
+  tombolWaiting.textContent = 'Daftar Waiting List';
+
+  tombolWaiting.className =
+    'mt-4 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white font-bold text-sm px-5 py-3 shadow-md transition';
+
+  tombolWaiting.onclick = tampilkanPopupWaitingList;
+
+  detailKuota.appendChild(document.createElement('br'));
+  detailKuota.appendChild(tombolWaiting);
+
+}
+
+}
+
+async function tampilkanPopupWaitingList() {
+
+  // Ambil data dari formulir registrasi
+  const dataSiswa = {
+    nik: document.getElementById('nik').value.trim(),
+    nama: document.getElementById('nama').value.trim(),
+    jenisKelamin: document.getElementById('jenisKelamin').value,
+    unitPendaftaran: document.getElementById('unitPendaftaran').value,
+    programPendaftaran: document.getElementById('programPendaftaran').value,
+    jalurPendaftaran: document.getElementById('jalurPendaftaran').value
+  };
+
+  const apiTujuan = API_UNIT[dataSiswa.unitPendaftaran];
+
+  if (!apiTujuan) {
+    Swal.fire('Gagal', 'API unit pendidikan tidak ditemukan.', 'error');
+    return;
+  }
+
+  // Escape teks agar aman ditampilkan di HTML popup
+  const aman = (teks) => String(teks || '').replace(/[&<>"']/g, karakter => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[karakter]);
+
+  const hasilPopup = await Swal.fire({
+    title: 'Form Waiting List',
+    html: `
+      <div class="text-left space-y-3">
+
+        <p class="text-sm text-gray-600 mb-4">
+          Silakan periksa data calon siswa dan masukkan nomor WhatsApp aktif.
+        </p>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">NIK</label>
+          <input id="wlNik" class="swal2-input" value="${aman(dataSiswa.nik)}" readonly>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Nama Calon Siswa</label>
+          <input id="wlNama" class="swal2-input" value="${aman(dataSiswa.nama)}" readonly>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Jenis Kelamin</label>
+          <input class="swal2-input" value="${dataSiswa.jenisKelamin === 'L' ? 'Laki-laki' : dataSiswa.jenisKelamin === 'P' ? 'Perempuan' : ''}" readonly>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Program Pendidikan</label>
+          <input class="swal2-input" value="${aman(dataSiswa.programPendaftaran)}" readonly>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Jalur Pendaftaran</label>
+          <input class="swal2-input" value="${aman(dataSiswa.jalurPendaftaran)}" readonly>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-gray-600 mb-1">Nomor WhatsApp</label>
+          <input
+            id="wlWa"
+            class="swal2-input"
+            type="tel"
+            placeholder="Contoh: 081234567890"
+            maxlength="15"
+            autocomplete="tel"
+          >
+        </div>
+
+        <p class="text-xs text-gray-500">
+          Data ini akan disimpan ke daftar Waiting List unit pendidikan yang dipilih.
+        </p>
+
+      </div>
+    `,
+    confirmButtonText: 'Kirim Waiting List',
+    cancelButtonText: 'Batal',
+    showCancelButton: true,
+    confirmButtonColor: '#047857',
+    focusConfirm: false,
+
+    preConfirm: async () => {
+
+      const wa = document.getElementById('wlWa').value.trim();
+
+      if (!wa) {
+        Swal.showValidationMessage('Nomor WhatsApp wajib diisi.');
+        return false;
+      }
+
+      if (!/^\d{9,15}$/.test(wa.replace(/\D/g, ''))) {
+        Swal.showValidationMessage('Nomor WhatsApp tidak valid.');
+        return false;
+      }
+
+      const formData = new URLSearchParams();
+
+      formData.append('action', 'daftarWaitingList');
+      formData.append('nik', dataSiswa.nik);
+      formData.append('nama', dataSiswa.nama);
+      formData.append('jenisKelamin', dataSiswa.jenisKelamin);
+      formData.append('wa', wa);
+      formData.append('unitPendaftaran', dataSiswa.unitPendaftaran);
+      formData.append('programPendaftaran', dataSiswa.programPendaftaran);
+      formData.append('jalurPendaftaran', dataSiswa.jalurPendaftaran);
+
+      try {
+
+        Swal.showLoading();
+
+        const response = await fetch(apiTujuan, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (!response.ok) {
+          throw new Error('Server tidak merespons dengan baik.');
+        }
+
+        const hasil = await response.json();
+
+        if (hasil.status !== 'success') {
+          Swal.showValidationMessage(
+            hasil.message || 'Pendaftaran Waiting List gagal.'
+          );
+          return false;
+        }
+
+        return hasil;
+
+      } catch (error) {
+
+        console.error('Error Waiting List:', error);
+
+        Swal.showValidationMessage(
+          'Tidak dapat menghubungi server. Silakan coba kembali.'
+        );
+
+        return false;
+      }
+    }
+  });
+
+  if (hasilPopup.isConfirmed && hasilPopup.value) {
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Berhasil Terdaftar!',
+      html: `
+        <p class="text-sm text-gray-600">
+          Data calon siswa berhasil masuk ke Waiting List.
+        </p>
+        <p class="font-bold text-emerald-700 mt-3">
+          ${aman(hasilPopup.value.nomorWaitingList)}
+        </p>
+      `,
+      confirmButtonText: 'Mengerti',
+      confirmButtonColor: '#047857'
+    });
+
+  }
+}
+
 
 // =====================================
-// UPDATE DOKUMEN BERDASARKAN JALUR
+// PENGECEKAN KUOTA KE GAS
 // =====================================
 
-function updateDokumenPendaftaran() {
+async function cekKuotaOtomatis() {
 
+  resetHasilKuota();
+
+  const unit = unitSelect.value;
   const jalur = jalurSelect.value;
+  const jk = jkSelect.value;
+  const program = programSelect.value;
 
+  if (!unit || !jalur || !jk || !program) {
+    return;
+  }
 
-  labelDokumenUtama.textContent =
-    'Upload Bukti Transfer (JPG, PNG, PDF)';
+  const apiTujuan = API_UNIT[unit];
 
+  if (!apiTujuan) {
 
-  uploadSuratSKA.classList.add('hidden');
+    Swal.fire(
+      'Konfigurasi API',
+      'API unit ' + unit + ' belum tersedia.',
+      'error'
+    );
 
-  buktiSuratSKAInput.required = false;
-
-
-  if (jalur === 'KBUN') {
-
-    labelDokumenUtama.textContent =
-      'Upload SK Yayasan (JPG, PNG, PDF)';
+    return;
 
   }
 
+  const nomorSekarang = ++nomorPengecekan;
 
-  else if (jalur === 'SKA') {
+  informasiKuota.classList.remove('hidden');
 
-    labelDokumenUtama.textContent =
-      'Upload Bukti Transfer (JPG, PNG, PDF)';
+  judulStatusKuota.textContent =
+    'Sedang memeriksa kuota...';
 
-    uploadSuratSKA.classList.remove('hidden');
+  judulStatusKuota.className =
+    'font-bold text-blue-800';
 
-    buktiSuratSKAInput.required = true;
+  detailKuota.textContent =
+    'Mohon tunggu sebentar.';
 
-  }
+  cardStatusKuota.className =
+    'rounded-xl border border-blue-200 bg-blue-50 p-4';
 
+  try {
 
-  else if (jalur === 'Alumni') {
+    const formData = new URLSearchParams();
 
-    labelDokumenUtama.textContent =
-      'Upload Surat Rekomendasi (JPG, PNG, PDF)';
+    formData.append('action', 'cekKuota');
+    formData.append('jalurPendaftaran', jalur);
+    formData.append('jenisKelamin', jk);
+    formData.append('program', program);
+
+    const response = await fetch(apiTujuan, {
+      method: 'POST',
+      body: formData
+    });
+
+    if (!response.ok) {
+      throw new Error('Server tidak merespons dengan baik.');
+    }
+
+    const hasil = await response.json();
+
+    // Jika kuota sudah terpakai oleh pendaftar lain
+// Abaikan respons lama jika pilihan sudah berubah
+if (nomorSekarang !== nomorPengecekan) {
+  return;
+}
+
+// Jika kuota penuh, tampilkan tombol Waiting List
+if (
+  hasil.status === 'error' &&
+  hasil.code === 'kuota_habis'
+) {
+
+  tampilkanKuota({
+    tersedia: false,
+    message: hasil.message
+  });
+
+  return;
+}
+
+    // Abaikan respons lama jika pilihan sudah berubah
+    if (nomorSekarang !== nomorPengecekan) {
+      return;
+    }
+
+    if (hasil.status !== 'success') {
+
+      informasiKuota.classList.remove('hidden');
+
+      cardStatusKuota.className =
+        'rounded-xl border border-red-200 bg-red-50 p-4';
+
+      judulStatusKuota.textContent =
+        'Pengecekan Tidak Berhasil';
+
+      judulStatusKuota.className =
+        'font-bold text-red-800';
+
+      detailKuota.textContent =
+        hasil.message || 'Kuota tidak dapat diperiksa.';
+
+      return;
+
+    }
+
+    tampilkanKuota(hasil);
+
+  } catch (error) {
+
+    if (nomorSekarang !== nomorPengecekan) {
+      return;
+    }
+
+    informasiKuota.classList.remove('hidden');
+
+    cardStatusKuota.className =
+      'rounded-xl border border-red-200 bg-red-50 p-4';
+
+    judulStatusKuota.textContent =
+      'Gagal Menghubungi Server';
+
+    judulStatusKuota.className =
+      'font-bold text-red-800';
+
+    detailKuota.textContent =
+      'Pengecekan kuota gagal. Silakan periksa koneksi dan coba kembali.';
+
+    console.error('Error cek kuota:', error);
 
   }
 
 }
 
 
-jalurSelect.addEventListener(
-  'change',
-  updateDokumenPendaftaran
-);
+// =====================================
+// EVENT PERUBAHAN PILIHAN
+// =====================================
 
-updateDokumenPendaftaran();
+unitSelect.addEventListener('change', function() {
+
+  aturJalurPendaftaran();
+
+});
+
+jalurSelect.addEventListener('change', function() {
+
+  updateDokumenPendaftaran();
+  resetHasilKuota();
+  cekKuotaOtomatis();
+
+});
+
+jkSelect.addEventListener('change', cekKuotaOtomatis);
+
+programSelect.addEventListener('change', cekKuotaOtomatis);
+
+
+// =====================================
+// SALIN NOMOR REKENING
+// =====================================
+
+function salinRekening() {
+
+  navigator.clipboard.writeText('123-555-7777')
+    .then(() => {
+
+      Swal.fire({
+        toast: true,
+        position: 'top',
+        icon: 'success',
+        title: 'Nomor rekening berhasil disalin',
+        showConfirmButton: false,
+        timer: 1800
+      });
+
+    })
+    .catch(() => {
+
+      Swal.fire(
+        'Tidak dapat menyalin',
+        'Silakan salin nomor rekening secara manual.',
+        'warning'
+      );
+
+    });
+
+}
+
+
+// =====================================
+// KONDISI AWAL
+// =====================================
+
+resetHasilKuota();
+aturJalurPendaftaran();
+
 
 </script>
 
@@ -1076,8 +1666,193 @@ document.getElementById('registerForm').addEventListener(
 
     e.preventDefault();
 
+    // =====================================
+// VALIDASI FIELD WAJIB DIISI
+// =====================================
 
-    const form = this;
+const form = this;
+
+const fieldWajib = form.querySelectorAll('[required]');
+
+for (const field of fieldWajib) {
+
+  if (!field.value.trim()) {
+
+    const label = form.querySelector(
+      `label[for="${field.id}"]`
+    );
+
+    const namaField = label
+      ? label.textContent.trim()
+      : 'Field ini';
+
+    Swal.fire({
+      icon: 'info',
+      title: 'Data Belum Lengkap',
+      html: `
+        <p class="text-gray-600 text-sm">
+          Mohon lengkapi terlebih dahulu:
+        </p>
+        <p class="font-bold text-emerald-700 mt-2">
+          ${namaField}
+        </p>
+      `,
+      confirmButtonText: 'Lengkapi Sekarang',
+      confirmButtonColor: '#047857',
+      allowOutsideClick: false
+    }).then(() => {
+      field.focus();
+      field.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+      });
+    });
+
+    return;
+  }
+
+}
+
+    
+
+    // =====================================
+    // VALIDASI ABK KHUSUS RA DAN SD
+    // =====================================
+
+    const unit = unitSelect.value;
+
+    if (['RA', 'SD'].includes(unit)) {
+
+      const statusABK = document.getElementById('statusABK').value;
+
+      if (!statusABK) {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Pilih Jawaban',
+          text: 'Silakan pilih apakah calon siswa termasuk anak berkebutuhan khusus (ABK).'
+        });
+        return;
+      }
+
+      if (statusABK === 'Ya') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Pendaftaran Tidak Dapat Dilanjutkan',
+          text: 'Mohon maaf, pendaftaran untuk unit ini belum dapat dilanjutkan.'
+        });
+        return;
+      }
+
+    }
+
+    // =====================================
+    // LANJUTKAN PROSES PENDAFTARAN
+    // =====================================
+
+   
+// =====================================
+// KONFIRMASI DATA PENDAFTARAN
+// =====================================
+
+function escapeHTML(teks) {
+  return String(teks || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+const dataKonfirmasi = {
+  nik: document.getElementById('nik').value,
+  nama: document.getElementById('nama').value,
+  jk: document.getElementById('jenisKelamin').value,
+  unit: unitSelect.options[unitSelect.selectedIndex].text,
+  program: programSelect.options[programSelect.selectedIndex].text,
+  jalur: jalurSelect.options[jalurSelect.selectedIndex].text,
+  wa: document.getElementById('wa').value
+};
+
+const hasilKonfirmasi = await Swal.fire({
+  
+  title: 'Periksa Data Pendaftaran',
+  html: `
+    <div class="text-left space-y-2">
+
+      <p class="text-sm text-gray-600 text-center mb-4">
+        Apakah seluruh data yang Anda masukkan sudah benar?
+        Silakan periksa kembali sebelum mengirim pendaftaran.
+      </p>
+
+      <div class="rounded-xl border border-gray-200 overflow-hidden text-sm">
+
+        <div class="grid grid-cols-2 border-b p-3">
+          <span class="text-gray-500">NIK</span>
+          <b class="text-gray-800 text-right">${escapeHTML(dataKonfirmasi.nik)}</b>
+        </div>
+
+        <div class="grid grid-cols-2 border-b p-3">
+          <span class="text-gray-500">Nama</span>
+          <b class="text-gray-800 text-right">${escapeHTML(dataKonfirmasi.nama)}</b>
+        </div>
+
+        <div class="grid grid-cols-2 border-b p-3">
+          <span class="text-gray-500">Jenis Kelamin</span>
+          <b class="text-gray-800 text-right">${escapeHTML(dataKonfirmasi.jk)}</b>
+        </div>
+
+        <div class="grid grid-cols-2 border-b p-3">
+          <span class="text-gray-500">Unit Pendidikan</span>
+          <b class="text-gray-800 text-right">${escapeHTML(dataKonfirmasi.unit)}</b>
+        </div>
+
+        <div class="grid grid-cols-2 border-b p-3">
+          <span class="text-gray-500">Program</span>
+          <b class="text-gray-800 text-right">${escapeHTML(dataKonfirmasi.program)}</b>
+        </div>
+
+        <div class="grid grid-cols-2 border-b p-3">
+          <span class="text-gray-500">Jalur Pendaftaran</span>
+          <b class="text-gray-800 text-right">${escapeHTML(dataKonfirmasi.jalur)}</b>
+        </div>
+
+        <div class="grid grid-cols-2 border-b p-3">
+          <span class="text-gray-500">WhatsApp</span>
+          <b class="text-gray-800 text-right">${escapeHTML(dataKonfirmasi.wa)}</b>
+        </div>
+
+        <div class="grid grid-cols-2 p-3">
+          <span class="text-gray-500">Password</span>
+          <b class="text-emerald-700 text-right">••••••••</b>
+        </div>
+
+      </div>
+
+      <p class="text-xs text-gray-500 text-center">
+        Pastikan seluruh data sudah sesuai sebelum melanjutkan.
+      </p>
+
+    </div>
+  `,
+  width: 520,
+  showCancelButton: true,
+  confirmButtonText: 'Ya, Data Sudah Benar',
+  cancelButtonText: 'Periksa Kembali',
+  confirmButtonColor: '#047857',
+  cancelButtonColor: '#64748b',
+  reverseButtons: true,
+  allowOutsideClick: false
+});
+
+// Jika memilih Periksa Kembali, hentikan submit
+if (!hasilKonfirmasi.isConfirmed) {
+  return;
+}
+
+// Jika dikonfirmasi, lanjutkan proses submit
+
+
+   
 
 
     // =====================================
@@ -1086,6 +1861,12 @@ document.getElementById('registerForm').addEventListener(
 
     const nama =
       form.elements.namedItem('nama').value.trim();
+
+      const jenisKelamin =
+  form.elements.namedItem('jenisKelamin').value;
+
+  const programPendaftaran =
+  form.elements.namedItem('programPendaftaran').value;
 
     const unitPendaftaran =
       form.elements.namedItem('unitPendaftaran').value;
@@ -1176,6 +1957,22 @@ if (wa.startsWith('0')) {
       return;
 
     }
+
+    // =====================================
+// VALIDASI KUOTA
+// =====================================
+
+if (!kuotaValid) {
+
+  Swal.fire(
+    'Kuota Belum Tersedia',
+    'Silakan tunggu hasil pengecekan kuota sebelum mendaftar.',
+    'warning'
+  );
+
+  return;
+
+}
 
 
 
@@ -1273,7 +2070,7 @@ if (wa.startsWith('0')) {
     // VALIDASI UKURAN DAN FORMAT FILE
     // =====================================
 
-    const maxSize = 2 * 1024 * 1024;
+    const maxSize = 5 * 1024 * 1024;
 
     const tipeValid = [
       'image/jpeg',
@@ -1318,7 +2115,7 @@ if (wa.startsWith('0')) {
 
         Swal.fire(
           'Ukuran File Terlalu Besar',
-          item.nama + ' maksimal 2 MB.',
+          item.nama + ' maksimal 5 MB.',
           'error'
         );
 
@@ -1435,6 +2232,10 @@ if (wa.startsWith('0')) {
       formData.append('action', 'register');
 
       formData.append('nama', nama);
+
+      formData.append('jenisKelamin', jenisKelamin);
+
+      formData.append('programPendaftaran', programPendaftaran);
 
       formData.append('jalurPendaftaran', jalurPendaftaran);
 
