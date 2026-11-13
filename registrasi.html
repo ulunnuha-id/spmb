@@ -307,7 +307,7 @@
             <select
               id="unitPendaftaran"
               name="unitPendaftaran"
-              onchange="aturProgramPendidikan()"              
+              onchange="aturProgramPendidikan(); muatSemuaJadwalRegistrasi()"              
               required
               class="input-field w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none appearance-none" >
 
@@ -319,7 +319,7 @@
               <option value="SD">SD</option>
               <option value="SMP">SMP</option>
               <option value="SMA">SMA</option>
-              <option value="Boarding">UNBS</option>
+              <!-- <option value="Boarding">UNBS</option> -->
               <option value="Sekolah Tinggi">I'dad Mualimin</option>
 
             </select>
@@ -373,7 +373,7 @@
       -- Pilih Program Pendidikan --
     </option>
 
-    <option value="Fullday">Full Day</option>
+    <option value="Fullday">Reguler</option>
     <option value="Asrama">Asrama</option>
 
   </select>
@@ -383,62 +383,86 @@
 
 
 
-        <!-- JALUR PENDAFTARAN -->
-        <div>
+       
+<!-- ===================================== -->
+<!-- JADWAL PENDAFTARAN -->
+<!-- ===================================== -->
 
-          <label for="jalurPendaftaran" class="block text-sm font-semibold text-gray-700 mb-2">
-            Jalur Pendaftaran
-          </label>
+<div id="areaJadwalRegistrasi" class="hidden space-y-3">
 
-          <div class="relative">
+  <div>
+    <h3 class="text-sm font-bold text-gray-800">
+      Pilih Jalur Pendaftaran
+    </h3>
+    <p class="text-xs text-gray-500 mt-1">
+      Pilih jalur pendaftaran yang sedang dibuka.
+    </p>
+  </div>
 
-            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-emerald-600">
+  <div id="daftarKartuJadwal"
+       class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+  </div>
 
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
-                  d="M12 3l2.5 5.5L20 11l-5.5 2.5L12 19l-2.5-5.5L4 11l5.5-2.5L12 3z"/>
-              </svg>
+</div>
 
-            </div>
 
-            <select
-              id="jalurPendaftaran"
-              name="jalurPendaftaran"
-              required
-              class="input-field w-full pl-12 pr-10 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none appearance-none">
+<!-- ===================================== -->
+<!-- DROPDOWN JALUR PENDAFTARAN -->
+<!-- ===================================== -->
 
-              <option value="" selected disabled>
-                -- Pilih Jalur Pendaftaran --
-              </option>
+<div hidden id="wrapperJalurPendaftaran" class="hidden">
 
-              <option value="Umum">Umum</option>
+  <label for="jalurPendaftaran"
+         class="block text-sm font-semibold text-gray-700 mb-2">
+    Jalur Pendaftaran
+  </label>
 
-              <option value="KBUN">
-                KBUN (Keluarga Besar Ulun Nuha)
-              </option>
+  <div class="relative">
 
-              <option value="SKA">
-                Saudara Kandung Aktif (SKA)
-              </option>
+    <select
+      id="jalurPendaftaran"
+      name="jalurPendaftaran"
+      required
+      onchange="cekJadwalRegistrasi()"
+      class="input-field w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none">
 
-              <option value="Alumni">
-                Alumni
-              </option>
+      <option value="" selected disabled>
+        -- Pilih Jalur Pendaftaran --
+      </option>
 
-            </select>
+    </select>
 
-            <div class="absolute inset-y-0 right-4 flex items-center pointer-events-none text-gray-400">
+  </div>
 
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                  d="M19 9l-7 7-7-7"/>
-              </svg>
+</div>
 
-            </div>
 
-          </div>
+<!-- ===================================== -->
+<!-- INFORMASI JADWAL TERPILIH -->
+<!-- ===================================== -->
 
-        </div>
+<div hidden id="infoJadwalRegistrasi"
+     class="hidden rounded-xl border p-4">
+
+  <div class="flex items-start gap-3">
+
+    <div id="iconStatusJadwal" class="text-xl">📅</div>
+
+    <div class="flex-1">
+
+      <p id="judulStatusJadwal" class="font-bold text-sm"></p>
+
+      <p id="pesanStatusJadwal" class="text-sm mt-1"></p>
+
+      <p id="keteranganStatusJadwal" class="text-xs mt-2"></p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
 
         <!-- INFORMASI KUOTA -->
 <div id="informasiKuota" class="hidden space-y-4">
@@ -792,7 +816,476 @@
 
 
 
+
 <script>
+  
+
+const URL_GAS_ADMIN_JADWAL =
+  'https://script.google.com/macros/s/AKfycbz5S_uh0pyn745_De2hbTorrYSVHD8UDjS4kc2D9n4YMZHAoQRQZCi2MGdlq63XgM3M/exec';
+
+let jadwalRegistrasiUnit = [];
+let statusJadwalRegistrasi = '';
+let requestJadwalTerakhir = 0;
+
+
+// =====================================
+// MEMUAT 4 JADWAL BERDASARKAN UNIT
+// =====================================
+
+function muatSemuaJadwalRegistrasi() {
+
+  const unit = document.getElementById('unitPendaftaran').value;
+
+  const area = document.getElementById('areaJadwalRegistrasi');
+  const wrapper = document.getElementById('wrapperJalurPendaftaran');
+
+  const info = document.getElementById('infoJadwalRegistrasi');
+
+  // Reset pilihan sebelumnya
+  jadwalRegistrasiUnit = [];
+  statusJadwalRegistrasi = '';
+
+  document.getElementById('jalurPendaftaran').value = '';
+
+  info.classList.add('hidden');
+
+  // Batalkan pengecekan kuota dari unit sebelumnya
+resetHasilKuota();
+
+// Kosongkan pilihan jalur dan sembunyikan dropdown
+document.getElementById('wrapperJalurPendaftaran')
+  .classList.add('hidden');
+
+// Sembunyikan informasi jadwal sebelumnya
+document.getElementById('infoJadwalRegistrasi')
+  .classList.add('hidden');
+
+  if (!unit) {
+    area.classList.add('hidden');
+    wrapper.classList.add('hidden');
+    return;
+  }
+
+  area.classList.remove('hidden');
+  wrapper.classList.add('hidden');
+
+  document.getElementById('daftarKartuJadwal').innerHTML = `
+    <div class="col-span-full text-center text-sm text-gray-500 py-5">
+      Memuat jadwal pendaftaran...
+    </div>
+  `;
+
+  const nomorRequest = ++requestJadwalTerakhir;
+
+  const callbackName =
+    'callbackSemuaJadwal_' + Date.now() + '_' + nomorRequest;
+
+  const script = document.createElement('script');
+  const url = new URL(URL_GAS_ADMIN_JADWAL);
+
+  url.searchParams.set('action', 'getSemuaJadwalRegistrasi');
+  url.searchParams.set('unit', unit);
+  url.searchParams.set('callback', callbackName);
+
+  let selesai = false;
+
+  const timeout = setTimeout(() => {
+
+    if (selesai) return;
+
+    selesai = true;
+    hapusCallback();
+
+    if (nomorRequest !== requestJadwalTerakhir) return;
+
+    document.getElementById('daftarKartuJadwal').innerHTML = `
+      <div class="col-span-full rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        Koneksi ke server jadwal gagal. Silakan muat ulang pilihan unit.
+      </div>
+    `;
+
+  }, 15000);
+
+
+  function hapusCallback() {
+    clearTimeout(timeout);
+    delete window[callbackName];
+    script.remove();
+  }
+
+
+  window[callbackName] = function(hasil) {
+
+    if (selesai) return;
+
+    selesai = true;
+    hapusCallback();
+
+    if (nomorRequest !== requestJadwalTerakhir) return;
+
+    if (!hasil || !hasil.success || !Array.isArray(hasil.jadwal)) {
+
+      document.getElementById('daftarKartuJadwal').innerHTML = `
+        <div class="col-span-full rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+          ${hasil?.message || 'Data jadwal tidak berhasil dibaca.'}
+        </div>
+      `;
+
+      return;
+    }
+
+    jadwalRegistrasiUnit = hasil.jadwal;
+
+    // Isi dropdown sesuai jalur yang berlaku untuk unit
+    aturJalurPendaftaran();
+
+    // Tampilkan kartu jadwal
+    tampilkanKartuSemuaJadwal();
+
+  };
+
+
+  script.onerror = function() {
+
+    if (selesai) return;
+
+    selesai = true;
+    hapusCallback();
+
+    if (nomorRequest !== requestJadwalTerakhir) return;
+
+    document.getElementById('daftarKartuJadwal').innerHTML = `
+      <div class="col-span-full rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
+        Koneksi ke server jadwal gagal.
+      </div>
+    `;
+
+  };
+
+  script.src = url.toString();
+  document.body.appendChild(script);
+
+}
+
+
+// =====================================
+// TAMPILKAN 4 KARTU JADWAL
+// =====================================
+
+function tampilkanKartuSemuaJadwal() {
+
+  const container = document.getElementById('daftarKartuJadwal');
+
+  const jalurSelect = document.getElementById('jalurPendaftaran');
+
+  const jalurTersedia = Array.from(jalurSelect.options)
+    .map(option => option.value);
+
+  container.innerHTML = '';
+
+  const daftarJalur = [
+    'Umum',
+    'KBUN',
+    'SKA',
+    'Alumni'
+  ];
+
+  daftarJalur.forEach(jalur => {
+
+    const data = jadwalRegistrasiUnit.find(
+      item => item.jalur === jalur
+    ) || {
+      jalur: jalur,
+      status: 'Belum Dibuka',
+      pesan: 'Jadwal belum tersedia.',
+      keterangan: ''
+    };
+
+    const status = data.status || 'Belum Dibuka';
+
+    const tersediaUntukUnit = jalurTersedia.includes(jalur);
+
+    const bolehDipilih =
+      status === 'Dibuka' && tersediaUntukUnit;
+
+    let warna = 'border-red-200 bg-red-50';
+    let label = 'Ditutup';
+    let icon = '🔒';
+
+    if (status === 'Dibuka') {
+      warna = 'border-emerald-200 bg-emerald-50';
+      label = 'Dibuka';
+      icon = '✅';
+
+    } else if (status === 'Belum Dibuka') {
+      warna = 'border-amber-200 bg-amber-50';
+      label = 'Belum Dibuka';
+      icon = '⏳';
+    }
+
+    if (!tersediaUntukUnit) {
+      warna = 'border-gray-200 bg-gray-50';
+      label = 'Tidak tersedia untuk unit ini';
+      icon = 'ℹ️';
+    }
+
+    const kartu = document.createElement('button');
+
+    kartu.type = 'button';
+    kartu.dataset.jalur = jalur;
+    kartu.disabled = !bolehDipilih;
+
+    kartu.className = `
+      text-left w-full rounded-xl border p-4
+      transition-all duration-200
+      ${warna}
+      ${bolehDipilih
+        ? 'hover:border-emerald-400 hover:shadow-md cursor-pointer'
+        : 'opacity-80 cursor-not-allowed'}
+    `;
+
+    const bagianAtas = document.createElement('div');
+    bagianAtas.className =
+      'flex items-start justify-between gap-2';
+
+    const bagianNama = document.createElement('div');
+
+    const judul = document.createElement('p');
+    judul.className = 'font-bold text-gray-800 text-sm';
+    judul.textContent = namaJalurRegistrasi(jalur);
+
+    const tanggalMulai = document.createElement('p');
+    tanggalMulai.className = 'text-xs text-gray-500 mt-1';
+
+    tanggalMulai.textContent = data.tanggalMulai
+      ? `${data.tanggalMulai} ${data.jamMulai || ''}`
+      : 'Jadwal belum ditentukan';
+
+    bagianNama.appendChild(judul);
+    bagianNama.appendChild(tanggalMulai);
+
+    if (data.tanggalSelesai) {
+
+      const tanggalSelesai = document.createElement('p');
+
+      tanggalSelesai.className =
+        'text-xs text-gray-500 mt-1';
+
+      tanggalSelesai.textContent =
+        `Sampai ${data.tanggalSelesai} ${data.jamSelesai || ''}`;
+
+      bagianNama.appendChild(tanggalSelesai);
+    }
+
+    const ikon = document.createElement('span');
+    ikon.className = 'text-lg';
+    ikon.textContent = icon;
+
+    bagianAtas.appendChild(bagianNama);
+    bagianAtas.appendChild(ikon);
+
+    const statusLabel = document.createElement('div');
+    statusLabel.className = 'mt-3';
+
+    const statusText = document.createElement('span');
+
+    statusText.className =
+      'inline-flex rounded-full bg-white/80 px-3 py-1 text-xs font-semibold text-gray-700';
+
+    statusText.textContent = label;
+
+    statusLabel.appendChild(statusText);
+
+    kartu.appendChild(bagianAtas);
+    kartu.appendChild(statusLabel);
+
+    if (data.keterangan) {
+
+      const keterangan = document.createElement('p');
+
+      keterangan.className =
+        'text-xs text-gray-600 mt-3';
+
+      keterangan.textContent = data.keterangan;
+
+      kartu.appendChild(keterangan);
+    }
+
+    if (bolehDipilih) {
+
+      const petunjuk = document.createElement('p');
+
+      petunjuk.className =
+        'text-xs font-semibold text-emerald-700 mt-3';
+
+      petunjuk.textContent = 'Pilih jalur ini →';
+
+      kartu.appendChild(petunjuk);
+
+      kartu.addEventListener('click', function() {
+        pilihJalurDariKartu(jalur);
+      });
+    }
+
+    container.appendChild(kartu);
+
+  });
+
+  document.getElementById('wrapperJalurPendaftaran')
+    .classList.remove('hidden');
+
+}
+
+// =====================================
+// NAMA JALUR
+// =====================================
+
+function namaJalurRegistrasi(jalur) {
+
+  const nama = {
+    Umum: 'Umum',
+    KBUN: 'KBUN (Keluarga Besar Ulun Nuha)',
+    SKA: 'Saudara Kandung Aktif (SKA)',
+    Alumni: 'Alumni'
+  };
+
+  return nama[jalur] || jalur;
+
+}
+
+
+// =====================================
+// PILIH JALUR DARI KARTU
+// =====================================
+
+function pilihJalurDariKartu(jalur) {
+
+  const select = document.getElementById('jalurPendaftaran');
+
+  const optionAda = Array.from(select.options)
+    .some(option => option.value === jalur);
+
+  if (!optionAda) return;
+
+  // Pastikan jadwal jalur memang sedang dibuka
+  const jadwal = jadwalRegistrasiUnit.find(
+    item => item.jalur === jalur
+  );
+
+  if (!jadwal || jadwal.status !== 'Dibuka') {
+    return;
+  }
+
+  // Isi dropdown
+  select.value = jalur;
+
+  // Memicu event change.
+  // Event ini akan mengurus dokumen dan pengecekan kuota.
+  select.dispatchEvent(
+    new Event('change', { bubbles: true })
+  );
+
+  // Tandai kartu yang dipilih
+  document.querySelectorAll('#daftarKartuJadwal button')
+    .forEach(kartu => {
+      kartu.classList.remove(
+        'ring-2',
+        'ring-emerald-500'
+      );
+    });
+
+  const kartuTerpilih = Array.from(
+    document.querySelectorAll('#daftarKartuJadwal button')
+  ).find(kartu =>
+    kartu.dataset.jalur === jalur
+  );
+
+  if (kartuTerpilih) {
+    kartuTerpilih.classList.add(
+      'ring-2',
+      'ring-emerald-500'
+    );
+  }
+
+}
+
+// =====================================
+// CEK STATUS JALUR YANG DIPILIH
+// =====================================
+
+function cekJadwalRegistrasi() {
+
+  const jalur = document.getElementById('jalurPendaftaran').value;
+
+  const hasil = jadwalRegistrasiUnit.find(
+    item => item.jalur === jalur
+  );
+
+  const info = document.getElementById('infoJadwalRegistrasi');
+
+  if (!jalur || !hasil) {
+    statusJadwalRegistrasi = '';
+    info.classList.add('hidden');
+    return;
+  }
+
+  tampilkanHasilJadwal(hasil);
+
+}
+
+
+// =====================================
+// TAMPILKAN STATUS JALUR TERPILIH
+// =====================================
+
+function tampilkanHasilJadwal(hasil) {
+
+  const info = document.getElementById('infoJadwalRegistrasi');
+
+  statusJadwalRegistrasi = hasil.status;
+
+  const konfigurasi = {
+    Dibuka: {
+      icon: '✅',
+      judul: 'Pendaftaran Dibuka',
+      warna: 'border-emerald-200 bg-emerald-50'
+    },
+    'Belum Dibuka': {
+      icon: '⏳',
+      judul: 'Pendaftaran Belum Dibuka',
+      warna: 'border-amber-200 bg-amber-50'
+    },
+    Ditutup: {
+      icon: '🔒',
+      judul: 'Pendaftaran Sudah Ditutup',
+      warna: 'border-red-200 bg-red-50'
+    }
+  };
+
+  const tampilan = konfigurasi[hasil.status];
+
+  if (!tampilan) return;
+
+  info.className = `rounded-xl border p-4 ${tampilan.warna}`;
+
+  document.getElementById('iconStatusJadwal').textContent =
+    tampilan.icon;
+
+  document.getElementById('judulStatusJadwal').textContent =
+    tampilan.judul;
+
+  document.getElementById('pesanStatusJadwal').textContent =
+    hasil.pesan || '';
+
+  document.getElementById('keteranganStatusJadwal').textContent =
+    hasil.keterangan || '';
+
+  info.classList.remove('hidden');
+
+}
+
+
+
 // =====================================
 // ELEMEN FORM
 // =====================================
@@ -835,10 +1328,28 @@ let nomorPengecekan = 0;
 // SEMUA JALUR PENDAFTARAN
 // =====================================
 
-const semuaJalur = Array.from(jalurSelect.options).map(option => ({
-  value: option.value,
-  text: option.text
-}));
+const semuaJalur = [
+  {
+    value: '',
+    text: '-- Pilih Jalur Pendaftaran --'
+  },
+  {
+    value: 'Umum',
+    text: 'Umum'
+  },
+  {
+    value: 'KBUN',
+    text: 'KBUN (Keluarga Besar Ulun Nuha)'
+  },
+  {
+    value: 'SKA',
+    text: 'Saudara Kandung Aktif (SKA)'
+  },
+  {
+    value: 'Alumni',
+    text: 'Alumni'
+  }
+];
 
 
 // =====================================
@@ -936,26 +1447,30 @@ function aturProgramPendidikan() {
 function aturJalurPendaftaran() {
 
   const unit = unitSelect.value;
-  const jalurSebelumnya = jalurSelect.value;
 
+  // Kosongkan dropdown
   jalurSelect.innerHTML = '';
 
+  // Tambahkan placeholder
+  const placeholder = document.createElement('option');
+  placeholder.value = '';
+  placeholder.textContent = '-- Pilih Jalur Pendaftaran --';
+  placeholder.disabled = true;
+  placeholder.selected = true;
+
+  jalurSelect.appendChild(placeholder);
+
+  // Masukkan jalur sesuai unit
   semuaJalur.forEach(jalur => {
 
-    if (!jalur.value) {
-      const option = document.createElement('option');
-      option.value = '';
-      option.textContent = jalur.text;
-      option.disabled = true;
-      option.selected = true;
-      jalurSelect.appendChild(option);
-      return;
-    }
+    if (!jalur.value) return;
 
-    if (unit === 'SD' && jalur.value === 'Umum') {
-      return;
-    }
+    // SD tidak menggunakan jalur Umum
+    // if (unit === 'SD' && jalur.value === 'Umum') {
+    //   return;
+    // }
 
+    // Sekolah Tinggi tidak menggunakan jalur Alumni
     if (
       unit === 'Sekolah Tinggi' &&
       jalur.value === 'Alumni'
@@ -964,6 +1479,7 @@ function aturJalurPendaftaran() {
     }
 
     const option = document.createElement('option');
+
     option.value = jalur.value;
     option.textContent = jalur.text;
 
@@ -971,20 +1487,12 @@ function aturJalurPendaftaran() {
 
   });
 
-  if (
-    Array.from(jalurSelect.options)
-      .some(option => option.value === jalurSebelumnya)
-  ) {
-    jalurSelect.value = jalurSebelumnya;
-  } else {
-    jalurSelect.value = '';
-  }
+  jalurSelect.value = '';
 
   updateDokumenPendaftaran();
   resetHasilKuota();
 
 }
-
 
 // =====================================
 // UPDATE DOKUMEN BERDASARKAN JALUR
@@ -1353,19 +1861,31 @@ async function tampilkanPopupWaitingList() {
 // PENGECEKAN KUOTA KE GAS
 // =====================================
 
+
 async function cekKuotaOtomatis() {
 
   resetHasilKuota();
 
   const unit = unitSelect.value;
-  const jalur = jalurSelect.value;
-  const jk = jkSelect.value;
-  const program = programSelect.value;
+const jk = jkSelect.value;
+const program = programSelect.value;
+const jalur = jalurSelect.value;
 
-  if (!unit || !jalur || !jk || !program) {
-    return;
-  }
+// Jalur wajib dipilih dan harus sedang dibuka
+if (!unit || !jk || !program || !jalur) {
+  return;
+}
 
+const jadwalDipilih = jadwalRegistrasiUnit.find(
+  item => item.jalur === jalur
+);
+
+if (
+  !jadwalDipilih ||
+  jadwalDipilih.status !== 'Dibuka'
+) {
+  return;
+}
   const apiTujuan = API_UNIT[unit];
 
   if (!apiTujuan) {
@@ -1401,7 +1921,6 @@ async function cekKuotaOtomatis() {
     const formData = new URLSearchParams();
 
     formData.append('action', 'cekKuota');
-    formData.append('jalurPendaftaran', jalur);
     formData.append('jenisKelamin', jk);
     formData.append('program', program);
 
@@ -1416,29 +1935,24 @@ async function cekKuotaOtomatis() {
 
     const hasil = await response.json();
 
-    // Jika kuota sudah terpakai oleh pendaftar lain
-// Abaikan respons lama jika pilihan sudah berubah
-if (nomorSekarang !== nomorPengecekan) {
-  return;
-}
-
-// Jika kuota penuh, tampilkan tombol Waiting List
-if (
-  hasil.status === 'error' &&
-  hasil.code === 'kuota_habis'
-) {
-
-  tampilkanKuota({
-    tersedia: false,
-    message: hasil.message
-  });
-
-  return;
-}
-
-    // Abaikan respons lama jika pilihan sudah berubah
+    // Abaikan respons lama jika pilihan sudah berubah.
     if (nomorSekarang !== nomorPengecekan) {
       return;
+    }
+
+    // Jika kuota sudah penuh, tampilkan Waiting List.
+    if (
+      hasil.status === 'error' &&
+      hasil.code === 'kuota_habis'
+    ) {
+
+      tampilkanKuota({
+        tersedia: false,
+        message: hasil.message
+      });
+
+      return;
+
     }
 
     if (hasil.status !== 'success') {
@@ -1494,16 +2008,34 @@ if (
 // EVENT PERUBAHAN PILIHAN
 // =====================================
 
-unitSelect.addEventListener('change', function() {
-
-  aturJalurPendaftaran();
-
-});
 
 jalurSelect.addEventListener('change', function() {
 
+  const jalur = this.value;
+
   updateDokumenPendaftaran();
+
   resetHasilKuota();
+
+  // Cari jadwal jalur yang dipilih
+  const hasil = jadwalRegistrasiUnit.find(
+    item => item.jalur === jalur
+  );
+
+  if (!hasil || hasil.status !== 'Dibuka') {
+
+    statusJadwalRegistrasi = '';
+
+    document.getElementById('infoJadwalRegistrasi')
+      .classList.add('hidden');
+
+    return;
+  }
+
+  // Tampilkan informasi jadwal
+  tampilkanHasilJadwal(hasil);
+
+  // Periksa kuota hanya jika jadwal dibuka
   cekKuotaOtomatis();
 
 });
@@ -1550,7 +2082,16 @@ function salinRekening() {
 // =====================================
 
 resetHasilKuota();
-aturJalurPendaftaran();
+
+// Sembunyikan area jadwal dan dropdown jalur saat pertama dibuka
+document.getElementById('areaJadwalRegistrasi')
+  .classList.add('hidden');
+
+document.getElementById('wrapperJalurPendaftaran')
+  .classList.add('hidden');
+
+document.getElementById('infoJadwalRegistrasi')
+  .classList.add('hidden');
 
 
 </script>
@@ -1778,7 +2319,7 @@ const dataKonfirmasi = {
 
 const hasilKonfirmasi = await Swal.fire({
   
-  title: 'Periksa Data Pendaftaran',
+  title: 'Periksa Data Pembuatan Akun',
   html: `
     <div class="text-left space-y-2">
 
@@ -1960,6 +2501,30 @@ if (wa.startsWith('0')) {
       return;
 
     }
+
+    // =====================================
+// VALIDASI JADWAL PENDAFTARAN
+// =====================================
+
+const jadwalTerpilih = jadwalRegistrasiUnit.find(
+  item => item.jalur === jalurPendaftaran
+);
+
+if (
+  !jadwalTerpilih ||
+  jadwalTerpilih.status !== 'Dibuka' ||
+  statusJadwalRegistrasi !== 'Dibuka'
+) {
+
+  Swal.fire(
+    'Pendaftaran Tidak Dibuka',
+    'Mohon pilih jalur pendaftaran yang jadwalnya sedang dibuka.',
+    'warning'
+  );
+
+  return;
+
+}
 
     // =====================================
 // VALIDASI KUOTA
