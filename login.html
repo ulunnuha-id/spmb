@@ -9,6 +9,8 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
   * {
@@ -136,6 +138,96 @@
     transform: scale(.98);
   }
 </style>
+
+<style>
+ .tanya-admin-popup {
+  transform-origin: bottom left;
+  animation: adminPopupNaik 0.3s ease-out;
+}
+
+@keyframes adminPopupNaik {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.admin-wa-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.admin-wa-item:hover {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+/* TOMBOL TANYA ADMIN MOBILE */
+@media (max-width: 640px) {
+
+  /* Tombol Tanya Admin versi mobile */
+  #tanyaAdminWrapper > button {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+
+    background: #16a34a !important;
+    color: white !important;
+
+    padding: 10px 7px !important;
+    width: 48px !important;
+
+    border-radius: 0 12px 12px 0 !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+
+    transition: all 0.3s ease;
+  }
+
+  /* Ikon WhatsApp */
+  #tanyaAdminWrapper > button i {
+    font-size: 23px !important;
+    color: white !important;
+  }
+
+  /* Tulisan vertikal */
+  #tanyaAdminWrapper > button span {
+    display: block !important;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* Posisi tombol */
+  #tanyaAdminWrapper {
+    transform: translateX(-5px);
+    transition: transform 0.3s ease;
+  }
+
+  #tanyaAdminWrapper.admin-terbuka {
+    transform: translateX(0);
+  }
+}
+</style>
+
 </head>
 
 <body
@@ -961,6 +1053,158 @@ function setCookie(name, value, days) {
 }
 
 </script>
+
+<script>
+  function toggleTanyaAdmin() {
+  const daftar = document.getElementById('daftarAdminWA');
+  const wrapper = document.getElementById('tanyaAdminWrapper');
+
+  daftar.classList.toggle('hidden');
+
+  if (window.innerWidth <= 640) {
+    wrapper.classList.toggle('admin-terbuka');
+  }
+}
+
+function hubungiAdminWA(unit) {
+
+  const nomorAdmin = {
+    'RA': '6282276529344',
+    'SD': '6282370773084',
+    'SMP': '6282382234103',
+    'SMA': '6281361351185',
+    'Boarding / UNBS': '6281361351185',
+    'Sekolah Tinggi': '6282167486954'
+  };
+
+  const nomor = nomorAdmin[unit];
+
+  if (!nomor) return;
+
+  const pesan = encodeURIComponent(
+    `Assalamu'alaikum Admin SPMB Terpadu Ulun Nuha.
+
+Saya ingin bertanya mengenai pendaftaran siswa baru untuk unit ${unit}.
+
+Mohon informasinya. Terima kasih.`
+  );
+
+  const url = `https://wa.me/${nomor}?text=${pesan}`;
+
+  window.open(url, '_blank');
+
+  document.getElementById('daftarAdminWA').classList.add('hidden');
+
+  document.getElementById('tanyaAdminWrapper')
+    .classList.remove('admin-terbuka');
+}
+</script>
+
+
+
+<!-- TOMBOL TANYA ADMIN WHATSAPP -->
+<div id="tanyaAdminWrapper"
+     class="fixed left-0 bottom-6 z-[9999]">
+
+  <!-- POPUP DAFTAR ADMIN -->
+  <div id="daftarAdminWA"
+       class="hidden absolute left-2 bottom-full mb-3
+              w-64 bg-white rounded-2xl shadow-2xl
+              border border-gray-100 overflow-hidden
+              tanya-admin-popup">
+
+    <!-- HEADER -->
+    <div class="bg-green-600 text-white p-4">
+      <div class="flex items-center justify-between">
+
+        <div>
+          <h3 class="font-bold text-base">Hubungi Admin</h3>
+          <p class="text-xs text-green-100 mt-1">
+            Pilih unit pendidikan
+          </p>
+        </div>
+
+        <button type="button"
+                onclick="toggleTanyaAdmin()"
+                class="text-white hover:text-green-200">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- DAFTAR UNIT -->
+    <div class="p-2 space-y-1">
+
+      <button type="button" onclick="hubungiAdminWA('RA')"
+        class="admin-wa-item">
+        <span>Admin RA</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('SD')"
+        class="admin-wa-item">
+        <span>Admin SD</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('SMP')"
+        class="admin-wa-item">
+        <span>Admin SMP</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('SMA')"
+        class="admin-wa-item">
+        <span>Admin SMA</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('Boarding / UNBS')"
+        class="admin-wa-item">
+        <span>Admin Boarding (UNBS)</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('Sekolah Tinggi')"
+        class="admin-wa-item">
+        <span>Admin Sekolah Tinggi</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="px-4 py-3 bg-gray-50 text-center">
+      <p class="text-xs text-gray-500">
+        SPMB Terpadu Ulun Nuha
+      </p>
+    </div>
+
+  </div>
+
+  <!-- TOMBOL MENGAMBANG -->
+  <button
+    type="button"
+    onclick="toggleTanyaAdmin()"
+    class="flex items-center gap-2 bg-green-600
+           hover:bg-green-700 text-white
+           px-4 py-3 rounded-r-xl shadow-lg
+           transition-all duration-300
+           hover:pr-5">
+
+   
+
+    <span class="text-sm font-semibold">
+      Tanya Admin
+    </span>
+
+     <i class="fab fa-whatsapp text-2xl"></i>
+
+  </button>
+
+</div>
+
 
 
 </body>
