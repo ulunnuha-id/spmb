@@ -9,6 +9,9 @@
 
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 
 
 <style>
@@ -86,6 +89,99 @@
       max-width: 100%;
     }
   }
+
+  
+
+  
+</style>
+
+<style>
+ .tanya-admin-popup {
+  transform-origin: bottom left;
+  animation: adminPopupNaik 0.3s ease-out;
+}
+
+@keyframes adminPopupNaik {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.92);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.admin-wa-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.admin-wa-item:hover {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+/* TOMBOL TANYA ADMIN MOBILE */
+@media (max-width: 640px) {
+
+  /* Tombol Tanya Admin versi mobile */
+  #tanyaAdminWrapper > button {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+
+    background: #16a34a !important;
+    color: white !important;
+
+    padding: 10px 7px !important;
+    width: 48px !important;
+
+    border-radius: 0 12px 12px 0 !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+
+    transition: all 0.3s ease;
+  }
+
+  /* Ikon WhatsApp */
+  #tanyaAdminWrapper > button i {
+    font-size: 23px !important;
+    color: white !important;
+  }
+
+  /* Tulisan vertikal */
+  #tanyaAdminWrapper > button span {
+    display: block !important;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* Posisi tombol */
+  #tanyaAdminWrapper {
+    transform: translateX(-5px);
+    transition: transform 0.3s ease;
+  }
+
+  #tanyaAdminWrapper.admin-terbuka {
+    transform: translateX(0);
+  }
+}
 </style>
 
 </head>
@@ -99,11 +195,11 @@
 <!-- BACKGROUND -->
 <!-- ===================================== -->
 
-<div class="fixed inset-0 overflow-hidden pointer-events-none">
+<!-- <div class="fixed inset-0 overflow-hidden pointer-events-none">
   <div class="absolute -top-32 -right-32 w-96 h-96 bg-emerald-200/40 rounded-full blur-3xl"></div>
   <div class="absolute -bottom-32 -left-32 w-96 h-96 bg-green-200/40 rounded-full blur-3xl"></div>
   <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal-100/20 rounded-full blur-3xl"></div>
-</div>
+</div> -->
 
 
 <!-- ===================================== -->
@@ -165,7 +261,7 @@
     <!-- RIGHT PANEL / FORM -->
     <!-- ===================================== -->
 
-    <section class="w-full bg-white/95 register-card backdrop-blur-md rounded-3xl p-6 sm:p-9 lg:p-10 shadow-xl shadow-emerald-900/10 border border-white/50">
+    <section class="w-full bg-white/95 register-card rounded-3xl p-6 sm:p-9 lg:p-10 shadow-xl shadow-emerald-900/10 border border-white/50">
 
 
       <!-- JUDUL -->
@@ -259,6 +355,7 @@
             <select
               id="jenisKelamin"
               name="jenisKelamin"
+               onchange="aturProgramPendidikan()"
               required
               class="input-field w-full px-4 py-3.5 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 text-sm outline-none appearance-none">
 
@@ -319,7 +416,7 @@
               <option value="SD">SD</option>
               <option value="SMP">SMP</option>
               <option value="SMA">SMA</option>
-              <!-- <option value="Boarding">UNBS</option> -->
+              <option value="Boarding">UNBS</option>
               <option value="Sekolah Tinggi">I'dad Mualimin</option>
 
             </select>
@@ -353,6 +450,41 @@
     <option value="Tidak">Tidak</option>
   </select>
 </div>
+
+
+    <!-- SURAT PERNYATAAN ORANG TUA -->
+    <div id="fieldSuratPernyataan" class="hidden mt-4">
+
+      <label for="suratPernyataanOrtu"
+        class="block text-sm font-semibold text-gray-700 mb-2">
+        Upload Surat Pernyataan Orang Tua
+      </label>
+
+      <p class="text-xs text-gray-500 mb-2">
+        Silakan unduh contoh format surat, lengkapi, tanda tangani,
+        kemudian unggah kembali dalam format PDF, JPG, atau PNG.
+      </p>
+
+      <a
+        href="sandbox:/mnt/data/Contoh_Surat_Pernyataan_Orang_Tua_SPMB.docx"
+        class="inline-flex items-center gap-2 text-sm font-semibold text-emerald-700 hover:underline mb-3"
+        target="_blank">
+        <i class="fas fa-file-word"></i>
+        Unduh Contoh Format Surat
+      </a>
+
+      <input
+        type="file"
+        id="suratPernyataanOrtu"
+        name="suratPernyataanOrtu"
+        accept="image/jpeg,image/png,application/pdf"
+        class="input-field w-full border border-gray-200 p-2.5 rounded-xl bg-gray-50 text-sm text-gray-600 cursor-pointer">
+
+      <p class="text-xs text-gray-400 mt-2">
+        Format JPG, PNG, atau PDF. Maksimal 5 MB.
+      </p>
+
+    </div>
 
         
 <!-- PROGRAM PENDIDIKAN -->
@@ -501,41 +633,12 @@
             class="input-field w-full border border-gray-200 p-2.5 rounded-xl bg-gray-50 text-sm text-gray-600 cursor-pointer">
 
           <p class="text-xs text-gray-400 mt-2">
-            Format JPG, PNG, atau PDF. Maksimal 2 MB.
+            Format JPG, PNG, atau PDF. Maksimal 5 MB.
           </p>
 
         </div>
 
-
-
-        <!-- DOKUMEN SKA -->
-        <div id="uploadSuratSKA" class="hidden">
-
-          <label for="buktiSuratSKA"
-            class="block text-sm font-semibold text-gray-700 mb-2">
-
-            Upload Bukti Surat Aktif Saudara Kandung di Sekolah Islam Ulun Nuha T.P. 2027/2028
-
-          </label>
-
-          <input
-            type="file"
-            id="buktiSuratSKA"
-            name="buktiSuratSKA"
-            accept="image/jpeg,image/png,application/pdf"
-            class="input-field w-full border border-gray-200 p-2.5 rounded-xl bg-gray-50 text-sm text-gray-600 cursor-pointer">
-
-          <p class="text-xs text-gray-400 mt-2">
-            Format JPG, PNG, atau PDF. Maksimal 2 MB.
-          </p>
-
-        </div>
-</div>
-        
-
-
-
-<!-- CARD PEMBAYARAN -->
+        <!-- CARD PEMBAYARAN -->
 <div id="cardPembayaran"
   class="hidden rounded-xl border border-emerald-200 bg-white overflow-hidden shadow-sm">
 
@@ -621,15 +724,41 @@
   <div class="px-4 pb-3">
     <p class="text-xs text-gray-500 leading-relaxed">
       <span class="text-emerald-700 font-semibold">Catatan:</span>
-      Transfer sesuai nominal, kemudian unggah bukti pembayaran pada formulir pendaftaran.
+      Pembayaran juga bisa dilakukan di loket setiap gedung.
     </p>
   </div>
 
 </div>
 
 
-</div>
 
+
+
+
+        <!-- DOKUMEN SKA -->
+        <div id="uploadSuratSKA" class="hidden">
+
+          <label for="buktiSuratSKA"
+            class="block text-sm font-semibold text-gray-700 mb-2">
+
+            Upload Bukti Surat Aktif Saudara Kandung di Sekolah Islam Ulun Nuha T.P. 2027/2028
+
+          </label>
+
+          <input
+            type="file"
+            id="buktiSuratSKA"
+            name="buktiSuratSKA"
+            accept="image/jpeg,image/png,application/pdf"
+            class="input-field w-full border border-gray-200 p-2.5 rounded-xl bg-gray-50 text-sm text-gray-600 cursor-pointer">
+
+          <p class="text-xs text-gray-400 mt-2">
+            Format JPG, PNG, atau PDF. Maksimal 5 MB.
+          </p>
+
+        </div>
+</div>
+  </div>
 
 
 
@@ -1301,6 +1430,7 @@ const uploadSuratSKA = document.getElementById('uploadSuratSKA');
 const buktiTransferInput = document.getElementById('buktiTransfer');
 const buktiSuratSKAInput = document.getElementById('buktiSuratSKA');
 
+
 const informasiKuota = document.getElementById('informasiKuota');
 const cardStatusKuota = document.getElementById('cardStatusKuota');
 const judulStatusKuota = document.getElementById('judulStatusKuota');
@@ -1385,18 +1515,31 @@ function aturFieldABK() {
   const unit = unitSelect.value;
   const fieldABK = document.getElementById('fieldABK');
   const statusABK = document.getElementById('statusABK');
+  const fieldSurat = document.getElementById('fieldSuratPernyataan');
 
   if (['RA', 'SD'].includes(unit)) {
     fieldABK.classList.remove('hidden');
   } else {
     fieldABK.classList.add('hidden');
+    fieldSurat.classList.add('hidden');
     statusABK.value = '';
+  }
+
+  // Tampilkan surat hanya jika unit RA/SD dan jawaban ABK Tidak
+  if (['RA', 'SD'].includes(unit) && statusABK.value === 'Tidak') {
+    fieldSurat.classList.remove('hidden');
+  } else {
+    fieldSurat.classList.add('hidden');
   }
 }
 
 document.getElementById('statusABK').addEventListener('change', function() {
 
+  const fieldSurat = document.getElementById('fieldSuratPernyataan');
+
   if (this.value === 'Ya') {
+
+    fieldSurat.classList.add('hidden');
 
     Swal.fire({
       icon: 'warning',
@@ -1408,38 +1551,131 @@ document.getElementById('statusABK').addEventListener('change', function() {
       allowEscapeKey: false
     }).then(() => {
 
-      // Kosongkan pilihan ABK
       this.value = '';
-
-      // Batasi tombol pendaftaran
       tombolDaftar.disabled = true;
 
     });
 
   } else if (this.value === 'Tidak') {
 
-    tombolDaftar.disabled = false;
+  tombolDaftar.disabled = false;
 
+  // Tampilkan upload surat pernyataan
+  if (['RA', 'SD'].includes(unitSelect.value)) {
+    document.getElementById('fieldSuratPernyataan')
+      .classList.remove('hidden');
   }
 
+} else {
+
+  document.getElementById('fieldSuratPernyataan')
+    .classList.add('hidden');
+
+}
+
+});
+
+programSelect.addEventListener('change', function () {
+  const unit = unitSelect.value;
+  const jenisKelamin = document.getElementById('jenisKelamin').value;
+
+  if (
+    programSelect.value === 'Asrama' &&
+    (
+      unit === 'SMP' ||
+      (unit === 'SMA' && jenisKelamin === 'P')
+    )
+  ) {
+    Swal.fire({
+      icon: 'info',
+      title: 'Informasi Program Asrama',
+      text: 'Asrama hanya diutamakan untuk siswa yang berasal dari luar Kota Medan.',
+      confirmButtonText: 'Mengerti',
+      confirmButtonColor: '#059669'
+    });
+  }
 });
 
 function aturProgramPendidikan() {
   const unit = unitSelect.value;
+  const jenisKelamin = document.getElementById('jenisKelamin').value;
+
   const opsiAsrama = programSelect.querySelector('option[value="Asrama"]');
+  const opsiFullday = programSelect.querySelector('option[value="Fullday"]');
+  const labelProgram = document.querySelector('label[for="programPendaftaran"]');
+  const programSebelumnya = programSelect.value;
 
-  if (['RA', 'SD', 'Sekolah Tinggi'].includes(unit)) {
-    // Sembunyikan pilihan Asrama
-    opsiAsrama.hidden = true;
+  // BOARDING PEREMPUAN
+  if (unit === 'Boarding' && jenisKelamin === 'P') {
 
-    // Otomatis pilih Full Day
-    programSelect.value = 'Fullday';
+    programSelect.value = '';
+    programSelect.disabled = true;
+    programSelect.classList.add('hidden');
+
+    if (labelProgram) {
+      labelProgram.classList.add('hidden');
+    }
+
+    // Tampilkan pemberitahuan SweetAlert
+    Swal.fire({
+      icon: 'warning',
+      title: 'Informasi Pendaftaran',
+      text: 'Mohon maaf, saat ini UNBS hanya menerima siswa laki-laki.',
+      confirmButtonText: 'Mengerti',
+      confirmButtonColor: '#059669'
+    });
+
   } else {
-    // Tampilkan kembali pilihan Asrama
-    opsiAsrama.hidden = false;
+    programSelect.disabled = false;
+    programSelect.classList.remove('hidden');
+
+    if (labelProgram) {
+      labelProgram.classList.remove('hidden');
+    }
+
+    if (['RA', 'SD', 'Sekolah Tinggi'].includes(unit)) {
+      opsiAsrama.hidden = true;
+      opsiFullday.hidden = false;
+      programSelect.value = 'Fullday';
+
+    } else if (unit === 'SMA' && jenisKelamin === 'L') {
+      opsiAsrama.hidden = true;
+      opsiFullday.hidden = false;
+      programSelect.value = 'Fullday';
+
+    } else if (unit === 'Boarding') {
+      opsiAsrama.hidden = false;
+      opsiFullday.hidden = true;
+      programSelect.value = 'Asrama';
+
+    } else {
+      opsiAsrama.hidden = false;
+      opsiFullday.hidden = false;
+
+      if (!['Fullday', 'Asrama'].includes(programSelect.value)) {
+        programSelect.value = '';
+      }
+    }
   }
 
-  // Perbarui pengecekan kuota
+  // Informasi Asrama untuk SMP dan SMA Perempuan
+if (
+  programSelect.value === 'Asrama' &&
+  programSebelumnya !== 'Asrama' &&
+  (
+    unit === 'SMP' ||
+    (unit === 'SMA' && jenisKelamin === 'P')
+  )
+) {
+  Swal.fire({
+    icon: 'info',
+    title: 'Informasi Program Asrama',
+    text: 'Asrama hanya diutamakan untuk siswa yang berasal dari luar Kota Medan.',
+    confirmButtonText: 'Mengerti',
+    confirmButtonColor: '#059669'
+  });
+}
+
   cekKuotaOtomatis();
   aturFieldABK();
 }
@@ -2287,6 +2523,27 @@ for (const field of fieldWajib) {
         return;
       }
 
+      // Wajib upload surat jika ABK = Tidak
+      if (statusABK === 'Tidak') {
+        const fileSurat = document.getElementById('suratPernyataanOrtu').files[0];
+
+        if (!fileSurat) {
+          Swal.fire({
+            icon: 'warning',
+            title: 'Surat Belum Diunggah',
+            text: 'Silakan upload Surat Pernyataan Orang Tua terlebih dahulu.'
+          });
+
+          document.getElementById('fieldSuratPernyataan')
+            .classList.remove('hidden');
+
+          document.getElementById('fieldSuratPernyataan')
+            .scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+          return;
+        }
+      }
+
     }
 
     // =====================================
@@ -2675,6 +2932,19 @@ if (!kuotaValid) {
 
     }
 
+    // Tambahkan Surat Pernyataan Orang Tua untuk RA dan SD
+    if (
+      ['RA', 'SD'].includes(unitSelect.value) &&
+      document.getElementById('statusABK').value === 'Tidak'
+    ) {
+      const fileSurat = document.getElementById('suratPernyataanOrtu').files[0];
+
+      semuaFile.push({
+        file: fileSurat,
+        nama: 'Surat Pernyataan Orang Tua'
+      });
+    }
+
 
     for (const item of semuaFile) {
 
@@ -2788,6 +3058,18 @@ if (!kuotaValid) {
 
       }
 
+      // Konversi Surat Pernyataan Orang Tua
+      let base64SuratPernyataan = '';
+
+      if (
+        ['RA', 'SD'].includes(unitSelect.value) &&
+        document.getElementById('statusABK').value === 'Tidak'
+      ) {
+        const fileSurat = document.getElementById('suratPernyataanOrtu').files[0];
+
+        base64SuratPernyataan = await fileKeBase64(fileSurat);
+      }
+
 
 
       // =====================================
@@ -2831,6 +3113,20 @@ if (!kuotaValid) {
         'unitPendaftaran',
         unitPendaftaran
       );
+
+      // Kirim status ABK
+      formData.append(
+        'statusABK',
+        document.getElementById('statusABK').value
+      );
+
+      // Kirim Surat Pernyataan Orang Tua
+      if (base64SuratPernyataan) {
+        formData.append(
+          'suratPernyataanOrtu',
+          base64SuratPernyataan
+        );
+      }
 
 
 
@@ -2949,6 +3245,159 @@ if (!kuotaValid) {
 );
 
 </script>
+
+
+
+<script>
+  function toggleTanyaAdmin() {
+  const daftar = document.getElementById('daftarAdminWA');
+  const wrapper = document.getElementById('tanyaAdminWrapper');
+
+  daftar.classList.toggle('hidden');
+
+  if (window.innerWidth <= 640) {
+    wrapper.classList.toggle('admin-terbuka');
+  }
+}
+
+function hubungiAdminWA(unit) {
+
+  const nomorAdmin = {
+    'RA': '6282381134103',
+    'SD': '6282388734103',
+    'SMP': '62823815764103',
+    'SMA': '6283819984103',
+    'Boarding / UNBS': '6282387878103',
+    'Sekolah Tinggi': '6282838134103'
+  };
+
+  const nomor = nomorAdmin[unit];
+
+  if (!nomor) return;
+
+  const pesan = encodeURIComponent(
+    `Assalamu'alaikum Admin SPMB Terpadu Ulun Nuha.
+
+Saya ingin bertanya mengenai pendaftaran siswa baru untuk unit ${unit}.
+
+Mohon informasinya. Terima kasih.`
+  );
+
+  const url = `https://wa.me/${nomor}?text=${pesan}`;
+
+  window.open(url, '_blank');
+
+  document.getElementById('daftarAdminWA').classList.add('hidden');
+
+  document.getElementById('tanyaAdminWrapper')
+    .classList.remove('admin-terbuka');
+}
+</script>
+
+
+
+<!-- TOMBOL TANYA ADMIN WHATSAPP -->
+<div id="tanyaAdminWrapper"
+     class="fixed left-0 bottom-6 z-[9999]">
+
+  <!-- POPUP DAFTAR ADMIN -->
+  <div id="daftarAdminWA"
+       class="hidden absolute left-2 bottom-full mb-3
+              w-64 bg-white rounded-2xl shadow-2xl
+              border border-gray-100 overflow-hidden
+              tanya-admin-popup">
+
+    <!-- HEADER -->
+    <div class="bg-green-600 text-white p-4">
+      <div class="flex items-center justify-between">
+
+        <div>
+          <h3 class="font-bold text-base">Hubungi Admin</h3>
+          <p class="text-xs text-green-100 mt-1">
+            Pilih unit pendidikan
+          </p>
+        </div>
+
+        <button type="button"
+                onclick="toggleTanyaAdmin()"
+                class="text-white hover:text-green-200">
+          <i class="fas fa-times text-lg"></i>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- DAFTAR UNIT -->
+    <div class="p-2 space-y-1">
+
+      <button type="button" onclick="hubungiAdminWA('RA')"
+        class="admin-wa-item">
+        <span>Admin RA</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('SD')"
+        class="admin-wa-item">
+        <span>Admin SD</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('SMP')"
+        class="admin-wa-item">
+        <span>Admin SMP</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('SMA')"
+        class="admin-wa-item">
+        <span>Admin SMA</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('Boarding / UNBS')"
+        class="admin-wa-item">
+        <span>Admin Boarding (UNBS)</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+      <button type="button" onclick="hubungiAdminWA('Sekolah Tinggi')"
+        class="admin-wa-item">
+        <span>Admin Sekolah Tinggi</span>
+        <i class="fab fa-whatsapp text-green-500 text-2xl"></i>
+      </button>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="px-4 py-3 bg-gray-50 text-center">
+      <p class="text-xs text-gray-500">
+        SPMB Terpadu Ulun Nuha
+      </p>
+    </div>
+
+  </div>
+
+  <!-- TOMBOL MENGAMBANG -->
+  <button
+    type="button"
+    onclick="toggleTanyaAdmin()"
+    class="flex items-center gap-2 bg-green-600
+           hover:bg-green-700 text-white
+           px-4 py-3 rounded-r-xl shadow-lg
+           transition-all duration-300
+           hover:pr-5">
+
+   
+
+    <span class="text-sm font-semibold">
+      Tanya Admin
+    </span>
+     <i class="fab fa-whatsapp text-2xl"></i>
+
+  </button>
+
+</div>
+
 
 </body>
 </html>
