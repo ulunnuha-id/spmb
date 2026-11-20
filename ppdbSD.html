@@ -83,7 +83,7 @@
     </button>
     <button id="tab-saudara"
       class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
-      Data Orang Tua
+      Data Orang Tua / Wali
     </button>
     <button id="tab-pernyataan"
       class="tab-btn flex-1 min-w-[100px] py-3 text-gray-600 border-b-2 border-transparent hover:bg-gray-50 transition">
@@ -116,7 +116,7 @@
       <!-- Header Sekolah -->
       <div class="bg-white p-4 sm:p-6 rounded-2xl shadow-md mb-6 text-center flex flex-col items-center">
       
-        <img src="logo.png" alt="Logo SD Islam Ulun Nuha" class="w-16 sm:w-32 ">
+        <img src="logosekolah.jpg" alt="Logo SD Islam Ulun Nuha" class="w-16 sm:w-32 ">
              
         <h1 class="text-base sm:text-lg md:text-2xl font-bold mb-1 text-center">SPMB SD Islam Ulun Nuha</h1>
         <p class="text-gray-700 text-sm sm:text-base">Ahlan Wa sahlan, <span id="userNama">Siswa</span>
@@ -532,7 +532,7 @@
   </div>
 
 </div>
-
+<div class="hidden">
       <div>
           <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Program Pemerintah </h3>
         </div>
@@ -546,7 +546,7 @@
 
           <select id="menerimaPIP" name="menerimaPIP"
             class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
-            required>
+            >
             <option value="">- Pilih kesediaan -</option>
             <option value="Bersedia">Bersedia</option>
             <option value="Tidak Bersedia">Tidak Bersedia</option>
@@ -582,7 +582,7 @@
             </option>
           </select>
         </div>
-<div class="hidden">
+
          <div>
           <label for="menerimaMBG" class="block text-gray-700 font-medium mb-1">
             Apakah bersedia menerima Makan Bergizi Gratis (MBG) ?
@@ -596,8 +596,7 @@
             <option value="Tidak Bersedia">Tidak Bersedia</option>
           </select>
         </div>
-
-        </div>
+      </div>  
 
 
 
@@ -929,6 +928,140 @@
           
         </div>
 
+        <!-- Data Wali  -->
+
+        <h3 class="font-semibold text-green-600 bg-green-100 text-lg"> Data Diri Wali (jika ada)</h3>
+
+        <div>
+          <label for="namaWali" class="block text-gray-700 font-medium mb-1">Nama Wali</label>
+          <input type="text" id="namaWali" name="namaWali" placeholder="Nama Wali" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" >
+        </div>
+
+         <div>
+        <label for="nikWali" class="block text-gray-700 font-medium mb-1">
+          Nomor Induk Kependudukan (NIK) Wali
+        </label>
+        <input
+          type="text"
+          id="nikWali"
+          placeholder="16 Digit Angka"
+          name="nikWali"
+          inputmode="numeric"
+          pattern="[0-9]{16}"
+          maxlength="16"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          
+        >
+        <p class="text-xs text-gray-500 mt-1">
+          Masukkan 16 digit Nomor Induk Kependudukan.
+        </p>
+      </div>
+
+      <div>
+        <label for="thnLhrWali" class="block text-gray-700 font-medium mb-1">
+          Tahun Lahir Wali
+        </label>
+        <input
+          type="text"
+          id="thnLhrWali"
+          placeholder="4 Digit Angka"
+          name="thnLhrWali"
+          inputmode="numeric"
+          pattern="[0-9]{4}"
+          maxlength="4"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          
+        >
+       
+      </div>
+
+      
+      <div>
+        <label for="pendidikanWali" class="block text-gray-700 font-medium mb-1">
+          Pendidikan Wali
+        </label>
+
+        <select
+          id="pendidikanWali"
+          name="pendidikanWali"
+          class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+          
+        >
+          <option value="">- Pilih Pendidikan Wali -</option>
+          <option value="Tidak Sekolah">Tidak Sekolah</option>
+          <option value="Putus SD">Putus SD</option>
+          <option value="SD Sederajat">SD Sederajat</option>
+          <option value="SMP Sederajat">SMP Sederajat</option>
+          <option value="SMA Sederajat">SMA Sederajat</option>
+          <option value="D1">D1</option>
+          <option value="D2">D2</option>
+          <option value="D3">D3</option>
+          <option value="D4/S1">D4/S1</option>
+          <option value="S2">S2</option>
+          <option value="S3">S3</option>
+        </select>
+      </div>
+
+      
+<div>
+  <label for="pekerjaanWali" class="block text-gray-700 font-medium mb-1">
+    Pekerjaan Wali
+  </label>
+
+  <select
+    id="pekerjaanWali"
+    name="pekerjaanWali"
+    class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+    
+  >
+    <option value="">- Pilih Pekerjaan Wali -</option>
+    <option value="Tidak Bekerja">Tidak Bekerja</option>
+    <option value="Nelayan">Nelayan</option>
+    <option value="Petani">Petani</option>
+    <option value="Peternak">Peternak</option>
+    <option value="PNS/TNI/POLRI">PNS/TNI/POLRI</option>
+    <option value="Karyawan Swasta">Karyawan Swasta</option>
+    <option value="Pedagang Kecil">Pedagang Kecil</option>
+    <option value="Pedagang Besar">Pedagang Besar</option>
+    <option value="Wiraswasta">Wiraswasta</option>
+    <option value="Wirausaha">Wirausaha</option>
+    <option value="Buruh">Buruh</option>
+    <option value="Pensiunan">Pensiunan</option>
+    <option value="Guru">Guru</option>
+    <option value="Lainnya">Lainnya</option>
+    <option value="Sudah meninggal">Sudah meninggal</option>
+  </select>
+</div>
+
+
+  <div>
+    <label for="penghasilanWali" class="block text-gray-700 font-medium mb-1">
+      Penghasilan Wali
+    </label>
+
+    <select
+      id="penghasilanWali"
+      name="penghasilanWali"
+      class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none"
+      
+    >
+      <option value="">- Pilih Penghasilan Wali -</option>
+      <option value="&lt; Rp. 500.000">&lt; Rp. 500.000</option>
+      <option value="Rp. 500.000 - Rp. 999.999">Rp. 500.000 - Rp. 999.999</option>
+      <option value="Rp. 1.000.000 - Rp. 1.999.999">Rp. 1.000.000 - Rp. 1.999.999</option>
+      <option value="Rp. 2.000.000 - Rp. 4.999.999">Rp. 2.000.000 - Rp. 4.999.999</option>
+      <option value="Rp. 5.000.000 - Rp. 20.000.000">Rp. 5.000.000 - Rp. 20.000.000</option>
+      <option value="&gt; Rp. 20.000.000">&gt; Rp. 20.000.000</option>
+      <option value="Tidak Berpenghasilan">Tidak Berpenghasilan</option>
+    </select>
+  </div>
+  
+      <div>
+          <label for="WaWali" class="block text-gray-700 font-medium mb-1">No. HP / WA Wali</label>
+          <input type="number" id="WaWali" name="WaWali" placeholder="Nomor HP/WA Aktif" class="w-full p-3 border rounded-xl focus:ring-2 focus:ring-green-400 outline-none" >
+          
+        </div>
+
                
         <!-- Field Khusus Jalur KBUN -->
         <div id="fieldKBUN" class="hidden space-y-4">
@@ -1025,7 +1158,7 @@
         
 
       <div class="bg-green-50 p-3 rounded-xl border border-green-200">
-          <label for="pasfotoFile" class="block font-medium text-gray-700 mb-1">Pas Foto:</label>
+          <label for="pasfotoFile" class="block font-medium text-gray-700 mb-1">Pas Foto Calon Siswa:</label>
           <span id="pasfotoLink" class="text-sm text-gray-600">Belum upload</span>
           <input
                 type="file"
@@ -1048,7 +1181,7 @@
         </div>
 
         <div class="bg-green-50 p-3 rounded-xl border border-green-200">
-          <label for="skFile" class="block font-medium text-gray-700 mb-1">Surat Keterangan Siswa dari SD/MI Asal:</label>
+          <label for="skFile" class="block font-medium text-gray-700 mb-1">Surat Keterangan Siswa dari Sekolah Asal:</label>
           <span id="skLink" class="text-sm text-gray-600">Belum upload</span>
           <input type="file" id="skFile" accept="image/*,.pdf" class="w-full mt-2 text-sm border p-2 rounded-lg bg-white">
         </div>
@@ -1165,7 +1298,51 @@
 
 
 
+<script>
+  function tandaiFieldWajib() {
 
+  const form = document.getElementById('dataForm');
+
+  if (!form) return;
+
+  const fieldWajib = form.querySelectorAll(
+    'input[required], select[required], textarea[required]'
+  );
+
+  fieldWajib.forEach(field => {
+
+    // Lewati input tersembunyi
+    if (field.type === 'hidden') return;
+
+    // Cari label berdasarkan atribut for
+    let label = field.id
+      ? form.querySelector(`label[for="${CSS.escape(field.id)}"]`)
+      : field.closest('label');
+
+    if (!label) return;
+
+    // Hindari tanda bintang ganda
+    if (label.querySelector('.required-star')) return;
+
+    // Buat tanda bintang
+    const bintang = document.createElement('span');
+
+    bintang.className = 'required-star text-red-500 ml-1 font-bold';
+    bintang.textContent = '*';
+
+    label.appendChild(bintang);
+
+  });
+
+}
+
+// Jalankan saat halaman siap
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', tandaiFieldWajib);
+} else {
+  tandaiFieldWajib();
+}
+</script>
 <script>
 const menerimaPIP = document.getElementById('menerimaPIP');
 const alasanPIP = document.getElementById('alasanPIP');
@@ -1632,7 +1809,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-// Tombol "Selanjutnya" & "Sebelumnya"
+  // Tombol "Selanjutnya" & "Sebelumnya"
 
 // Step 1 → Step 2
 document.getElementById('next1').addEventListener('click', () => {
@@ -1675,12 +1852,6 @@ showTab('tab-beranda');
 </script>
 
 
-
-
-  
-
-
-
     <!-- Bukti Daftar  -->
     <div id="buktiArea" class="hidden mt-6 mx-4 sm:mx-6 md:mx-10 lg:mx-16 p-4 sm:p-6 bg-white rounded-2xl shadow-md">
       <div id="buktiCard" class="bg-white p-4 rounded-xl border border-gray-200 shadow-sm">
@@ -1689,7 +1860,7 @@ showTab('tab-beranda');
           <div class="flex items-center gap-3">
          
             <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
-              <img src="logo.png" alt="Logo Sekolah" class="w-24 mx-auto mb-2" id="logoPPDB">
+              <img src="logosekolah.jpg" alt="Logo Sekolah" class="w-24 mx-auto mb-2" id="logoPPDB">
 
             </div>
             <div>
@@ -2028,10 +2199,12 @@ async function loadUserData() {
 
       document.getElementById('namaAyah').value = data.namaAyah || '';
       document.getElementById('namaIbu').value = data.namaIbu || '';
+      document.getElementById('namaWali').value = data.namaWali || '';
       document.getElementById('sekolahAsal').value = data.sekolahAsal || '';
       document.getElementById('alamat').value = data.alamat || '';
       document.getElementById('WaAyah').value = data.WaAyah || '';
       document.getElementById('WaIbu').value = data.WaIbu || '';
+      document.getElementById('WaWali').value = data.WaWali || '';
       document.getElementById('jk').value = data.jenisKelamin || '';
       document.getElementById('anakke').value = data.anakKe || '';
       document.getElementById('tanggalDaftar').value = data.tanggalDaftar || '';
@@ -2062,6 +2235,12 @@ async function loadUserData() {
       document.getElementById('pendidikanIbu').value = data.pendidikanIbu || '';
       document.getElementById('pekerjaanIbu').value = data.pekerjaanIbu || '';
       document.getElementById('penghasilanIbu').value = data.penghasilanIbu || '';
+
+      document.getElementById('nikWali').value = data.nikWali || '';
+      document.getElementById('thnLhrWali').value = data.thnLhrWali || '';
+      document.getElementById('pendidikanWali').value = data.pendidikanWali || '';
+      document.getElementById('pekerjaanWali').value = data.pekerjaanWali || '';
+      document.getElementById('penghasilanWali').value = data.penghasilanWali || '';
       
       document.getElementById('tugasOrtu').value = data.tugasOrtu || '';
       document.getElementById('unitOrtu').value = data.unitOrtu || '';
@@ -2530,10 +2709,12 @@ document.getElementById('dataForm').addEventListener('submit', async function(e)
   const jk = document.getElementById('jk').value;
   const namaAyah = document.getElementById('namaAyah').value.trim();
   const namaIbu = document.getElementById('namaIbu').value.trim();
+  const namaWali = document.getElementById('namaWali').value.trim();
   const sekolahAsal = document.getElementById('sekolahAsal').value;
   const alamat = document.getElementById('alamat').value.trim();
   const WaAyah = document.getElementById('WaAyah').value.trim();
   const WaIbu = document.getElementById('WaIbu').value;
+  const WaWali = document.getElementById('WaWali').value;
   const nisn = document.getElementById('nisn').value;
   const noKK= document.getElementById('noKK').value;
   const noAkte= document.getElementById('noAkte').value;
@@ -2560,6 +2741,12 @@ document.getElementById('dataForm').addEventListener('submit', async function(e)
   const pendidikanIbu = document.getElementById('pendidikanIbu').value;
   const pekerjaanIbu = document.getElementById('pekerjaanIbu').value;
   const penghasilanIbu = document.getElementById('penghasilanIbu').value;
+
+  const nikWali= document.getElementById('nikWali').value;
+  const thnLhrWali = document.getElementById('thnLhrWali').value;
+  const pendidikanWali = document.getElementById('pendidikanWali').value;
+  const pekerjaanWali = document.getElementById('pekerjaanWali').value;
+  const penghasilanWali = document.getElementById('penghasilanWali').value;
   
   const tugasOrtu = document.getElementById('tugasOrtu').value;
   const unitOrtu = document.getElementById('unitOrtu').value;
@@ -2752,10 +2939,12 @@ function readFileBase64(file) {
     formData.append('jk', jk);
     formData.append('namaAyah', namaAyah);
     formData.append('namaIbu', namaIbu);
+    formData.append('namaWali', namaWali);
     formData.append('sekolahAsal', sekolahAsal);
     formData.append('alamat', alamat);
     formData.append('WaAyah', WaAyah);
     formData.append('WaIbu', WaIbu);
+    formData.append('WaWali', WaWali);
     formData.append('anakke', anakke);
     formData.append('nisn', nisn);
     formData.append('noKK', noKK);
@@ -2785,6 +2974,12 @@ function readFileBase64(file) {
     formData.append('pendidikanIbu', pendidikanIbu);
     formData.append('pekerjaanIbu', pekerjaanIbu);
     formData.append('penghasilanIbu', penghasilanIbu);
+
+    formData.append('nikWali', nikWali);
+    formData.append('thnLhrWali', thnLhrWali);
+    formData.append('pendidikanWali', pendidikanWali);
+    formData.append('pekerjaanWali', pekerjaanWali);
+    formData.append('penghasilanWali', penghasilanWali);
    
     formData.append('tugasOrtu', tugasOrtu);
     formData.append('unitOrtu', unitOrtu);
@@ -2840,7 +3035,8 @@ if (result.status === 'success') {
       showConfirmButton: false
     });
 
-    await loadUserData();
+    // await loadUserData();
+    window.location.reload();
     refreshSemuaIndikator();
 
     // Kunci form setelah data lengkap berhasil disimpan
